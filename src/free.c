@@ -6,11 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/28 17:49:13 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:37:24 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cub3d.h"
 
 void	exit_game(t_vars *vars)
 {

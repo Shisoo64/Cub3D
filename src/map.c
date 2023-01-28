@@ -6,13 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/28 17:51:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:37:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cub3d.h"
 
-int	get_map_height(t_vars *vars)
+int	get_map_dimension(t_vars *vars)
 {
 	int		fd;
 	int		i;
@@ -26,7 +26,7 @@ int	get_map_height(t_vars *vars)
 		exit (0);
 	}
 	line = get_next_line(fd);
-	vars->map_x = ft_strlen(line);
+	vars->map_x = ft_strlen(line) - 1;
 	while (line)
 	{
 		i++;
@@ -38,19 +38,32 @@ int	get_map_height(t_vars *vars)
 	return (i);
 }
 
-char	**create_map(t_vars *vars)
+int	**create_map(t_vars *vars)
 {
-	char	**map;
+	int		**map;
+	char	*buf;
 	int		fd;
-	int		i;
+	int		y;
+	int		x;
 
-	i = -1;
-	vars->map_y = get_map_height(vars);
+	y = -1;
+	vars->map_y = get_map_dimension(vars);
+
 	fd = open(vars->mapname, 0);
-	map = malloc(sizeof(char *) * (vars->map_y + 1));
-	while (++i < vars->map_y)
-		map[i] = get_next_line(fd);
-	map[vars->map_y] = NULL;
+	map = malloc(sizeof(int *) * (vars->map_y + 1));
+	while (++y < vars->map_y)
+	{
+		buf = get_next_line(fd);
+		map[y] = malloc(sizeof(int) * (ft_strlen(buf) + 1));
+		if (!buf)
+			break;
+		x = -1;
+		while (++x < vars->map_x - 1)
+			map[y][x] = buf[x] - 47;
+		map[y][x] = '\0';
+		free(buf);
+	}
+	map[y] = NULL;
 	close(fd);
 	return (map);
 }

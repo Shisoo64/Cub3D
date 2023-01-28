@@ -6,11 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/28 18:12:49 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:37:20 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cub3d.h"
 
 
 void	check_map_ext(t_vars *v)

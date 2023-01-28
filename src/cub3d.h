@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/28 18:19:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:37:49 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <fcntl.h>
 # include "../mlx_linux/mlx.h"
@@ -38,11 +38,9 @@ enum e_keycode
 	ESC = 0xFF1B
 };
 
-void		exit_game(t_vars *vars);
-char		**create_map(t_vars *vars);
-int			get_map_height(t_vars *vars);
-int			frames(t_vars *vars);
-
-void		check_map_ext(t_vars *v);
+void	exit_game(t_vars *vars);
+int		**create_map(t_vars *vars);
+int		frames(t_vars *vars);
+void	check_map_ext(t_vars *v);
 
 #endif
