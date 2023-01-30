@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/29 00:37:22 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:58:31 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	get_map_dimension(t_vars *vars)
 	return (i);
 }
 
-int	**create_map(t_vars *vars)
+char	**create_map(t_vars *vars)
 {
-	int		**map;
+	char	**map;
 	char	*buf;
 	int		fd;
 	int		y;
@@ -48,7 +48,6 @@ int	**create_map(t_vars *vars)
 
 	y = -1;
 	vars->map_y = get_map_dimension(vars);
-
 	fd = open(vars->mapname, 0);
 	map = malloc(sizeof(int *) * (vars->map_y + 1));
 	while (++y < vars->map_y)
@@ -59,7 +58,7 @@ int	**create_map(t_vars *vars)
 			break;
 		x = -1;
 		while (++x < vars->map_x - 1)
-			map[y][x] = buf[x] - 47;
+			map[y][x] = buf[x];
 		map[y][x] = '\0';
 		free(buf);
 	}
