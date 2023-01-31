@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/01/30 15:56:51 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/01/31 17:21:49 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +55,12 @@ $(MLX) :
 	@make -sC mlx_linux/
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -o $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 	@echo "\e[2A\e[1;32m📦 $(NAME) compiled!                                           \n\n\033[0m"
 
 
 bonus : $(OBJS_BONUS) $(LIBFT) $(MLX)
-	$(CC) $(OBJS_BONUS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -o $(NAME)
+	$(CC) $(OBJS_BONUS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 
 logo :
 	@echo "\n                          CUB3D                                        "

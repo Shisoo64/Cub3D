@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/30 17:58:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:31:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 
 # include <fcntl.h>
 # include <math.h>
+# include <stdio.h>
 # include "../mlx_linux/mlx.h"
 # include "../libft/libft.h"
 
-# define WIN_W 480
-# define WIN_H 320
+# define WIN_W 1024
+# define WIN_H 768
+# define MOVESPEED 5
+# define FRAMETIME 30
+# define ROTSPEED 0.1
+# define FLOORCOLOR 8900331
 
-
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -38,6 +42,13 @@ typedef struct s_vars {
 	char		*mapname;
 	int			map_y;
 	int			map_x;
+
+	double posX;
+	double posY;
+	double dirX;
+	double dirY;
+	double planeX;
+	double planeY;
 }				t_vars;
 
 enum e_keycode
@@ -53,5 +64,6 @@ void	exit_game(t_vars *vars);
 char	**create_map(t_vars *vars);
 int		frames(t_vars *vars);
 void	check_map_ext(t_vars *v);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

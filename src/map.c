@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/30 17:58:31 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:16:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ char	**create_map(t_vars *vars)
 		x = -1;
 		while (++x < vars->map_x - 1)
 			map[y][x] = buf[x];
+
+
 		map[y][x] = '\0';
+				
 		free(buf);
 	}
 	map[y] = NULL;
