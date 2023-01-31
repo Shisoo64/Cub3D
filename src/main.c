@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/31 18:35:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:53:26 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ void draw_backdrop(t_vars *vars)
 	int	yo;
 	int	xo;
 	yo = -1;
+	while (++yo <= WIN_H / 2)
+	{
+		xo = -1;
+		while (++xo <= WIN_W)
+			my_mlx_pixel_put(&vars->img, xo, yo, SKYCOLOR);
+	}
 	while (++yo <= WIN_H)
 	{
 		xo = -1;
@@ -34,7 +40,7 @@ int	toto(t_vars *vars)
 	x = -1;
 	while (++x < WIN_W)
 	{
-		int color = 0xffffff;
+		int color = HORIZCOLOR;
 		//calculate ray position and direction
 		double cameraX = 2 * x / (double)WIN_W - 1; //x-coordinate in camera space
 		double raydirX = vars->dirX + vars->planeX * cameraX;
@@ -153,7 +159,7 @@ int	toto(t_vars *vars)
 
 		// Color change on YWall
     	if (side == 1)
-			color = color * 0.75;
+			color = VERTCOLOR;
 
 		//draw line
 		while (drawStart < drawEnd)
@@ -173,10 +179,12 @@ int	frames(t_vars *vars)
 
 void	move_player_up(t_vars *vars)
 {
-	if (vars->map[(int)(vars->posX + vars->dirX * MOVESPEED)][(int)vars->posY] == 0)
+	if (vars->map[(int)(vars->posX + vars->dirX * MOVESPEED)][(int)vars->posY] == '0')
 		vars->posX += vars->dirX * MOVESPEED;
-	if (vars->map[(int)vars->posX][(int)(vars->posY + vars->dirY * MOVESPEED)] == 0)
+	if (vars->map[(int)vars->posX][(int)(vars->posY + vars->dirY * MOVESPEED)] == '0')
 		vars->posY += vars->dirY * MOVESPEED;
+	printf("posX:%lf\n", vars->posX);
+	printf("posY:%lf\n", vars->posY);
 	toto(vars);
 }
 
@@ -186,6 +194,8 @@ void	move_player_down(t_vars *vars)
 		vars->posX -= vars->dirX * MOVESPEED;
 	if (vars->map[(int)vars->posX][(int)(vars->posY - vars->dirY * MOVESPEED)] == 0)
 		vars->posY -= vars->dirY * MOVESPEED;
+	printf("posX:%lf\n", vars->posX);
+	printf("posY:%lf\n", vars->posY);
 	toto(vars);
 }
 
@@ -203,7 +213,6 @@ void	rotate_player(int multi, t_vars *vars)
 	printf("planeX:%lf\n", vars->planeX);
 	printf("planeY:%lf\n", vars->planeY);
 	toto(vars);
-	
 }
 
 int	inputs(int key, t_vars *vars)

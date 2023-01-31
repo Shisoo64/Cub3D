@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/31 18:31:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:55:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 
 # define WIN_W 1024
 # define WIN_H 768
-# define MOVESPEED 5
+# define MOVESPEED 0.25
+# define ROTSPEED 0.25
 # define FRAMETIME 30
-# define ROTSPEED 0.1
-# define FLOORCOLOR 8900331
+
+# define VERTCOLOR 0xFFE7CC
+# define HORIZCOLOR 0xFFFBEB
+# define SKYCOLOR 0xECF9FF
+# define FLOORCOLOR 0xF8CBA6
 
 typedef struct s_data {
 	void	*img;
