@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/31 18:55:40 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:01:32 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,42 @@
 
 # define WIN_W 1024
 # define WIN_H 768
-# define MOVESPEED 0.25
-# define ROTSPEED 0.25
+# define MOVESPEED 0.1
+# define ROTSPEED 0.2
 # define FRAMETIME 30
 
-# define VERTCOLOR 0xFFE7CC
-# define HORIZCOLOR 0xFFFBEB
+# define YCOLOR 0xFFE7CC
+# define XCOLOR 0xFFFBEB
 # define SKYCOLOR 0xECF9FF
 # define FLOORCOLOR 0xF8CBA6
 
-typedef struct s_data {
+typedef struct s_display {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}				t_display;
 
-typedef struct s_vars {
-	void		*mlx;
-	void		*win;
-	t_data		img;
-	char		**map;
-	char		*mapname;
-	int			map_y;
-	int			map_x;
-
+typedef struct s_player {
 	double posX;
 	double posY;
 	double dirX;
 	double dirY;
 	double planeX;
 	double planeY;
-}				t_vars;
+}				t_player;
+
+typedef struct s_mlx {
+	void		*mlx;
+	void		*win;
+	t_display	display;
+	t_player	player;
+	char		**map;
+	char		*mapname;
+	int			map_y;
+	int			map_x;
+}				t_mlx;
 
 enum e_keycode
 {
@@ -64,10 +67,10 @@ enum e_keycode
 	ESC = 0xFF1B
 };
 
-void	exit_game(t_vars *vars);
-char	**create_map(t_vars *vars);
-int		frames(t_vars *vars);
-void	check_map_ext(t_vars *v);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	exit_game(t_mlx *mlx);
+char	**create_map(t_mlx *mlx);
+int		frames(t_mlx *mlx);
+void	check_map_ext(t_mlx *v);
+void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
 
 #endif

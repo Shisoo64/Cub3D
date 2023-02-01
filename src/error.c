@@ -6,14 +6,14 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/29 00:37:27 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:15:19 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-void	check_map(char **map, t_vars *v)
+void	check_map(char **map, t_mlx *v)
 {
 	check_map_ext(v);
 	check_rectangle(map, v);
@@ -21,7 +21,7 @@ void	check_map(char **map, t_vars *v)
 	check_items(map, v);
 }
 
-int	check_rectangle(char **map, t_vars *v)
+int	check_rectangle(char **map, t_mlx *v)
 {
 	int		y;
 
@@ -41,7 +41,7 @@ int	check_rectangle(char **map, t_vars *v)
 	return (0);
 }
 
-int	check_borders(char **map, t_vars *v)
+int	check_borders(char **map, t_mlx *v)
 {
 	int	x;
 	int	y;
@@ -65,13 +65,13 @@ int	check_borders(char **map, t_vars *v)
 	return (0);
 }
 
-void	check_items_ext(int i[3], t_vars *v)
+void	check_items_ext(int i[3], t_mlx *v)
 {
 	if (i[0] != 1 || i[2] <= 0 || i[1] != 1)
 		ft_error(v, "Error\nProblem with item numbers.\n");
 }
 
-void	check_items(char **map, t_vars *v)
+void	check_items(char **map, t_mlx *v)
 {
 	int	x;
 	int	y;

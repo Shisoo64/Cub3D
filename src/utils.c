@@ -6,13 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/01/31 18:30:35 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:33:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_display *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -20,14 +20,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	check_map_ext(t_vars *v)
+void	check_map_ext(t_mlx *v)
 {
 	int		i;
 	char	*ext;
 
 	i = 1;
 	ext = ".cub";
-	if (ft_strlen(v->mapname) < 5 
+	if (ft_strlen(v->mapname) < 5
 		|| v->mapname[ft_strlen(v->mapname) - 5] == '/')
 	{
 		ft_printf("Error\nNo map name!\n");
