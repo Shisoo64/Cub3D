@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/01 18:53:51 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:40:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ void	ft_raycast(t_mlx *mlx, int x)
 	int drawEnd;
 
 
-
-
-
 	//calculate ray position and direction
 	double cameraX = 2 * x / (double)WIN_W - 1; //x-coordinate in camera space
 	double raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
@@ -61,20 +58,11 @@ void	ft_raycast(t_mlx *mlx, int x)
 	//length of ray from current position to next x or y-side
 	double sideDistX;
 	double sideDistY;
-
-	//length of ray from one x or y-side to next x or y-side
-	//these are derived as:
-
-	//which can be simplified to abs(|rayDir| / raymlx->player->dirX) and abs(|rayDir| / raymlx->player->dirY)
-	//where |rayDir| is the length of the vector (raymlx->player->dirX, raymlx->player->dirY). Its length,
-	//unlike (mlx->player->dirX, mlx->player->dirY) is not 1, however this does not matter, only the
-	//ratio between deltaDistX and deltaDistY matters, due to the way the DDA
-	//stepping further below works. So the values can be computed as below.
-	// Division through zero is prevented, even though technically that's not
-	// needed in C++ with IEEE 754 floating point values.
-
 	double DeltaDistX;
 	double DeltaDistY;
+
+	int hit = 0; //was there a wall hit?
+	int side; //was a NS or a EW wall hit?
 
 	if (raydirX == 0)
 		DeltaDistX = 1000;
@@ -88,8 +76,6 @@ void	ft_raycast(t_mlx *mlx, int x)
 		DeltaDistY = fabs(1 / raydirY);
 	//	DeltaDistY = sqrt(1 + (raymlx->player->dirX * raymlx->player->dirX) / (raymlx->player->dirY * raymlx->player->dirY));
 
-	int hit = 0; //was there a wall hit?
-	int side; //was a NS or a EW wall hit?
 	//calculate step and initial sideDist
 	if (raydirX < 0)
 	{
@@ -140,10 +126,6 @@ void	ft_raycast(t_mlx *mlx, int x)
 	}
 	//Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
 	//hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-	//This can be computed as (mapX - mlx->player->posX + (1 - stepX) / 2) / raymlx->player->dirX for side == 0, or same formula with Y
-	//for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
-	//because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-	//steps, but we subtract deltaDist once because one step more into the wall was taken above.
 	if (side == 0)
 		perpWallDist = (sideDistX - DeltaDistX);
 	else
@@ -177,10 +159,7 @@ int	ft_display(t_mlx *mlx)
 	draw_backdrop(mlx);
 	x = -1;
 	while (++x < WIN_W)
-	{
 		ft_raycast(mlx, x);
-	}
-
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 	return (0);
 }
