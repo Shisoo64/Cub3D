@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/01 18:00:51 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:53:51 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,43 +192,40 @@ int	frames(t_mlx *mlx)
 	return (0);
 }
 
-void	move_player_up(t_mlx *mlx)
+void	move_player_up(t_player *player, char **map)
 {
-	if (mlx->map[(int)mlx->player.posY][(int)(mlx->player.posX + mlx->player.dirX * MOVESPEED)] != '1')
-		mlx->player.posX += mlx->player.dirX * MOVESPEED;
-	if (mlx->map[(int)(mlx->player.posY + mlx->player.dirY * MOVESPEED)][(int)mlx->player.posX] != '1')
-		mlx->player.posY += mlx->player.dirY * MOVESPEED;
-	printf("posX:%lf\n", mlx->player.posX);
-	printf("posY:%lf\n", mlx->player.posY);
-	ft_display(mlx);
+	if (map[(int)player->posY][(int)(player->posX + player->dirX * MOVESPEED)] != '1')
+		player->posX += player->dirX * MOVESPEED;
+	if (map[(int)(player->posY + player->dirY * MOVESPEED)][(int)player->posX] != '1')
+		player->posY += player->dirY * MOVESPEED;
+	printf("posX:%lf\n", player->posX);
+	printf("posY:%lf\n", player->posY);
 }
 
-void	move_player_down(t_mlx *mlx)
+void	move_player_down(t_player *player, char **map)
 {
-	if (mlx->map[(int)mlx->player.posY][(int)(mlx->player.posX - mlx->player.dirX * MOVESPEED)] != '1')
-		mlx->player.posX -= mlx->player.dirX * MOVESPEED;
-	if (mlx->map[(int)(mlx->player.posY - mlx->player.dirY * MOVESPEED)][(int)mlx->player.posX] != '1')
-		mlx->player.posY -= mlx->player.dirY * MOVESPEED;
-	printf("posX:%lf\n", mlx->player.posX);
-	printf("posY:%lf\n", mlx->player.posY);
-	ft_display(mlx);
+	if (map[(int)player->posY][(int)(player->posX - player->dirX * MOVESPEED)] != '1')
+		player->posX -= player->dirX * MOVESPEED;
+	if (map[(int)(player->posY - player->dirY * MOVESPEED)][(int)player->posX] != '1')
+		player->posY -= player->dirY * MOVESPEED;
+	printf("posX:%lf\n", player->posX);
+	printf("posY:%lf\n", player->posY);
 }
 
 
-void	rotate_player(int multi, t_mlx *mlx)
+void	rotate_player(int multi, t_player *player)
 {
 	double	olddirX;
 	double	oldPlaneX;
 
-	olddirX = mlx->player.dirX;
-	oldPlaneX = mlx->player.planeX;
-	mlx->player.dirX = mlx->player.dirX * cos(ROTSPEED * multi) - mlx->player.dirY * sin(ROTSPEED * multi);
-	mlx->player.dirY = olddirX * sin(ROTSPEED * multi) + mlx->player.dirY * cos(ROTSPEED * multi);
-	mlx->player.planeX = mlx->player.planeX * cos(ROTSPEED * multi) - mlx->player.planeY * sin(ROTSPEED * multi);
-	mlx->player.planeY = oldPlaneX * sin(ROTSPEED * multi) + mlx->player.planeY * cos(ROTSPEED * multi);
-	printf("planeX:%lf\n", mlx->player.planeX);
-	printf("planeY:%lf\n", mlx->player.planeY);
-	ft_display(mlx);
+	olddirX = player->dirX;
+	oldPlaneX = player->planeX;
+	player->dirX = player->dirX * cos(ROTSPEED * multi) - player->dirY * sin(ROTSPEED * multi);
+	player->dirY = olddirX * sin(ROTSPEED * multi) + player->dirY * cos(ROTSPEED * multi);
+	player->planeX = player->planeX * cos(ROTSPEED * multi) - player->planeY * sin(ROTSPEED * multi);
+	player->planeY = oldPlaneX * sin(ROTSPEED * multi) + player->planeY * cos(ROTSPEED * multi);
+	printf("planeX:%lf\n", player->planeX);
+	printf("planeY:%lf\n", player->planeY);
 }
 
 int	inputs(int key, t_mlx *mlx)
@@ -236,13 +233,14 @@ int	inputs(int key, t_mlx *mlx)
 	if (key == ESC)
 		exit_game(mlx);
 	else if (key == KEY_LEFT)
-		rotate_player(1, mlx);
+		rotate_player(1, &mlx->player);
 	else if (key == KEY_UP)
-		move_player_down(mlx);
+		move_player_down(&mlx->player, mlx->map);
 	else if (key == KEY_DOWN)
-		move_player_up(mlx);
+		move_player_up(&mlx->player, mlx->map);
 	else if (key == KEY_RIGHT)
-		rotate_player(-1, mlx);
+		rotate_player(-1, &mlx->player);
+	ft_display(mlx);
 	return (0);
 }
 

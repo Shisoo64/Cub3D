@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/01 18:01:32 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:45:58 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ typedef struct s_player {
 	double planeX;
 	double planeY;
 }				t_player;
+
+typedef struct s_raycast {
+	double posX;
+}				t_raycast;
 
 typedef struct s_mlx {
 	void		*mlx;
