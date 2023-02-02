@@ -6,9 +6,12 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/01/31 17:21:49 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/02/02 15:14:09 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
+NAME = cub3D
 
 SRCS =	src/main.c \
 		src/utils.c \
@@ -34,8 +37,6 @@ LIBFT = libft/libft.a
 MLX = mlx_linux/libmlx.a
 
 CFLAGS = -Wall -Wextra -Werror -g3
-
-NAME = cub3d
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,11 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/01 17:33:40 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:14:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3D.h"
 
 void	my_mlx_pixel_put(t_display *data, int x, int y, int color)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/01 19:42:25 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:05:39 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # define WIN_H 768
 # define MOVESPEED 0.1
 # define ROTSPEED 0.15
-# define FRAMETIME 30
 
 # define YCOLOR 0xFFE7CC
 # define XCOLOR 0xFFFBEB
@@ -48,7 +47,28 @@ typedef struct s_player {
 }				t_player;
 
 typedef struct s_raycast {
-	double posX;
+	//what cardinal point the raycast hit is perpendicular to
+	int	side;
+
+	//what direction to step in x or y-direction (either +1 or -1)
+	int stepX;
+	int stepY;
+
+	//calculate ray position and direction
+	double cameraX;
+
+	double raydirX;
+	double raydirY;
+
+	//which box of the map we're in
+	int mapX;
+	int mapY;
+
+	//length of ray from current position to next x or y-side
+	double sideDistX;
+	double sideDistY;
+	double DeltaDistX;
+	double DeltaDistY;
 }				t_raycast;
 
 typedef struct s_mlx {
