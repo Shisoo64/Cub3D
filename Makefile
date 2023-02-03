@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/02/03 00:00:18 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/02/03 23:39:25 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = cub3D
 
 SRCS =	src/main.c \
 		src/utils.c \
+		src/parsing.c \
 		src/map.c \
 		src/movement.c \
 		src/free.c \

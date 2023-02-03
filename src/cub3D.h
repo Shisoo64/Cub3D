@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 15:24:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:35:30 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,14 @@ int		inputs(int key, t_mlx *mlx);
 
 enum e_keycode
 {
-	KEY_UP = 115,
-	KEY_DOWN = 119,
-	KEY_STRAFE_L = 97,
-	KEY_STRAFE_R = 100,
-	KEY_TURN_L = 65361,
-	KEY_TURN_R = 65363,
+	KEY_W = 115,
+	KEY_S = 119,
+	KEY_A = 97,
+	KEY_D = 100,
+	KEY_Q = 113,
+	KEY_E = 101,
+	KEY_ARROW_L = 65361,
+	KEY_ARROW_R = 65363,
 	ESC = 0xFF1B
 };
 
