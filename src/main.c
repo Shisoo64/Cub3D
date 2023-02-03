@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 12:58:16 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:25:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_render_vline(t_raycast *ray, t_display *mlx_display, int x)
 		drawStart = 0;
 	drawEnd = lineHeight / 2 + WIN_H / 2;
 	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
+		drawEnd = WIN_H;
 
 	// Color change on YWall
 	if (ray->side == 1)
@@ -210,7 +210,7 @@ int	main(int ac, char **av)
 	check_map_ext(&mlx);
 	mlx.map = create_map(&mlx);
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3d");
+	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3D");
 	mlx.display.img = mlx_new_image(mlx.mlx, WIN_W, WIN_H);
 	mlx.display.addr = mlx_get_data_addr(mlx.display.img, &mlx.display.bits_per_pixel,
 			&mlx.display.line_length, &mlx.display.endian);

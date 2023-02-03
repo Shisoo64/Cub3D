@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 12:48:51 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:49:36 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ void	move_player(int multi, t_player *player, char **map)
 		player->posX += (player->dirX * MOVESPEED) * multi;
 	if (map[(int)(player->posY + (player->dirY * MOVESPEED * multi))][(int)player->posX] != '1')
 		player->posY += (player->dirY * MOVESPEED) * multi;
+	printf("\e[2AposX:%lf             \n", player->posX);
+	printf("posY:%lf              \n", player->posY);
+}
+
+void	strafe_player(int multi, t_player *player, char **map)
+{
+	if (map[(int)player->posY][(int)(player->posX + (player->dirX * MOVESPEED * multi))] != '1')
+		player->posY += (player->dirX * MOVESPEED) * multi;
+	if (map[(int)(player->posY + (player->dirY * MOVESPEED * multi))][(int)player->posX] != '1')
+		player->posX += (player->dirY * MOVESPEED) * multi;
 	printf("\e[2AposX:%lf             \n", player->posX);
 	printf("posY:%lf              \n", player->posY);
 }
@@ -40,7 +50,7 @@ void	rotate_player(int multi, t_player *player)
 
 int	inputs(int key, t_mlx *mlx)
 {
-	//printf("key:%d\n", key);
+	printf("key:%d\n", key);
 	if (key == ESC)
 		exit_game(mlx);
 	else if (key == KEY_TURN_L)
