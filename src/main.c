@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/02 20:09:06 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 03:02:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,12 @@ void	ft_render_vline(t_raycast *ray, t_display *mlx_display, int x)
 void	ft_raycast(t_mlx *mlx, int x)
 {
 	t_raycast	ray;
+	double	cameraX;
 
-	ray.cameraX = 2 * x / (double)WIN_W - 1; //x-coordinate in camera space
+	cameraX = 2 * x / (double)WIN_W - 1; //x-coordinate in camera space
 
-	ray.raydirX = mlx->player.dirX + mlx->player.planeX * ray.cameraX;
-	ray.raydirY = mlx->player.dirY + mlx->player.planeY * ray.cameraX;
+	ray.raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
+	ray.raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
 
 	ray.mapX = (int)mlx->player.posX;
 	ray.mapY = (int)mlx->player.posY;
@@ -118,13 +119,11 @@ void	ft_raycast(t_mlx *mlx, int x)
 		ray.DeltaDistX = 1000;
 	else
 		ray.DeltaDistX = fabs(1 / ray.raydirX);
-	//	DeltaDistX = sqrt(1 + (raymlx->player->dirY * raymlx->player->dirY) / (raymlx->player->dirX * raymlx->player->dirX));
 
 	if (ray.raydirY == 0)
 		ray.DeltaDistY = 1000;
 	else
 		ray.DeltaDistY = fabs(1 / ray.raydirY);
-	//	DeltaDistY = sqrt(1 + (raymlx->player->dirX * raymlx->player->dirX) / (raymlx->player->dirY * raymlx->player->dirY));
 
 	//calculate step and initial sideDist
 	if (ray.raydirX < 0)
@@ -170,68 +169,6 @@ int	frames(t_mlx *mlx)
 {
 	(void)mlx;
 	//ft_printf("FRAME\n");
-	return (0);
-}
-
-void	move_player(int multi, t_player *player, char **map)
-{
-	if (map[(int)player->posY][(int)(player->posX + (player->dirX * MOVESPEED * multi))] != '1')
-		player->posX += (player->dirX * MOVESPEED) * multi;
-	if (map[(int)(player->posY + (player->dirY * MOVESPEED * multi))][(int)player->posX] != '1')
-		player->posY += (player->dirY * MOVESPEED) * multi;
-	printf("posX:%lf\n", player->posX);
-	printf("posY:%lf\n", player->posY);
-}
-
-/*
-void	move_player_up(t_player *player, char **map)
-{
-	if (map[(int)player->posY][(int)(player->posX + player->dirX * MOVESPEED)] != '1')
-		player->posX += player->dirX * MOVESPEED;
-	if (map[(int)(player->posY + player->dirY * MOVESPEED)][(int)player->posX] != '1')
-		player->posY += player->dirY * MOVESPEED;
-	printf("posX:%lf\n", player->posX);
-	printf("posY:%lf\n", player->posY);
-}
-
-void	move_player_down(t_player *player, char **map)
-{
-	if (map[(int)player->posY][(int)(player->posX - player->dirX * MOVESPEED)] != '1')
-		player->posX -= player->dirX * MOVESPEED;
-	if (map[(int)(player->posY - player->dirY * MOVESPEED)][(int)player->posX] != '1')
-		player->posY -= player->dirY * MOVESPEED;
-	printf("posX:%lf\n", player->posX);
-	printf("posY:%lf\n", player->posY);
-}
-*/
-
-void	rotate_player(int multi, t_player *player)
-{
-	double	olddirX;
-	double	oldPlaneX;
-
-	olddirX = player->dirX;
-	oldPlaneX = player->planeX;
-	player->dirX = player->dirX * cos(ROTSPEED * multi) - player->dirY * sin(ROTSPEED * multi);
-	player->dirY = olddirX * sin(ROTSPEED * multi) + player->dirY * cos(ROTSPEED * multi);
-	player->planeX = player->planeX * cos(ROTSPEED * multi) - player->planeY * sin(ROTSPEED * multi);
-	player->planeY = oldPlaneX * sin(ROTSPEED * multi) + player->planeY * cos(ROTSPEED * multi);
-	printf("planeX:%lf\n", player->planeX);
-	printf("planeY:%lf\n", player->planeY);
-}
-
-int	inputs(int key, t_mlx *mlx)
-{
-	if (key == ESC)
-		exit_game(mlx);
-	else if (key == KEY_LEFT)
-		rotate_player(1, &mlx->player);
-	else if (key == KEY_UP)
-		move_player(-1, &mlx->player, mlx->map);
-	else if (key == KEY_DOWN)
-		move_player(1, &mlx->player, mlx->map);
-	else if (key == KEY_RIGHT)
-		rotate_player(-1, &mlx->player);
 	ft_display(mlx);
 	return (0);
 }
@@ -242,14 +179,7 @@ int	exit_hook(t_mlx *mlx)
 	return (0);
 }
 
-void	print_map(t_mlx *mlx)
-{
-	int	y;
 
-	y = -1;
-	while (++y < mlx->map_y)
-		ft_printf("%s\n", mlx->map[y]);
-}
 
 int	main(int ac, char **av)
 {
@@ -269,7 +199,6 @@ int	main(int ac, char **av)
 	mlx.mapname = av[1];
 	check_map_ext(&mlx);
 	mlx.map = create_map(&mlx);
-	print_map(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3d");
 	mlx.display.img = mlx_new_image(mlx.mlx, WIN_W, WIN_H);
@@ -278,7 +207,7 @@ int	main(int ac, char **av)
 
 	ft_display(&mlx);
 	mlx_hook(mlx.win, 2, 1L<<0, inputs, &mlx);
-	mlx_loop_hook(mlx.mlx, frames, &mlx);
+	//mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);
 }

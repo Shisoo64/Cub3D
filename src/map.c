@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/02 15:14:45 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/02 23:56:43 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ int	get_map_dimension(t_mlx *mlx)
 	return (i);
 }
 
+void	print_map(char **map)
+{
+	int	y;
+
+	y = -1;
+	ft_printf("map:\n");
+	while (map[++y])
+		ft_printf("%s\n", map[y]);
+	ft_printf("\n\n\n");
+}
+
 char	**create_map(t_mlx *mlx)
 {
 	char	**map;
@@ -67,5 +78,8 @@ char	**create_map(t_mlx *mlx)
 	}
 	map[y] = NULL;
 	close(fd);
+
+	print_map(map);
+
 	return (map);
 }

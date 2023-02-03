@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/02 20:05:39 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 03:05:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,46 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/libft.h"
 
+// Colors
+# define YCOLOR 0xD84727
+# define XCOLOR 0xEF7B45
+# define SKYCOLOR 0x5EB1BF
+# define FLOORCOLOR 0xFFECD1
+
+
+# define FPS 60
+
+// Screen size
 # define WIN_W 1024
 # define WIN_H 768
-# define MOVESPEED 0.1
-# define ROTSPEED 0.15
 
-# define YCOLOR 0xFFE7CC
-# define XCOLOR 0xFFFBEB
-# define SKYCOLOR 0xECF9FF
-# define FLOORCOLOR 0xF8CBA6
+// Movement
+# define MOVESPEED 0.05
+# define ROTSPEED 0.1
 
-typedef struct s_display {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_display;
+//
+//		STRUCTS
+typedef struct s_raycast {
+	//what cardinal point the raycast hit is perpendicular to
+	int		side;
+
+	//what direction to step in x or y-direction (either +1 or -1)
+	int		stepX;
+	int		stepY;
+
+	double	raydirX;
+	double	raydirY;
+
+	//which box of the map we're in
+	int		mapX;
+	int		mapY;
+
+	//length of ray from current position to next x or y-side
+	double	sideDistX;
+	double	sideDistY;
+	double	DeltaDistX;
+	double	DeltaDistY;
+}				t_raycast;
 
 typedef struct s_player {
 	double	posX;
@@ -46,30 +69,13 @@ typedef struct s_player {
 	double	planeY;
 }				t_player;
 
-typedef struct s_raycast {
-	//what cardinal point the raycast hit is perpendicular to
-	int	side;
-
-	//what direction to step in x or y-direction (either +1 or -1)
-	int stepX;
-	int stepY;
-
-	//calculate ray position and direction
-	double cameraX;
-
-	double raydirX;
-	double raydirY;
-
-	//which box of the map we're in
-	int mapX;
-	int mapY;
-
-	//length of ray from current position to next x or y-side
-	double sideDistX;
-	double sideDistY;
-	double DeltaDistX;
-	double DeltaDistY;
-}				t_raycast;
+typedef struct s_display {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_display;
 
 typedef struct s_mlx {
 	void		*mlx;
@@ -82,6 +88,15 @@ typedef struct s_mlx {
 	t_player	player;
 }				t_mlx;
 
+//
+//		PARSING
+void	check_map_ext(t_mlx *v);
+char	**create_map(t_mlx *mlx);
+
+//
+//		MOVEMENT
+int		inputs(int key, t_mlx *mlx);
+
 enum e_keycode
 {
 	KEY_UP = 115,
@@ -91,10 +106,15 @@ enum e_keycode
 	ESC = 0xFF1B
 };
 
-void	exit_game(t_mlx *mlx);
-char	**create_map(t_mlx *mlx);
+//
+//		RENDER
 int		frames(t_mlx *mlx);
-void	check_map_ext(t_mlx *v);
+int		ft_display(t_mlx *mlx);
+
+//
+//		MLX
 void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
+void	exit_game(t_mlx *mlx);
+
 
 #endif
