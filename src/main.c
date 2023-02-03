@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 03:02:40 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:58:16 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,9 @@ int	frames(t_mlx *mlx)
 	(void)mlx;
 	//ft_printf("FRAME\n");
 	ft_display(mlx);
+
+	mlx_mouse_hide(mlx->mlx, mlx->win);
+	mlx_mouse_move(mlx->mlx, mlx->win, 0, 0);
 	return (0);
 }
 
@@ -179,7 +182,14 @@ int	exit_hook(t_mlx *mlx)
 	return (0);
 }
 
-
+int	mouse_hook(int key, t_mlx *mlx)
+{
+	(void)mlx;
+	//printf("key:%d\n", key);
+	if (key == 1)
+		printf("\e[2APAN                            \n                                \n");
+	return (0);
+}
 
 int	main(int ac, char **av)
 {
@@ -207,6 +217,7 @@ int	main(int ac, char **av)
 
 	ft_display(&mlx);
 	mlx_hook(mlx.win, 2, 1L<<0, inputs, &mlx);
+	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
 	//mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);

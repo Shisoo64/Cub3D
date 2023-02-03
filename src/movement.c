@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 03:05:16 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:48:51 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ void	rotate_player(int multi, t_player *player)
 
 int	inputs(int key, t_mlx *mlx)
 {
+	//printf("key:%d\n", key);
 	if (key == ESC)
 		exit_game(mlx);
-	else if (key == KEY_LEFT)
+	else if (key == KEY_TURN_L)
 		rotate_player(1, &mlx->player);
 	else if (key == KEY_UP)
 		move_player(-1, &mlx->player, mlx->map);
 	else if (key == KEY_DOWN)
 		move_player(1, &mlx->player, mlx->map);
-	else if (key == KEY_RIGHT)
+	else if (key == KEY_TURN_R)
 		rotate_player(-1, &mlx->player);
 	ft_display(mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 03:05:22 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:40:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ enum e_keycode
 {
 	KEY_UP = 115,
 	KEY_DOWN = 119,
-	KEY_LEFT = 97,
-	KEY_RIGHT = 100,
+	KEY_TURN_L = 97,
+	KEY_TURN_R = 100,
+	KEY_STRAFE_L = 100,
+	KEY_STRAFE_R = 97,
 	ESC = 0xFF1B
 };
 
