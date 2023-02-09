@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/09 13:59:10 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:30:32 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	rotate_player(int multi, t_player *player)
 		- player->planeY * sin(ROTSPEED * multi);
 	player->planeY = old_plane_x * sin(ROTSPEED * multi)
 		+ player->planeY * cos(ROTSPEED * multi);
-	printf("\e[2AplaneX:%lf             \n", player->planeX);
-	printf("planeY:%lf              \n", player->planeY);
 }
 
 int	inputs(int key, t_mlx *mlx)
@@ -73,6 +71,5 @@ int	inputs(int key, t_mlx *mlx)
 		strafe_player(-1, &mlx->player, mlx->map);
 	else if (key == KEY_D)
 		strafe_player(1, &mlx->player, mlx->map);
-	ft_display(mlx);
 	return (0);
 }

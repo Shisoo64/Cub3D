@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 23:38:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:18:41 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,46 @@ void	print_map(char **map)
 	ft_printf("\n\n\n");
 }
 
+void	get_map_vars(t_mlx *mlx, char **map)
+{
+	int		y;
+	int		x;
+
+	y = -1;
+	while (++y < mlx->map_y)
+	{
+		x = -1;
+		while (++x < mlx->map_x - 1)
+		{
+			if (map[y][x] == 'N')
+			{
+				mlx->player.dirX = -1;
+				mlx->player.posY = y + 0.5f;
+				mlx->player.posX = x + 0.5f;
+			}
+			else if (map[y][x] == 'S')
+			{
+				mlx->player.dirX = 1;
+				mlx->player.posY = y + 0.5f;
+				mlx->player.posX = x + 0.5f;
+			}
+			else if (map[y][x] == 'E')
+			{
+				mlx->player.dirX = -1;
+				mlx->player.posY = y + 0.5f;
+				mlx->player.posX = x + 0.5f;
+			}
+			else if (map[y][x] == 'W')
+			{
+				mlx->player.dirX = -1;
+				mlx->player.posY = y + 0.5f;
+				mlx->player.posX = x + 0.5f;
+			}
+		}
+	}
+	mlx->player.dirY = 0.0;
+}
+
 char	**create_map(t_mlx *mlx)
 {
 	char	**map;
@@ -66,19 +106,17 @@ char	**create_map(t_mlx *mlx)
 		buf = get_next_line(fd);
 		map[y] = malloc(sizeof(int) * (ft_strlen(buf) + 1));
 		if (!buf)
-			break;
+			break ;
 		x = -1;
 		while (++x < mlx->map_x - 1)
 			map[y][x] = buf[x];
-
-
 		map[y][x] = '\0';
-				
 		free(buf);
 	}
 	map[y] = NULL;
 	close(fd);
 
+	get_map_vars(mlx, map);
 	print_map(map);
 
 	return (map);

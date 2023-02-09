@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 15:25:55 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:35:28 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	ft_render_vline(t_raycast *ray, t_display *mlx_display, int x)
 	lineHeight = (int)(WIN_H / perpWallDist);
 
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight / 2 + WIN_H / 2;
+	drawStart = -lineHeight * 2 + WIN_H / 2;
 	if (drawStart < 0)
 		drawStart = 0;
-	drawEnd = lineHeight / 2 + WIN_H / 2;
+	drawEnd = lineHeight * 0.25 + WIN_H / 2;
 	if (drawEnd >= WIN_H)
 		drawEnd = WIN_H;
 
@@ -153,7 +153,7 @@ void	ft_raycast(t_mlx *mlx, int x)
 // Render the backdrop in the img,
 // raycast each vertical lines and render them in the img,
 // then display the img
-int	ft_display(t_mlx *mlx)
+void	ft_display(t_mlx *mlx)
 {
 	int	x;
 
@@ -162,7 +162,6 @@ int	ft_display(t_mlx *mlx)
 	while (++x < WIN_W)
 		ft_raycast(mlx, x);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-	return (0);
 }
 
 int	frames(t_mlx *mlx)
@@ -171,8 +170,13 @@ int	frames(t_mlx *mlx)
 	//ft_printf("FRAME\n");
 	ft_display(mlx);
 
-	mlx_mouse_hide(mlx->mlx, mlx->win);
-	mlx_mouse_move(mlx->mlx, mlx->win, 0, 0);
+	int mouse_x = 0;
+	int mouse_y = 0;
+
+	mlx_mouse_get_pos(mlx->mlx, mlx->win, &mouse_x, &mouse_y);
+	printf("mX:%d  mY:%d\n", WIN_W / 2 - mouse_x, WIN_H / 2 - mouse_y);
+	rotate_player(WIN_W / 2 - mouse_x, &mlx->player);
+	mlx_mouse_move(mlx->mlx, mlx->win, WIN_W / 2, WIN_H / 2);
 	return (0);
 }
 
@@ -191,23 +195,27 @@ int	mouse_hook(int key, t_mlx *mlx)
 	return (0);
 }
 
+void	ft_parsing()
+{
+	return ;
+}
+
 int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	//x and y start position
-	mlx.player.posX = 5;
-	mlx.player.posY = 5;
-
-	mlx.player.dirX = -1;
-	mlx.player.dirY = 0; //initial direction vector
 	mlx.player.planeX = 0;
-	mlx.player.planeY = 0.66; //the 2d raycaster version of camera plane
+	mlx.player.planeY = FOV;
 
 	if (ac != 2)
 		return (1);
 	mlx.mapname = av[1];
 	check_map_ext(&mlx);
+
+
+	int ix, iy;
+	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall1.xpm", &ix, &iy);
+
 	mlx.map = create_map(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3D");
@@ -215,10 +223,11 @@ int	main(int ac, char **av)
 	mlx.display.addr = mlx_get_data_addr(mlx.display.img, &mlx.display.bits_per_pixel,
 			&mlx.display.line_length, &mlx.display.endian);
 
+	mlx_mouse_hide(mlx.mlx, mlx.win);
 	ft_display(&mlx);
-	mlx_hook(mlx.win, 2, 1L<<0, inputs, &mlx);
+	mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
 	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
-	//mlx_loop_hook(mlx.mlx, frames, &mlx);
+	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);
 }

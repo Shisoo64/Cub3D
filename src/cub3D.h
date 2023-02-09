@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/03 23:35:30 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:03:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@
 
 // Colors
 # define YCOLOR 0xD84727
-# define XCOLOR 0xEF7B45
+# define XCOLOR 0xffffff //0xEF7B45
 # define SKYCOLOR 0x5EB1BF
 # define FLOORCOLOR 0xFFECD1
 
 
+# define FOV 0.8
 # define FPS 60
+
+#define texWidth 64
+#define texHeight 64
 
 // Screen size
 # define WIN_W 1024
@@ -34,7 +38,7 @@
 
 // Movement
 # define MOVESPEED 0.05
-# define ROTSPEED 0.1
+# define ROTSPEED 0.001
 
 //
 //		STRUCTS
@@ -86,12 +90,17 @@ typedef struct s_mlx {
 	int			map_x;
 	t_display	display;
 	t_player	player;
+
+
+	void		*texture;
+
 }				t_mlx;
 
 //
 //		PARSING
 void	check_map_ext(t_mlx *v);
 char	**create_map(t_mlx *mlx);
+void	rotate_player(int multi, t_player *player);
 
 //
 //		MOVEMENT
@@ -113,7 +122,7 @@ enum e_keycode
 //
 //		RENDER
 int		frames(t_mlx *mlx);
-int		ft_display(t_mlx *mlx);
+void	ft_display(t_mlx *mlx);
 
 //
 //		MLX
