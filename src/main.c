@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/09 20:35:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:28:38 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,46 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			ray->mapY = mlx->map_y - 1;
 
 		//Check if ray has hit a wall
-		if (mlx->map[ray->mapY][ray->mapX] && mlx->map[ray->mapY][ray->mapX] == '1')
+		if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == '1')
 			break ;
 	}
 }
 
+
+unsigned int    my_mlx_get_color(t_display *texture, int x, int y)
+{
+	char	*dst;
+
+	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+	return ((unsigned int) *dst);
+}
+
+void    draw_line_texture(t_display *texture,
+    t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+{
+	double	step;
+	double	tex_pos;
+	int		color;
+	int		tex_y;
+	int		y;
+
+	step = 1.0 * texHeight / lineHeight;
+	tex_pos = (draw_start - WIN_W / 2 + lineHeight / 2) * step;
+	y = draw_start;
+	tex_x = texWidth - tex_x;
+	while (y < draw_end + 1)
+	{
+		tex_y = (int)tex_pos;
+		tex_pos += step;
+		color = my_mlx_get_color(texture, tex_x - 1, tex_y);
+		my_mlx_pixel_put(display, x, y, color);
+		y++;
+	}
+}
+
 // Draw a vertical line of pixels in the img
-void	ft_render_vline(t_raycast *ray, t_display *mlx_display, int x)
+void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 {
 	int 	drawStart;
 	int 	drawEnd;
@@ -93,14 +126,46 @@ void	ft_render_vline(t_raycast *ray, t_display *mlx_display, int x)
 	if (drawEnd >= WIN_H)
 		drawEnd = WIN_H;
 
+
+
 	// Color change on YWall
 	if (ray->side == 1)
 		color = YCOLOR;
 
+
+	//Get line on texture
+
+	int		tex_x;
+
+	double	wall_x;
+
+	if (ray->side == 0)
+		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
+	else
+		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
+	wall_x -= floor(wall_x);
+	tex_x = (int)(wall_x * (double)texWidth);
+	if (ray->side == 0 && ray->raydirX > 0)
+		tex_x = texWidth - tex_x - 1;
+	if (ray->side == 1 && ray->raydirY < 0)
+		tex_x = texWidth - tex_x - 1;
+
+	draw_line_texture(mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+
 	//draw line
+	/*
 	while (drawStart < drawEnd)
-		my_mlx_pixel_put(mlx_display, x, drawStart++, color);
+		my_mlx_pixel_put(&mlx->display, x, drawStart++, color);
+	*/
 }
+
+
+
+
+
+
+
+
 
 void	ft_raycast(t_mlx *mlx, int x)
 {
@@ -147,7 +212,7 @@ void	ft_raycast(t_mlx *mlx, int x)
 		ray.sideDistY = (ray.mapY + 1.0 - mlx->player.posY) * ray.DeltaDistY;
 	}
 	ft_dda(mlx, &ray);
-	ft_render_vline(&ray, &mlx->display, x);
+	ft_render_vline(&ray, mlx, x);
 }
 
 // Render the backdrop in the img,
@@ -214,7 +279,8 @@ int	main(int ac, char **av)
 
 
 	int ix, iy;
-	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall1.xpm", &ix, &iy);
+	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &ix, &iy);
+
 
 	mlx.map = create_map(&mlx);
 	mlx.mlx = mlx_init();

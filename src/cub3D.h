@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/09 20:03:55 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:30:28 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_mlx {
 	t_player	player;
 
 
-	void		*texture;
+	t_display	*texture;
 
 }				t_mlx;
 
