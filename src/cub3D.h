@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/10 15:30:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/12 01:46:08 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 // Colors
 # define YCOLOR 0xD84727
-# define XCOLOR 0xffffff //0xEF7B45
+# define XCOLOR 0xEF7B45
 # define SKYCOLOR 0x5EB1BF
-# define FLOORCOLOR 0xFFECD1
+# define FLOORCOLOR 0x000000//0xFFECD1
 
 
 # define FOV 0.8
@@ -37,8 +37,14 @@
 # define WIN_H 768
 
 // Movement
-# define MOVESPEED 0.05
-# define ROTSPEED 0.001
+# define MOVESPEED 0.00001//0.05
+# define ROTSPEED 0.000005
+
+
+
+// NEW
+# define CRASH_SPEED 750
+
 
 //
 //		STRUCTS
@@ -71,6 +77,16 @@ typedef struct s_player {
 	double	dirY;
 	double	planeX;
 	double	planeY;
+
+
+
+	int	rot_l;
+	int rot_r;
+	int left;
+	int right;
+	int up;
+	int down;
+
 }				t_player;
 
 typedef struct s_display {
@@ -93,6 +109,8 @@ typedef struct s_mlx {
 
 
 	t_display	*texture;
+	t_display	*bike;
+	t_display	*bike_wheel;
 
 }				t_mlx;
 
@@ -105,6 +123,10 @@ void	rotate_player(int multi, t_player *player);
 //
 //		MOVEMENT
 int		inputs(int key, t_mlx *mlx);
+
+int	key_press(int key, t_mlx *mlx);
+int	key_release(int key, t_mlx *mlx);
+int	input_manager(t_mlx *mlx);
 
 enum e_keycode
 {

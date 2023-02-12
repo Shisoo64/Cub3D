@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/10 18:28:38 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/12 00:42:50 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 
 unsigned int    my_mlx_get_color(t_display *texture, int x, int y)
 {
-	char	*dst;
+	char	*color;
 
-	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
-	return ((unsigned int) *dst);
+	color = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+	return ((unsigned int)color);
 }
 
-void    draw_line_texture(t_display *texture,
-    t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int *tex_x)
 {
 	double	step;
 	double	tex_pos;
@@ -88,14 +87,14 @@ void    draw_line_texture(t_display *texture,
 	int		y;
 
 	step = 1.0 * texHeight / lineHeight;
-	tex_pos = (draw_start - WIN_W / 2 + lineHeight / 2) * step;
+	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
 	y = draw_start;
-	tex_x = texWidth - tex_x;
+	*tex_x = texWidth - *tex_x;
 	while (y < draw_end + 1)
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x - 1, tex_y);
+		color = my_mlx_get_color(texture, *tex_x - 1, tex_y);
 		my_mlx_pixel_put(display, x, y, color);
 		y++;
 	}
@@ -127,10 +126,11 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 		drawEnd = WIN_H;
 
 
-
 	// Color change on YWall
 	if (ray->side == 1)
 		color = YCOLOR;
+
+
 
 
 	//Get line on texture
@@ -150,13 +150,7 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	if (ray->side == 1 && ray->raydirY < 0)
 		tex_x = texWidth - tex_x - 1;
 
-	draw_line_texture(mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-
-	//draw line
-	/*
-	while (drawStart < drawEnd)
-		my_mlx_pixel_put(&mlx->display, x, drawStart++, color);
-	*/
+	draw_line_texture(mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, &tex_x);
 }
 
 
@@ -235,11 +229,16 @@ int	frames(t_mlx *mlx)
 	//ft_printf("FRAME\n");
 	ft_display(mlx);
 
+	// NEW
+	input_manager(mlx);
+
 	int mouse_x = 0;
 	int mouse_y = 0;
 
 	mlx_mouse_get_pos(mlx->mlx, mlx->win, &mouse_x, &mouse_y);
-	printf("mX:%d  mY:%d\n", WIN_W / 2 - mouse_x, WIN_H / 2 - mouse_y);
+
+	//printf("mX:%d  mY:%d\n", WIN_W / 2 - mouse_x, WIN_H / 2 - mouse_y);
+
 	rotate_player(WIN_W / 2 - mouse_x, &mlx->player);
 	mlx_mouse_move(mlx->mlx, mlx->win, WIN_W / 2, WIN_H / 2);
 	return (0);
@@ -265,6 +264,13 @@ void	ft_parsing()
 	return ;
 }
 
+
+
+
+
+
+
+
 int	main(int ac, char **av)
 {
 	t_mlx	mlx;
@@ -276,12 +282,6 @@ int	main(int ac, char **av)
 		return (1);
 	mlx.mapname = av[1];
 	check_map_ext(&mlx);
-
-
-	int ix, iy;
-	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &ix, &iy);
-
-
 	mlx.map = create_map(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3D");
@@ -289,9 +289,20 @@ int	main(int ac, char **av)
 	mlx.display.addr = mlx_get_data_addr(mlx.display.img, &mlx.display.bits_per_pixel,
 			&mlx.display.line_length, &mlx.display.endian);
 
+	int ix, iy;
+	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &ix, &iy);
+	mlx.bike = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &ix, &iy);
+	mlx.bike_wheel = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &ix, &iy);
+
+
 	mlx_mouse_hide(mlx.mlx, mlx.win);
-	ft_display(&mlx);
-	mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
+
+	//mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
+
+	// NEW
+	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
+	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
+
 	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);

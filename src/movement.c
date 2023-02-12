@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/09 20:30:32 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/12 01:48:36 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,159 @@ int	inputs(int key, t_mlx *mlx)
 	if (key == ESC)
 		exit_game(mlx);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
-		rotate_player(1, &mlx->player);
+		rotate_player(30, &mlx->player);
 	else if (key == KEY_W)
 		move_player(-1, &mlx->player, mlx->map);
 	else if (key == KEY_S)
 		move_player(1, &mlx->player, mlx->map);
 	else if (key == KEY_ARROW_R || key == KEY_E)
-		rotate_player(-1, &mlx->player);
+		rotate_player(-30, &mlx->player);
 	else if (key == KEY_A)
 		strafe_player(-1, &mlx->player, mlx->map);
 	else if (key == KEY_D)
 		strafe_player(1, &mlx->player, mlx->map);
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// NEW
+
+void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
+{
+	if (mlx->map[(int)player->posY]
+		[(int)(player->posX + (player->dirX * MOVESPEED * speed))] != '1')
+		player->posX += (player->dirX * MOVESPEED) * speed;
+	if (mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
+		[(int)player->posX] != '1')
+		player->posY += (player->dirY * MOVESPEED) * speed;
+
+	if (mlx->map[(int)player->posY]
+		[(int)(player->posX + (player->dirX * MOVESPEED * speed))] == '1' && speed >= CRASH_SPEED)
+		exit_game(mlx);
+	if (mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
+		[(int)player->posX] == '1' && speed >= CRASH_SPEED)
+		exit_game(mlx);
+			
+	printf("posX:%lf\n", player->posX);
+	printf("posY:%lf\n", player->posY);
+}
+
+int	input_manager(t_mlx *mlx)
+{
+	static double speed;
+	static double coef;
+
+
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike, WIN_W / 2 - 150, WIN_H - 90);
+	if (speed > 6000)
+		speed = 6000;
+	else if (speed >= 4000)
+	{
+		coef = 0.1;
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel, WIN_W / 2 - 150, WIN_H - 125);
+	}
+	else if (speed >= 3250)
+	{
+		coef = 0.25;
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel, WIN_W / 2 - 150, WIN_H - 125);
+	}
+	else if (speed >= 500)
+		coef = 0.5;
+	else
+		coef = 1;
+
+	if (speed < -400)
+		speed = -400;
+
+	// Frein
+	if (mlx->player.up == 1)
+		speed-= 25;
+
+	// Reculer avec les pieds
+	if (mlx->player.down == 1)
+		speed+= 10 * coef;
+	
+	// Accelerer
+	if (mlx->player.down == 1 && speed > 0)
+		speed+= 5 * coef;
+
+	// Frein moteur
+	if (!mlx->player.up && !mlx->player.down && speed > 0)
+		speed-= 10 * (1.4 - coef);
+	// Frein moteur en marche arriere
+	if (!mlx->player.up && speed < 0)
+		speed+= 20 * (1.3 - coef);
+
+	//if (mlx->player.left == 1)
+	//	strafe_player(-10, &mlx->player, mlx->map);
+	//if (mlx->player.right == 1)
+	//	strafe_player(10, &mlx->player, mlx->map);
+	if (mlx->player.rot_l == 1)
+		rotate_player((5000 - speed) * coef, &mlx->player);
+	if (mlx->player.rot_r == 1)
+		rotate_player((-5000 + speed) * coef, &mlx->player);
+
+
+	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2KSpeed:%fkmh	(%f)\n", speed / 25, speed);
+	move_player_bike(mlx, speed, &mlx->player);
+
+	return (0);
+}
+
+int	key_press(int key, t_mlx *mlx)
+{
+	//printf("key:%d\n", key);
+
+	if (key == ESC)
+		exit_game(mlx);
+	else if (key == KEY_ARROW_L || key == KEY_Q)
+		mlx->player.rot_l = 1;
+	else if (key == KEY_W)
+		mlx->player.up = 1;
+	else if (key == KEY_S)
+		mlx->player.down = 1;
+	else if (key == KEY_ARROW_R || key == KEY_E)
+		mlx->player.rot_r = 1;
+	else if (key == KEY_A)
+		mlx->player.left = 1;
+	else if (key == KEY_D)
+		mlx->player.right = 1;
+
+
+	return (0);
+}
+
+int	key_release(int key, t_mlx *mlx)
+{
+	//printf("key:%d\n", key);
+
+	if (key == ESC)
+		exit_game(mlx);
+	else if (key == KEY_ARROW_L || key == KEY_Q)
+		mlx->player.rot_l = 0;
+	else if (key == KEY_W)
+		mlx->player.up = 0;
+	else if (key == KEY_S)
+		mlx->player.down = 0;
+	else if (key == KEY_ARROW_R || key == KEY_E)
+		mlx->player.rot_r = 0;
+	else if (key == KEY_A)
+		mlx->player.left = 0;
+	else if (key == KEY_D)
+		mlx->player.right = 0;
 	return (0);
 }
