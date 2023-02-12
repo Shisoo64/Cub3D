@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/12 01:48:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/12 02:42:24 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	input_manager(t_mlx *mlx)
 		coef = 0.25;
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel, WIN_W / 2 - 150, WIN_H - 125);
 	}
-	else if (speed >= 500)
+	else if (speed >= 250)
 		coef = 0.5;
 	else
 		coef = 1;
@@ -138,9 +138,11 @@ int	input_manager(t_mlx *mlx)
 	if (speed < -400)
 		speed = -400;
 
+	mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, ft_itoa(speed / 25));
+
 	// Frein
 	if (mlx->player.up == 1)
-		speed-= 25;
+		speed-= 20;
 
 	// Reculer avec les pieds
 	if (mlx->player.down == 1)

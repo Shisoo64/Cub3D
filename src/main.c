@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/12 00:42:50 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/12 02:31:00 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 		tex_x = texWidth - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
 		tex_x = texWidth - tex_x - 1;
-
 	draw_line_texture(mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, &tex_x);
 }
 
@@ -218,9 +217,14 @@ void	ft_display(t_mlx *mlx)
 
 	draw_backdrop(mlx);
 	x = -1;
+		int ix, iy;
+	mlx->texture = mlx_xpm_file_to_image(mlx->mlx, "./sprites/wall.xpm", &ix, &iy);
+	
 	while (++x < WIN_W)
 		ft_raycast(mlx, x);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+	
+	mlx_destroy_image(mlx->mlx, mlx->texture);
 }
 
 int	frames(t_mlx *mlx)
