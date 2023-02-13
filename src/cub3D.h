@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/12 01:46:08 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:48:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@
 
 # define FOV 0.8
 # define FPS 60
-
-#define texWidth 64
-#define texHeight 64
 
 // Screen size
 # define WIN_W 1024
@@ -63,6 +60,9 @@ typedef struct s_raycast {
 	int		mapX;
 	int		mapY;
 
+
+	int		tex_x;
+
 	//length of ray from current position to next x or y-side
 	double	sideDistX;
 	double	sideDistY;
@@ -77,8 +77,6 @@ typedef struct s_player {
 	double	dirY;
 	double	planeX;
 	double	planeY;
-
-
 
 	int	rot_l;
 	int rot_r;
@@ -95,6 +93,8 @@ typedef struct s_display {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		tex_width;
+	int		tex_height;
 }				t_display;
 
 typedef struct s_mlx {
@@ -108,9 +108,9 @@ typedef struct s_mlx {
 	t_player	player;
 
 
-	t_display	*texture;
-	t_display	*bike;
-	t_display	*bike_wheel;
+	t_display	texture;
+	t_display	bike;
+	t_display	bike_wheel;
 
 }				t_mlx;
 

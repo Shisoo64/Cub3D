@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/12 02:42:24 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:03:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 	if (mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
 		[(int)player->posX] == '1' && speed >= CRASH_SPEED)
 		exit_game(mlx);
-			
+
 	printf("posX:%lf\n", player->posX);
 	printf("posY:%lf\n", player->posY);
 }
@@ -117,18 +117,18 @@ int	input_manager(t_mlx *mlx)
 	static double coef;
 
 
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike, WIN_W / 2 - 150, WIN_H - 90);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike.img, WIN_W / 2 - 150, WIN_H - 90);
 	if (speed > 6000)
 		speed = 6000;
 	else if (speed >= 4000)
 	{
 		coef = 0.1;
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel, WIN_W / 2 - 150, WIN_H - 125);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel.img, WIN_W / 2 - 150, WIN_H - 125);
 	}
 	else if (speed >= 3250)
 	{
 		coef = 0.25;
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel, WIN_W / 2 - 150, WIN_H - 125);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel.img, WIN_W / 2 - 150, WIN_H - 125);
 	}
 	else if (speed >= 250)
 		coef = 0.5;

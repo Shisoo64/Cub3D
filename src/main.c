@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/12 02:31:00 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:02:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			ray->side = 1;
 		}
 
-		if (ray->mapX > mlx->map_x - 1)
-			ray->mapX = mlx->map_x - 1;
+		//if (ray->mapX > mlx->map_x - 1)
+		//	ray->mapX = mlx->map_x - 1;
 
-		if (ray->mapY > mlx->map_y - 1)
-			ray->mapY = mlx->map_y - 1;
+		//if (ray->mapY > mlx->map_y - 1)
+		//	ray->mapY = mlx->map_y - 1;
 
 		//Check if ray has hit a wall
 		if (mlx->map[ray->mapY][ray->mapX]
@@ -70,15 +70,16 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 }
 
 
-unsigned int    my_mlx_get_color(t_display *texture, int x, int y)
+int    my_mlx_get_color(t_display *texture, int x, int y)
 {
 	char	*color;
 
-	color = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
-	return ((unsigned int)color);
+	color = texture->addr + (y * texture->line_length + x
+			* (texture->bits_per_pixel / 8));
+	return (*(int *)color);
 }
 
-void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int *tex_x)
+void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
 	double	tex_pos;
@@ -86,15 +87,15 @@ void    draw_line_texture(t_display *texture, t_display *display, int x, int lin
 	int		tex_y;
 	int		y;
 
-	step = 1.0 * texHeight / lineHeight;
+	step = 1.0 * texture->tex_height / lineHeight;
 	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
 	y = draw_start;
-	*tex_x = texWidth - *tex_x;
-	while (y < draw_end + 1)
+	tex_x = texture->tex_width - tex_x;
+	while (y < draw_end)
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
-		color = my_mlx_get_color(texture, *tex_x - 1, tex_y);
+		color = my_mlx_get_color(texture, tex_x, tex_y);
 		my_mlx_pixel_put(display, x, y, color);
 		y++;
 	}
@@ -107,9 +108,7 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	int 	drawEnd;
 	double	perpWallDist;
 	int		lineHeight;
-	int		color;
 
-	color = XCOLOR;
 	if (ray->side == 0)
 		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
 	else
@@ -123,39 +122,29 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 		drawStart = 0;
 	drawEnd = lineHeight * 0.25 + WIN_H / 2;
 	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H;
-
-
-	// Color change on YWall
-	if (ray->side == 1)
-		color = YCOLOR;
+		drawEnd = WIN_H - 1;
 
 
 
 
 	//Get line on texture
 
-	int		tex_x;
-
 	double	wall_x;
+	int		tex_x;
 
 	if (ray->side == 0)
 		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
 	else
 		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)texWidth);
+	tex_x = (int)(wall_x * (double)mlx->texture.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = texWidth - tex_x - 1;
+		tex_x = mlx->texture.tex_width - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = texWidth - tex_x - 1;
-	draw_line_texture(mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, &tex_x);
+		tex_x = mlx->texture.tex_width - tex_x - 1;
+
+	draw_line_texture(&mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 }
-
-
-
-
-
 
 
 
@@ -165,7 +154,7 @@ void	ft_raycast(t_mlx *mlx, int x)
 	t_raycast	ray;
 	double	cameraX;
 
-	cameraX = 2 * x / (double)WIN_W - 1; //x-coordinate in camera space
+	cameraX = 2 * x / (double)WIN_W - 1;
 
 	ray.raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
 	ray.raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
@@ -216,15 +205,10 @@ void	ft_display(t_mlx *mlx)
 	int	x;
 
 	draw_backdrop(mlx);
-	x = -1;
-		int ix, iy;
-	mlx->texture = mlx_xpm_file_to_image(mlx->mlx, "./sprites/wall.xpm", &ix, &iy);
-	
-	while (++x < WIN_W)
-		ft_raycast(mlx, x);
+	x = 0;
+	while (x < WIN_W)
+		ft_raycast(mlx, x++);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-	
-	mlx_destroy_image(mlx->mlx, mlx->texture);
 }
 
 int	frames(t_mlx *mlx)
@@ -243,7 +227,7 @@ int	frames(t_mlx *mlx)
 
 	//printf("mX:%d  mY:%d\n", WIN_W / 2 - mouse_x, WIN_H / 2 - mouse_y);
 
-	rotate_player(WIN_W / 2 - mouse_x, &mlx->player);
+	rotate_player((WIN_W / 2 - mouse_x) * 10, &mlx->player);
 	mlx_mouse_move(mlx->mlx, mlx->win, WIN_W / 2, WIN_H / 2);
 	return (0);
 }
@@ -293,10 +277,14 @@ int	main(int ac, char **av)
 	mlx.display.addr = mlx_get_data_addr(mlx.display.img, &mlx.display.bits_per_pixel,
 			&mlx.display.line_length, &mlx.display.endian);
 
+
+	mlx.texture.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &mlx.texture.tex_width, &mlx.texture.tex_height);
+	
+	mlx.texture.addr = mlx_get_data_addr(mlx.texture.img, &mlx.texture.bits_per_pixel, &mlx.texture.line_length, &mlx.texture.endian);
+
 	int ix, iy;
-	mlx.texture = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &ix, &iy);
-	mlx.bike = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &ix, &iy);
-	mlx.bike_wheel = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &ix, &iy);
+	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &ix, &iy);
+	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &ix, &iy);
 
 
 	mlx_mouse_hide(mlx.mlx, mlx.win);
@@ -304,6 +292,12 @@ int	main(int ac, char **av)
 	//mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
 
 	// NEW
+	mlx.player.rot_l = 0;
+	mlx.player.up = 0;
+	mlx.player.down = 0;
+	mlx.player.rot_r = 0;
+	mlx.player.left = 0;
+	mlx.player.right = 0;
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
 
