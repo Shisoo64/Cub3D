@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:40:56 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:55:59 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,15 +222,7 @@ int	frames(t_mlx *mlx)
 	// NEW
 	input_manager(mlx);
 
-	int mouse_x = 0;
-	int mouse_y = 0;
 
-	mlx_mouse_get_pos(mlx->mlx, mlx->win, &mouse_x, &mouse_y);
-
-	//printf("mX:%d  mY:%d\n", WIN_W / 2 - mouse_x, WIN_H / 2 - mouse_y);
-
-	rotate_player((WIN_W / 2 - mouse_x) * 10, &mlx->player);
-	mlx_mouse_move(mlx->mlx, mlx->win, WIN_W / 2, WIN_H / 2);
 	return (0);
 }
 

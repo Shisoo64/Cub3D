@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:51:57 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:59:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,15 @@ int	input_manager(t_mlx *mlx)
 		rotate_player((-5000 + speed) * coef, &mlx->player);
 
 
+
+	int mouse_x = 0;
+	int mouse_y = 0;
+
+	mlx_mouse_get_pos(mlx->mlx, mlx->win, &mouse_x, &mouse_y);
+	rotate_player((WIN_W / 2 - mouse_x) * 10, &mlx->player);
+	mlx_mouse_move(mlx->mlx, mlx->win, WIN_W / 2, WIN_H / 2);
+
+
 	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2KSpeed:%fkmh	(%f)\n", speed / 25, speed);
 	move_player_bike(mlx, speed, &mlx->player);
 
@@ -198,8 +207,6 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->player.left = 1;
 	else if (key == KEY_D)
 		mlx->player.right = 1;
-
-
 	return (0);
 }
 
