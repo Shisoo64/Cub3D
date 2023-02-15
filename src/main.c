@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/13 20:02:07 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:40:56 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int    my_mlx_get_color(t_display *texture, int x, int y)
 {
 	char	*color;
 
+	if (y < 0)
+		y = -y;
 	color = texture->addr + (y * texture->line_length + x
 			* (texture->bits_per_pixel / 8));
 	return (*(int *)color);
@@ -87,8 +89,8 @@ void    draw_line_texture(t_display *texture, t_display *display, int x, int lin
 	int		tex_y;
 	int		y;
 
-	step = 1.0 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
+	step = 0.75 * texture->tex_height / lineHeight;
+	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 1.25) * step;
 	y = draw_start;
 	tex_x = texture->tex_width - tex_x;
 	while (y < draw_end)
@@ -117,10 +119,10 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	lineHeight = (int)(WIN_H / perpWallDist);
 
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight * 2 + WIN_H / 2;
+	drawStart = -lineHeight * 2.1 + WIN_H / 2;
 	if (drawStart < 0)
 		drawStart = 0;
-	drawEnd = lineHeight * 0.25 + WIN_H / 2;
+	drawEnd = lineHeight * 0.1 + WIN_H / 2;
 	if (drawEnd >= WIN_H)
 		drawEnd = WIN_H - 1;
 
@@ -278,13 +280,7 @@ int	main(int ac, char **av)
 			&mlx.display.line_length, &mlx.display.endian);
 
 
-	mlx.texture.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &mlx.texture.tex_width, &mlx.texture.tex_height);
 	
-	mlx.texture.addr = mlx_get_data_addr(mlx.texture.img, &mlx.texture.bits_per_pixel, &mlx.texture.line_length, &mlx.texture.endian);
-
-	int ix, iy;
-	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &ix, &iy);
-	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &ix, &iy);
 
 
 	mlx_mouse_hide(mlx.mlx, mlx.win);
@@ -292,6 +288,15 @@ int	main(int ac, char **av)
 	//mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
 
 	// NEW
+	mlx.texture.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &mlx.texture.tex_width, &mlx.texture.tex_height);
+	mlx.texture.addr = mlx_get_data_addr(mlx.texture.img, &mlx.texture.bits_per_pixel, &mlx.texture.line_length, &mlx.texture.endian);
+
+	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &mlx.bike.tex_width, &mlx.bike.tex_height);
+	mlx.bike.addr = mlx_get_data_addr(mlx.bike.img, &mlx.bike.bits_per_pixel, &mlx.bike.line_length, &mlx.bike.endian);
+
+	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &mlx.bike_wheel.tex_width, &mlx.bike_wheel.tex_height);
+	mlx.bike_wheel.addr = mlx_get_data_addr(mlx.bike_wheel.img, &mlx.bike_wheel.bits_per_pixel, &mlx.bike_wheel.line_length, &mlx.bike_wheel.endian);
+
 	mlx.player.rot_l = 0;
 	mlx.player.up = 0;
 	mlx.player.down = 0;

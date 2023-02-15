@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/13 16:48:22 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:46:03 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define YCOLOR 0xD84727
 # define XCOLOR 0xEF7B45
 # define SKYCOLOR 0x5EB1BF
-# define FLOORCOLOR 0x000000//0xFFECD1
+# define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
 
 
 # define FOV 0.8
@@ -149,6 +149,8 @@ void	ft_display(t_mlx *mlx);
 //
 //		MLX
 void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
+int		my_mlx_get_color(t_display *texture, int x, int y);
+void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void	exit_game(t_mlx *mlx);
 
 

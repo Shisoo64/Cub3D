@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/13 16:03:48 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:51:57 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,30 @@ void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 	printf("posY:%lf\n", player->posY);
 }
 
+
 int	input_manager(t_mlx *mlx)
 {
 	static double speed;
 	static double coef;
 
 
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike.img, WIN_W / 2 - 150, WIN_H - 90);
+	//mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike.img, WIN_W / 2 - 150, WIN_H - 90);
 	if (speed > 6000)
 		speed = 6000;
 	else if (speed >= 4000)
 	{
 		coef = 0.1;
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel.img, WIN_W / 2 - 150, WIN_H - 125);
+		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
 	}
 	else if (speed >= 3250)
 	{
 		coef = 0.25;
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->bike_wheel.img, WIN_W / 2 - 150, WIN_H - 125);
+		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
 	}
-	else if (speed >= 250)
+	else
+		put_img_transp(mlx, mlx->bike, WIN_W / 2 - 204, WIN_H - 137);
+
+	if (speed >= 250)
 		coef = 0.5;
 	else
 		coef = 1;
@@ -144,13 +148,14 @@ int	input_manager(t_mlx *mlx)
 	if (mlx->player.up == 1)
 		speed-= 20;
 
+
 	// Reculer avec les pieds
 	if (mlx->player.down == 1)
 		speed+= 10 * coef;
 	
 	// Accelerer
 	if (mlx->player.down == 1 && speed > 0)
-		speed+= 5 * coef;
+		speed+= 2.5 * coef;
 
 	// Frein moteur
 	if (!mlx->player.up && !mlx->player.down && speed > 0)
