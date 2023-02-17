@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:55:59 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:03:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,9 +272,6 @@ int	main(int ac, char **av)
 			&mlx.display.line_length, &mlx.display.endian);
 
 
-	
-
-
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 
 	//mlx_hook(mlx.win, 2, 1L << 0, inputs, &mlx);
@@ -283,10 +280,10 @@ int	main(int ac, char **av)
 	mlx.texture.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &mlx.texture.tex_width, &mlx.texture.tex_height);
 	mlx.texture.addr = mlx_get_data_addr(mlx.texture.img, &mlx.texture.bits_per_pixel, &mlx.texture.line_length, &mlx.texture.endian);
 
-	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike.xpm", &mlx.bike.tex_width, &mlx.bike.tex_height);
+	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/honda.xpm", &mlx.bike.tex_width, &mlx.bike.tex_height);
 	mlx.bike.addr = mlx_get_data_addr(mlx.bike.img, &mlx.bike.bits_per_pixel, &mlx.bike.line_length, &mlx.bike.endian);
 
-	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/bike_wheel.xpm", &mlx.bike_wheel.tex_width, &mlx.bike_wheel.tex_height);
+	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/honda_wheel.xpm", &mlx.bike_wheel.tex_width, &mlx.bike_wheel.tex_height);
 	mlx.bike_wheel.addr = mlx_get_data_addr(mlx.bike_wheel.img, &mlx.bike_wheel.bits_per_pixel, &mlx.bike_wheel.line_length, &mlx.bike_wheel.endian);
 
 	mlx.player.rot_l = 0;

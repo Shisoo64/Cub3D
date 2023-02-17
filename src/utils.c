@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:45:51 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:37:33 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y)
 		while (++x <= img.tex_width)
 		{
 			color = my_mlx_get_color(&img, x, y);
-			if (color != 0xFF00FF)
+			if (color != 0x00FF00)
 				my_mlx_pixel_put(&mlx->display, x + pad_x, y + pad_y, color);
 		}
 	}

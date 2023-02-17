@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:59:25 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:34:02 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,18 @@ int	input_manager(t_mlx *mlx)
 	else if (speed >= 4000)
 	{
 		coef = 0.1;
-		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
+		//put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
+		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 250, WIN_H - 262);
 	}
 	else if (speed >= 3250)
 	{
 		coef = 0.25;
-		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
+		//put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 204, WIN_H - 204);
+		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 250, WIN_H - 262);
 	}
 	else
-		put_img_transp(mlx, mlx->bike, WIN_W / 2 - 204, WIN_H - 137);
+		put_img_transp(mlx, mlx->bike, WIN_W / 2 - 250, WIN_H - 262);
+		//put_img_transp(mlx, mlx->bike, WIN_W / 2 - 204, WIN_H - 137);
 
 	if (speed >= 250)
 		coef = 0.5;
