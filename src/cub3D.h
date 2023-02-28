@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/15 14:46:03 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:14:45 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_player {
 	double	planeX;
 	double	planeY;
 
+
+	int	biking;
 	int	rot_l;
 	int rot_r;
 	int left;
@@ -136,6 +138,7 @@ enum e_keycode
 	KEY_D = 100,
 	KEY_Q = 113,
 	KEY_E = 101,
+	KEY_F = 102,
 	KEY_ARROW_L = 65361,
 	KEY_ARROW_R = 65363,
 	ESC = 0xFF1B
