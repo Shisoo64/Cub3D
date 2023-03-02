@@ -9,14 +9,17 @@ LIGHT_GREEN="\033[92m"
 LIGHT_CYAN="\033[96m"
 
 logging(){
-	local type=$1; shift
-	printf "${LIGHT_CYAN}${BOLD}configure${RESET} [%b] : %b\n" "$type" "$*"
+	#local type=$1; shift
+	#printf "${LIGHT_CYAN}${BOLD}configure${RESET} [%b] : %b\n" "$type" "$*"
+	return 0
 }
 log_info(){
-	logging "${LIGHT_GREEN}info${RESET}" "$@"
+	#logging "${LIGHT_GREEN}info${RESET}" "$@"
+	return 0
 }
 log_error(){
-	logging "${LIGHT_RED}error${RESET}" "$@" >&2
+	#logging "${LIGHT_RED}error${RESET}" "$@" >&2
+	return 0
 }
 
 # find and print x11 header path
@@ -74,9 +77,9 @@ EOF
 }
 
 clean(){
-	log_info 'Execute "make clean" from "makefile.gen"'
+	#log_info 'Execute "make clean" from "makefile.gen"'
 	${MAKE} -f Makefile.gen clean
-	log_info 'Execute "make clean" from "test/makefile.gen"'
+	#log_info 'Execute "make clean" from "test/makefile.gen"'
 	${MAKE} -f Makefile.gen -C test/ --no-print-directory clean
 }
 
@@ -90,7 +93,7 @@ parse_args(){
 			exit 0;;
 		"") return;;
 		*)
-			log_error "unknown command \"$1\"\nRun \"./configure --help\" for usage."
+			#log_error "unknown command \"$1\"\nRun \"./configure --help\" for usage."
 			exit 1;;
 	esac
 }
@@ -105,21 +108,21 @@ main(){
 
 	parse_args "$@"
 	if [ -z "$xlib_inc" ]; then
-		log_error "Can't find a suitable X11 include directory."
+		#log_error "Can't find a suitable X11 include directory."
 		exit 1
 	fi
-	log_info "Found X11 include path directory: $xlib_inc"
+	#log_info "Found X11 include path directory: $xlib_inc"
 
-	log_info 'Generate "makefile.gen" from template "makefile.mk"'
+	#log_info 'Generate "makefile.gen" from template "makefile.mk"'
 		echo "INC=$xlib_inc"  	 	    	>  Makefile.gen 
 		cat Makefile.mk | grep -v %%%%  	>> Makefile.gen
-	log_info 'Generate "test/makefile.gen" from template "test/makefile.mk"'
+	#log_info 'Generate "test/makefile.gen" from template "test/makefile.mk"'
 		echo "INC=$xlib_inc"				>  test/Makefile.gen
 		cat test/Makefile.mk | grep -v %%%% >> test/Makefile.gen
 
-	log_info 'Execute "make all" from file "makefile.gen"'
+	#log_info 'Execute "make all" from file "makefile.gen"'
 		${MAKE} -f Makefile.gen all
-	log_info 'Execute "make all" from file "test/makefile.gen"'
+	#log_info 'Execute "make all" from file "test/makefile.gen"'
 		(cd test ; ${MAKE} -f Makefile.gen all )
 }
 
