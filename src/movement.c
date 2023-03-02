@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/28 17:23:49 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:06:57 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,16 @@ void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 
 void	input_manager_bike(t_mlx *mlx)
 {
-	static double speed;
 	static double coef;
 
-
-	if (speed > 6000)
-		speed = 6000;
-	else if (speed >= 4000)
+	if (mlx->player.speed > 6000)
+		mlx->player.speed = 6000;
+	else if (mlx->player.speed >= 4000)
 	{
 		coef = 0.1;
 		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 250, WIN_H - 262);
 	}
-	else if (speed >= 2600)
+	else if (mlx->player.speed >= 2600)
 	{
 		coef = 0.25;
 		put_img_transp(mlx, mlx->bike_wheel, WIN_W / 2 - 250, WIN_H - 262);
@@ -136,47 +134,47 @@ void	input_manager_bike(t_mlx *mlx)
 	else
 		put_img_transp(mlx, mlx->bike, WIN_W / 2 - 250, WIN_H - 262);
 
-	if (speed >= 250)
+	if (mlx->player.speed >= 250)
 		coef = 0.5;
 	else
 		coef = 1;
 
-	if (speed < -250)
-		speed = -250;
+	if (mlx->player.speed < -250)
+		mlx->player.speed = -250;
 
-	mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, ft_itoa(speed / 30));
+	mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, ft_itoa(mlx->player.speed / 30));
 
 	// Frein
 	if (mlx->player.up == 1)
-		speed-= 15;
+		mlx->player.speed -= 15;
 
 
 	// Reculer avec les pieds
-	if (mlx->player.up == 1 && speed <= 0)
-		speed-= 20;
+	if (mlx->player.up == 1 && mlx->player.speed <= 0)
+		mlx->player.speed -= 20;
 	
 	// Accelerer
-	if (mlx->player.down == 1 && speed >= 0)
-		speed+= 12 * coef;
+	if (mlx->player.down == 1 && mlx->player.speed >= 0)
+		mlx->player.speed += 12 * coef;
 
 	// Frein moteur
-	if (mlx->player.down == 0 && speed >= 0)
-		speed-= 12 * (1.15 - coef);
+	if (mlx->player.down == 0 && mlx->player.speed >= 0)
+		mlx->player.speed -= 12 * (1.15 - coef);
 	// Frein moteur en marche arriere
-	if (mlx->player.up == 0 && speed <= 0)
-		speed+= 20 * (1.3 - coef);
+	if (mlx->player.up == 0 && mlx->player.speed <= 0)
+		mlx->player.speed += 20 * (1.3 - coef);
 
 	if (mlx->player.rot_l == 1)
-		rotate_player((5000 - speed) * coef, &mlx->player);
+		rotate_player((5000 - mlx->player.speed) * coef, &mlx->player);
 	if (mlx->player.rot_r == 1)
-		rotate_player((-5000 + speed) * coef, &mlx->player);
+		rotate_player((-5000 + mlx->player.speed) * coef, &mlx->player);
 
-	if (speed <= 10 && speed >= -10)
-		speed = 0;
+	if (mlx->player.speed <= 10 && mlx->player.speed >= -10)
+		mlx->player.speed = 0;
 
 
-	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2KSpeed:%fkmh	(%f)\n", speed / 30, speed);
-	move_player_bike(mlx, speed, &mlx->player);
+	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2Kspeed:%fkmh	(%f)\n", mlx->player.speed / 30, mlx->player.speed);
+	move_player_bike(mlx, mlx->player.speed, &mlx->player);
 }
 
 int	key_press(int key, t_mlx *mlx)
@@ -195,7 +193,7 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->player.left = 1;
 	else if (key == KEY_D)
 		mlx->player.right = 1;
-	else if (key == KEY_F)
+	else if (key == KEY_F && mlx->player.speed == 0)
 		mlx->player.biking = -mlx->player.biking;
 	return (0);
 }

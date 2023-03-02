@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/28 17:14:45 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:42:37 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_player {
 	double	planeX;
 	double	planeY;
 
-
+	double speed;
 	int	biking;
 	int	rot_l;
 	int rot_r;
