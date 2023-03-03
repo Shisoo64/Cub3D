@@ -8,7 +8,9 @@
 
 ## 📖 Description
 
-Lorem ipsum
+Ce projet est inspiré du jeu éponyme mondialement connu, considéré comme le premier FPS jamais développé.<br>
+Il vous permettra d'explorer la technique du ray-casting.<br>
+Votre objectif est de faire une vue dynamique au sein d'un labyrinthe, dans lequel vous devrez trouver votre chemin.
 
 ## 🔩 Makefile
 
