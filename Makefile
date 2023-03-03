@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/02 18:57:11 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/03/03 16:51:44 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,12 @@
 NAME = cub3D
 
 SRCS =	src/main.c \
+		src/input_manager.c \
+		src/foot_movement.c \
+		src/bike_movement.c \
 		src/utils.c \
 		src/parsing.c \
 		src/map.c \
-		src/movement.c \
 		src/free.c \
 		src/error.c
 

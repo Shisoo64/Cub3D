@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/02 14:42:37 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/03 16:08:06 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,18 @@ void	check_map_ext(t_mlx *v);
 char	**create_map(t_mlx *mlx);
 void	rotate_player(int multi, t_player *player);
 
+
 //
 //		MOVEMENT
-int		inputs(int key, t_mlx *mlx);
+void	input_manager_foot(t_mlx *mlx);
+void	input_manager_bike(t_mlx *mlx);
 
-int	key_press(int key, t_mlx *mlx);
-int	key_release(int key, t_mlx *mlx);
-int	input_manager(t_mlx *mlx);
+
+//
+//		INPUTS
+int		key_press(int key, t_mlx *mlx);
+int		key_release(int key, t_mlx *mlx);
+int		input_manager(t_mlx *mlx);
 
 enum e_keycode
 {
@@ -148,6 +153,7 @@ enum e_keycode
 //		RENDER
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
+
 
 //
 //		MLX
