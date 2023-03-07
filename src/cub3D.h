@@ -22,7 +22,7 @@
 // Colors
 # define YCOLOR 0xD84727
 # define XCOLOR 0xEF7B45
-# define SKYCOLOR 0x5EB1BF
+# define SKYCOLOR 0x2faee0
 # define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
 
 

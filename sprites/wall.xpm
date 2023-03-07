@@ -1,5 +1,5 @@
 /* XPM */
-static char * \\wsl_localhost\Ubuntu_20_04\home\romil\projects\Cub3D\sprites\wall_xpm[] = {
+static char * wall_xpm[] = {
 "64 64 1609 2",
 "  	c #BBBCB7",
 ". 	c #BDBEB9",
