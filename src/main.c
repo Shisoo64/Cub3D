@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/03 15:56:24 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/08 16:12:53 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,32 @@ void	ft_display(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 }
 
+void	start_screen(t_mlx *mlx)
+{
+	static int	i;
+
+	if (++i == 0)
+	{
+		draw_backdrop(mlx);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 24, WIN_H - 70, 0xffffff, "Press any key to start");
+	}
+	else if (i == 50000)
+	{
+		draw_backdrop(mlx);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+	}
+	if (i >= 100000)
+		i = -1;
+}
+
 int	frames(t_mlx *mlx)
 {
+	if (mlx->started == 0)
+	{
+		start_screen(mlx);
+		return (0);
+	}
 	ft_display(mlx);
 	input_manager(mlx);
 	return (0);
@@ -235,17 +259,26 @@ int	mouse_hook(int key, t_mlx *mlx)
 	return (0);
 }
 
-void	ft_parsing()
+void	ft_parsing(t_mlx *mlx)
 {
-	return ;
+	check_map_ext(mlx);
+	mlx->map = create_map(mlx);
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
+	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
+	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
+			&mlx->display.line_length, &mlx->display.endian);
+
+	// GET SPRITES
+	mlx->texture.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/wall.xpm", &mlx->texture.tex_width, &mlx->texture.tex_height);
+	mlx->texture.addr = mlx_get_data_addr(mlx->texture.img, &mlx->texture.bits_per_pixel, &mlx->texture.line_length, &mlx->texture.endian);
+
+	mlx->bike.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/honda.xpm", &mlx->bike.tex_width, &mlx->bike.tex_height);
+	mlx->bike.addr = mlx_get_data_addr(mlx->bike.img, &mlx->bike.bits_per_pixel, &mlx->bike.line_length, &mlx->bike.endian);
+
+	mlx->bike_wheel.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/honda_wheel.xpm", &mlx->bike_wheel.tex_width, &mlx->bike_wheel.tex_height);
+	mlx->bike_wheel.addr = mlx_get_data_addr(mlx->bike_wheel.img, &mlx->bike_wheel.bits_per_pixel, &mlx->bike_wheel.line_length, &mlx->bike_wheel.endian);
 }
-
-
-
-
-
-
-
 
 int	main(int ac, char **av)
 {
@@ -257,37 +290,20 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	mlx.mapname = av[1];
-	check_map_ext(&mlx);
-	mlx.map = create_map(&mlx);
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WIN_W, WIN_H, "cub3D");
-	mlx.display.img = mlx_new_image(mlx.mlx, WIN_W, WIN_H);
-	mlx.display.addr = mlx_get_data_addr(mlx.display.img, &mlx.display.bits_per_pixel,
-			&mlx.display.line_length, &mlx.display.endian);
 
+	ft_parsing(&mlx);
 
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 
-
-	// GET SPRITES
-	mlx.texture.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/wall.xpm", &mlx.texture.tex_width, &mlx.texture.tex_height);
-	mlx.texture.addr = mlx_get_data_addr(mlx.texture.img, &mlx.texture.bits_per_pixel, &mlx.texture.line_length, &mlx.texture.endian);
-
-	mlx.bike.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/honda.xpm", &mlx.bike.tex_width, &mlx.bike.tex_height);
-	mlx.bike.addr = mlx_get_data_addr(mlx.bike.img, &mlx.bike.bits_per_pixel, &mlx.bike.line_length, &mlx.bike.endian);
-
-	mlx.bike_wheel.img = mlx_xpm_file_to_image(mlx.mlx, "./sprites/honda_wheel.xpm", &mlx.bike_wheel.tex_width, &mlx.bike_wheel.tex_height);
-	mlx.bike_wheel.addr = mlx_get_data_addr(mlx.bike_wheel.img, &mlx.bike_wheel.bits_per_pixel, &mlx.bike_wheel.line_length, &mlx.bike_wheel.endian);
-
-
 	// INIT VARS
+	mlx.player.rot_r = 0;
 	mlx.player.rot_l = 0;
 	mlx.player.up = 0;
 	mlx.player.down = 0;
-	mlx.player.rot_r = 0;
 	mlx.player.left = 0;
 	mlx.player.right = 0;
 	mlx.player.biking = -1;
+	mlx.started = 0;
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
 

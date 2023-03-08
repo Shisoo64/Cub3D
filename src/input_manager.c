@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/03 16:04:58 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:41:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	key_press(int key, t_mlx *mlx)
 {
 	if (key == ESC)
 		exit_game(mlx);
+	else if (mlx->started == 0)
+		mlx->started = 1;
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 1;
 	else if (key == KEY_W)
