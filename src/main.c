@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 14:55:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:33:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,17 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 		//Check if ray has hit a wall
 		if (mlx->map[ray->mapY][ray->mapX]
 			&& mlx->map[ray->mapY][ray->mapX] == '1')
+		{
+			ray->wall_type = 1;
 			break ;
+		}
+		//Check if ray has hit an enterable building
+		else if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == 'D')
+		{
+			ray->wall_type = 2;
+			break ;
+		}
 	}
 }
 
@@ -108,7 +118,14 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	if (ray->side == 1 && ray->raydirY < 0)
 		tex_x = mlx->texture.tex_width - tex_x - 1;
 
-	draw_line_texture(&mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	if (ray->wall_type == 1)
+		draw_line_texture(&mlx->texture, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	if (ray->wall_type == 2)
+	{
+		if (perpWallDist <= 0.2)
+			printf("Open door\n");
+		draw_line_texture(&mlx->texture2, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	}
 }
 
 
@@ -186,7 +203,7 @@ int	frames(t_mlx *mlx)
 	else if (mlx->crashed == 1)
 	{
 		crash_screen(mlx);
-		return(0);
+		return (0);
 	}
 	ft_display(mlx);
 	input_manager(mlx);
@@ -221,6 +238,13 @@ void	ft_parsing(t_mlx *mlx)
 	// GET SPRITES
 	mlx->texture.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/wall.xpm", &mlx->texture.tex_width, &mlx->texture.tex_height);
 	mlx->texture.addr = mlx_get_data_addr(mlx->texture.img, &mlx->texture.bits_per_pixel, &mlx->texture.line_length, &mlx->texture.endian);
+
+
+	mlx->texture2.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/wall2.xpm", &mlx->texture2.tex_width, &mlx->texture2.tex_height);
+	mlx->texture2.addr = mlx_get_data_addr(mlx->texture2.img, &mlx->texture2.bits_per_pixel, &mlx->texture2.line_length, &mlx->texture2.endian);
+
+
+
 
 	mlx->bike.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/honda.xpm", &mlx->bike.tex_width, &mlx->bike.tex_height);
 	mlx->bike.addr = mlx_get_data_addr(mlx->bike.img, &mlx->bike.bits_per_pixel, &mlx->bike.line_length, &mlx->bike.endian);

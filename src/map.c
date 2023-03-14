@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/09 20:18:41 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:09:53 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_map(char **map)
 	ft_printf("\n\n\n");
 }
 
-void	get_map_vars(t_mlx *mlx, char **map)
+void	place_player_on_map(t_mlx *mlx, char **map)
 {
 	int		y;
 	int		x;
@@ -116,7 +116,7 @@ char	**create_map(t_mlx *mlx)
 	map[y] = NULL;
 	close(fd);
 
-	get_map_vars(mlx, map);
+	place_player_on_map(mlx, map);
 	print_map(map);
 
 	return (map);

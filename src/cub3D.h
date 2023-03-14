@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 14:55:45 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:28:33 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ enum e_keycode
 typedef struct s_raycast {
 	//what cardinal point the raycast hit is perpendicular to
 	int		side;
+
+
+	//what type of wall the ray has hit
+	int		wall_type;
 
 	//what direction to step in x or y-direction (either +1 or -1)
 	int		stepX;
@@ -125,6 +129,7 @@ typedef struct s_mlx {
 
 
 	t_display	texture;
+	t_display	texture2;
 	t_display	crash;
 	t_display	bike;
 	t_display	bike_wheel;

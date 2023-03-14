@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/03 16:06:43 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:21:38 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	move_player(int multi, t_player *player, char **map)
 	if (map[(int)(player->posY + (player->dirY * MOVESPEED * multi))]
 		[(int)player->posX] != '1')
 		player->posY += (player->dirY * MOVESPEED) * multi;
-	printf("\e[2AposX:%lf             \n", player->posX);
-	printf("posY:%lf              \n", player->posY);
+	//printf("\e[2AposX:%lf             \n", player->posX);
+	//printf("posY:%lf              \n", player->posY);
 }
 
 void	strafe_player(int multi, t_player *player, char **map)
@@ -32,8 +32,8 @@ void	strafe_player(int multi, t_player *player, char **map)
 	if (map[(int)(player->posY + (player->planeY * MOVESPEED * multi))]
 		[(int)player->posX] != '1')
 		player->posY += (player->planeY * MOVESPEED) * multi;
-	printf("\e[2AposX:%lf             \n", player->posX);
-	printf("posY:%lf              \n", player->posY);
+	//printf("\e[2AposX:%lf             \n", player->posX);
+	//printf("posY:%lf              \n", player->posY);
 }
 
 void	rotate_player(int multi, t_player *player)
