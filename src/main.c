@@ -6,36 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/08 16:12:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:55:01 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	draw_backdrop(t_mlx *mlx)
-{
-	int	y;
-	int	x;
-
-	y = -1;
-	while (++y <= WIN_H / 2)
-	{
-		x = -1;
-		while (++x <= WIN_W)
-			my_mlx_pixel_put(&mlx->display, x, y, SKYCOLOR);
-	}
-	while (++y <= WIN_H)
-	{
-		x = -1;
-		while (++x <= WIN_W)
-			my_mlx_pixel_put(&mlx->display, x, y, FLOORCOLOR);
-	}
-}
-
-void	ft_init_raycast(t_mlx *mlx)
-{
-	(void)mlx;
-}
 
 // Digital Differential Analysis
 // iterate through each line in the grid the ray intersect until it hit a wall
@@ -67,18 +42,6 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			&& mlx->map[ray->mapY][ray->mapX] == '1')
 			break ;
 	}
-}
-
-
-int    my_mlx_get_color(t_display *texture, int x, int y)
-{
-	char	*color;
-
-	if (y < 0)
-		y = -y;
-	color = texture->addr + (y * texture->line_length + x
-			* (texture->bits_per_pixel / 8));
-	return (*(int *)color);
 }
 
 void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
@@ -127,7 +90,7 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 		drawEnd = WIN_H - 1;
 
 
-
+	/// Couper la fonction ici ///
 
 	//Get line on texture
 
@@ -213,31 +176,17 @@ void	ft_display(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 }
 
-void	start_screen(t_mlx *mlx)
-{
-	static int	i;
-
-	if (++i == 0)
-	{
-		draw_backdrop(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 24, WIN_H - 70, 0xffffff, "Press any key to start");
-	}
-	else if (i == 50000)
-	{
-		draw_backdrop(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-	}
-	if (i >= 100000)
-		i = -1;
-}
-
 int	frames(t_mlx *mlx)
 {
 	if (mlx->started == 0)
 	{
 		start_screen(mlx);
 		return (0);
+	}
+	else if (mlx->crashed == 1)
+	{
+		crash_screen(mlx);
+		return(0);
 	}
 	ft_display(mlx);
 	input_manager(mlx);
@@ -278,6 +227,10 @@ void	ft_parsing(t_mlx *mlx)
 
 	mlx->bike_wheel.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/honda_wheel.xpm", &mlx->bike_wheel.tex_width, &mlx->bike_wheel.tex_height);
 	mlx->bike_wheel.addr = mlx_get_data_addr(mlx->bike_wheel.img, &mlx->bike_wheel.bits_per_pixel, &mlx->bike_wheel.line_length, &mlx->bike_wheel.endian);
+
+
+	mlx->crash.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/crash.xpm", &mlx->crash.tex_width, &mlx->crash.tex_height);
+
 }
 
 int	main(int ac, char **av)
@@ -302,8 +255,10 @@ int	main(int ac, char **av)
 	mlx.player.down = 0;
 	mlx.player.left = 0;
 	mlx.player.right = 0;
+	mlx.player.speed = 0;
 	mlx.player.biking = -1;
 	mlx.started = 0;
+	mlx.crashed = 0;
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
 

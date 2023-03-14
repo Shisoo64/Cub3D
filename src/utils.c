@@ -6,11 +6,23 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/16 16:37:33 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:53:52 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+//	get the color of the pixel on the coordinates of the texture
+int    my_mlx_get_color(t_display *texture, int x, int y)
+{
+	char	*color;
+
+	if (y < 0)
+		y = -y;
+	color = texture->addr + (y * texture->line_length + x
+			* (texture->bits_per_pixel / 8));
+	return (*(int *)color);
+}
 
 void	my_mlx_pixel_put(t_display *data, int x, int y, int color)
 {

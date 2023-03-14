@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/08 15:32:10 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:55:45 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,21 @@
 # define ROTSPEED 0.000005
 
 
-
-// NEW
 # define CRASH_SPEED 750
+
+enum e_keycode
+{
+	KEY_W = 115,
+	KEY_S = 119,
+	KEY_A = 97,
+	KEY_D = 100,
+	KEY_Q = 113,
+	KEY_E = 101,
+	KEY_F = 102,
+	KEY_ARROW_L = 65361,
+	KEY_ARROW_R = 65363,
+	ESC = 0xFF1B
+};
 
 
 //
@@ -107,11 +119,13 @@ typedef struct s_mlx {
 	int			map_y;
 	int			map_x;
 	int			started;
+	int			crashed;
 	t_display	display;
 	t_player	player;
 
 
 	t_display	texture;
+	t_display	crash;
 	t_display	bike;
 	t_display	bike_wheel;
 
@@ -136,25 +150,16 @@ int		key_press(int key, t_mlx *mlx);
 int		key_release(int key, t_mlx *mlx);
 int		input_manager(t_mlx *mlx);
 
-enum e_keycode
-{
-	KEY_W = 115,
-	KEY_S = 119,
-	KEY_A = 97,
-	KEY_D = 100,
-	KEY_Q = 113,
-	KEY_E = 101,
-	KEY_F = 102,
-	KEY_ARROW_L = 65361,
-	KEY_ARROW_R = 65363,
-	ESC = 0xFF1B
-};
-
 //
 //		RENDER
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
 
+//
+//		SCREENS
+void	start_screen(t_mlx *mlx);
+void	crash_screen(t_mlx *mlx);
+void	draw_backdrop(t_mlx *mlx);
 
 //
 //		MLX

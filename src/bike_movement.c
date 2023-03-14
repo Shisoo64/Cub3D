@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:05:19 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/03 16:05:35 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:17:54 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 	// CHECK WALL CRASH
 	if (mlx->map[(int)player->posY]
 		[(int)(player->posX + (player->dirX * MOVESPEED * speed))] == '1' && speed >= CRASH_SPEED)
-		exit_game(mlx);
+		mlx->crashed = 1;
 	if (mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
 		[(int)player->posX] == '1' && speed >= CRASH_SPEED)
-		exit_game(mlx);
+		mlx->crashed = 1;
 
 	printf("posX:%lf\n", player->posX);
 	printf("posY:%lf\n", player->posY);
