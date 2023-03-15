@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 15:28:33 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:37:32 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include "../libft/libft.h"
 
 // Colors
-# define YCOLOR 0xD84727
-# define XCOLOR 0xEF7B45
 # define SKYCOLOR 0x2faee0
 # define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
+
+# define CEILINGCOLOR 0xc4c4c4
+# define IN_FLOORCOLOR 0xc4c4c4
 
 
 # define FOV 0.8
@@ -49,6 +50,7 @@ enum e_keycode
 	KEY_Q = 113,
 	KEY_E = 101,
 	KEY_F = 102,
+	KEY_M = 109,
 	KEY_ARROW_L = 65361,
 	KEY_ARROW_R = 65363,
 	ESC = 0xFF1B
@@ -94,8 +96,18 @@ typedef struct s_player {
 	double	planeX;
 	double	planeY;
 
+	//SAVES
+	double	planeX_save;
+	double	planeY_save;
+	double	dirX_save;
+	double	dirY_save;
+	double	posX_save;
+	double	posY_save;
+
 	double speed;
+	int	inside;
 	int	biking;
+	int	using;
 	int	rot_l;
 	int rot_r;
 	int left;
@@ -127,7 +139,7 @@ typedef struct s_mlx {
 	t_display	display;
 	t_player	player;
 
-
+	t_display	in_wall;
 	t_display	texture;
 	t_display	texture2;
 	t_display	crash;
@@ -140,14 +152,14 @@ typedef struct s_mlx {
 //		PARSING
 void	check_map_ext(t_mlx *v);
 char	**create_map(t_mlx *mlx);
-void	rotate_player(int multi, t_player *player);
+void	place_player_on_map(t_mlx *mlx, char **map);
 
 
 //
 //		MOVEMENT
 void	input_manager_foot(t_mlx *mlx);
 void	input_manager_bike(t_mlx *mlx);
-
+void	rotate_player(int multi, t_player *player);
 
 //
 //		INPUTS
@@ -165,6 +177,10 @@ void	ft_display(t_mlx *mlx);
 void	start_screen(t_mlx *mlx);
 void	crash_screen(t_mlx *mlx);
 void	draw_backdrop(t_mlx *mlx);
+
+
+
+void	free_map(t_mlx *mlx, char **map);
 
 //
 //		MLX

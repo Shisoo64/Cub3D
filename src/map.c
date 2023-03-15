@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 15:09:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:27:23 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**create_map(t_mlx *mlx)
 	map[y] = NULL;
 	close(fd);
 
-	place_player_on_map(mlx, map);
+	//printmap
 	print_map(map);
 
 	return (map);

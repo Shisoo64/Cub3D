@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/13 16:24:19 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/14 19:04:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->player.left = 1;
 	else if (key == KEY_D)
 		mlx->player.right = 1;
-	else if (key == KEY_F && mlx->player.speed == 0)
+	else if (key == KEY_F)
+		mlx->player.using = 1;
+	else if (key == KEY_M && mlx->player.speed == 0)
 		mlx->player.biking = -mlx->player.biking;
 	return (0);
 }
@@ -53,12 +55,14 @@ int	key_release(int key, t_mlx *mlx)
 		mlx->player.left = 0;
 	else if (key == KEY_D)
 		mlx->player.right = 0;
+	else if (key == KEY_F)
+		mlx->player.using = 0;
 	return (0);
 }
 
 int	input_manager(t_mlx *mlx)
 {
-	if (mlx->player.biking == 1)
+	if (mlx->player.inside != 1 && mlx->player.biking == 1)
 		input_manager_bike(mlx);
 	else
 		input_manager_foot(mlx);

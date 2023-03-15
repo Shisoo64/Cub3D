@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 14:47:56 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:35:39 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,30 @@ void	draw_backdrop(t_mlx *mlx)
 {
 	int	y;
 	int	x;
+	int	sky;
+	int floor;
+
+	sky = SKYCOLOR;
+	floor = FLOORCOLOR;
+
+	if (mlx->player.inside == 1)
+	{
+		sky = CEILINGCOLOR;
+		floor = IN_FLOORCOLOR;
+	}
 
 	y = -1;
 	while (++y <= WIN_H / 2)
 	{
 		x = -1;
 		while (++x <= WIN_W)
-			my_mlx_pixel_put(&mlx->display, x, y, SKYCOLOR);
+			my_mlx_pixel_put(&mlx->display, x, y, sky);
 	}
 	while (++y <= WIN_H)
 	{
 		x = -1;
 		while (++x <= WIN_W)
-			my_mlx_pixel_put(&mlx->display, x, y, FLOORCOLOR);
+			my_mlx_pixel_put(&mlx->display, x, y, floor);
 	}
 }
 
