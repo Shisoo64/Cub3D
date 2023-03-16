@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/15 19:32:43 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/16 02:34:20 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void    draw_short_line_texture(t_display *texture, t_display *display, int x, i
 	int		tex_y;
 	int		y;
 
-	step = texture->tex_height / lineHeight;
+	step = 1.0 * texture->tex_height / lineHeight;
 	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
 	y = draw_start;
 	tex_x = texture->tex_width - tex_x;
@@ -250,10 +250,10 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 	{
 		if (perpWallDist <= 0.15)
 		{
-			//if (mlx->player.using == 1)
-			//	close_door(mlx);
+			if (mlx->player.using == 1)
+				close_door(mlx);
 			// Mettre un bool?????
-			//else
+			else
 				mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, "Press F to open door");
 		}
 		draw_short_line_texture(&mlx->texture2, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
@@ -309,7 +309,7 @@ void	ft_raycast(t_mlx *mlx, int x)
 	ft_dda(mlx, &ray);
 	if (mlx->player.inside == 0)
 		ft_render_out_vline(&ray, mlx, x);
-	if (mlx->player.inside == 1)
+	else
 		ft_render_in_vline(&ray, mlx, x);
 }
 

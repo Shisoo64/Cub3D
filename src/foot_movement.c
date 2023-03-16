@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/14 16:21:38 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/16 01:50:36 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,25 @@ void	rotate_player(int multi, t_player *player)
 
 void	input_manager_foot(t_mlx *mlx)
 {
+	int	mult;
 
+	mult = 1;
+	if (mlx->player.inside == 1)
+		mult = 2;
 	if (mlx->player.up == 1)
-		move_player(-500, &mlx->player, mlx->map);
+		move_player(-500 * mult, &mlx->player, mlx->map);
 	if (mlx->player.down == 1)
-		move_player(500, &mlx->player, mlx->map);
+		move_player(500 * mult, &mlx->player, mlx->map);
 
 	if (mlx->player.rot_r == 1)
-		rotate_player(-3000, &mlx->player);
+		rotate_player(-4000, &mlx->player);
 	if (mlx->player.rot_l == 1)
-		rotate_player(3000, &mlx->player);
+		rotate_player(4000, &mlx->player);
 
 	if (mlx->player.left == 1)
-		strafe_player(-300, &mlx->player, mlx->map);
+		strafe_player(-300 * mult, &mlx->player, mlx->map);
 	if (mlx->player.right == 1)
-		strafe_player(300, &mlx->player, mlx->map);
+		strafe_player(300 * mult, &mlx->player, mlx->map);
 
 
 	int mouse_x = 0;
