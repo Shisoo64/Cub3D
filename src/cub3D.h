@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/15 19:37:32 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:26:42 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,11 @@ typedef struct s_mlx {
 	t_player	player;
 
 	t_display	in_wall;
-	t_display	texture;
-	t_display	texture2;
+	t_display	in_wall2;
+	t_display	bat_tex;
+	t_display	bat2_tex;
+	t_display	door_tex;
+	t_display	in_door_tex;
 	t_display	crash;
 	t_display	bike;
 	t_display	bike_wheel;
@@ -167,10 +170,17 @@ int		key_press(int key, t_mlx *mlx);
 int		key_release(int key, t_mlx *mlx);
 int		input_manager(t_mlx *mlx);
 
+
+//
+//		TRUCS
+void	open_door(t_mlx *mlx);
+void	close_door(t_mlx *mlx);
+
 //
 //		RENDER
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
+void	ft_raycast(t_mlx *mlx, int x);
 
 //
 //		SCREENS

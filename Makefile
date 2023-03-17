@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/14 14:58:05 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/03/17 15:10:39 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS =	src/main.c \
 		src/screens.c \
 		src/utils.c \
 		src/parsing.c \
+		src/rendering.c \
 		src/map.c \
 		src/free.c \
 		src/error.c
