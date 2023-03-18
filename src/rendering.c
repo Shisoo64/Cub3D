@@ -12,70 +12,8 @@
 
 #include "rendering.h"
 
-// Digital Differential Analysis
-// iterate through each line in the grid the ray intersect until it hit a wall
-void	ft_dda(t_mlx *mlx, t_raycast *ray)
-{
-	while (1)
-	{
-		if (ray->sideDistX < ray->sideDistY)
-		{
-			ray->sideDistX += ray->DeltaDistX;
-			ray->mapX += ray->stepX;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->sideDistY += ray->DeltaDistY;
-			ray->mapY += ray->stepY;
-			ray->side = 1;
-		}
-
-		//Check if ray has hit a wall
-		if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '1')
-		{
-			ray->wall_type = 1;
-			break ;
-		}
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '2')
-		{
-			ray->wall_type = 2;
-			break ;
-		}
-		//Check if ray has hit an enterable building
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == 'D')
-		{
-			ray->wall_type = 999;
-			break ;
-		}
-	}
-}
-
-void    draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
-{
-	double	step;
-	double	tex_pos;
-	int		color;
-	int		tex_y;
-	int		y;
-
-	step = 1.0 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
-	y = draw_start;
-	tex_x = texture->tex_width - tex_x;
-	while (y < draw_end)
-	{
-		tex_y = (int)tex_pos;
-		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
-		my_mlx_pixel_put(display, x, y, color);
-		y++;
-	}
-}
-
+//
+//		OUTSIDE
 void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
@@ -158,9 +96,35 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 				open_door(mlx);
 			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
 			else
-				mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, "Press F to open door");
+				mlx->message = "Press F to open door";
 		}
 		draw_line_texture(&mlx->door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	}
+}
+
+
+
+//		INSIDE
+//
+void    draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+{
+	double	step;
+	double	tex_pos;
+	int		color;
+	int		tex_y;
+	int		y;
+
+	step = 1.0 * texture->tex_height / lineHeight;
+	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
+	y = draw_start;
+	tex_x = texture->tex_width - tex_x;
+	while (y < draw_end)
+	{
+		tex_y = (int)tex_pos;
+		tex_pos += step;
+		color = my_mlx_get_color(texture, tex_x, tex_y);
+		my_mlx_pixel_put(display, x, y, color);
+		y++;
 	}
 }
 
@@ -220,13 +184,55 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 				close_door(mlx);
 			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
 			else
-				mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, "Press F to open door");
+				mlx->message = "Press F to open door";
 		}
 		draw_short_line_texture(&mlx->in_door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 	}
 }
 
 
+
+// Digital Differential Analysis
+// iterate through each line in the grid the ray intersect until it hit a wall
+void	ft_dda(t_mlx *mlx, t_raycast *ray)
+{
+	while (1)
+	{
+		if (ray->sideDistX < ray->sideDistY)
+		{
+			ray->sideDistX += ray->DeltaDistX;
+			ray->mapX += ray->stepX;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->sideDistY += ray->DeltaDistY;
+			ray->mapY += ray->stepY;
+			ray->side = 1;
+		}
+
+		//Check if ray has hit a wall
+		if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == '1')
+		{
+			ray->wall_type = 1;
+			break ;
+		}
+		else if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == '2')
+		{
+			ray->wall_type = 2;
+			break ;
+		}
+		//Check if ray has hit an enterable building
+		else if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == 'D')
+		{
+			ray->wall_type = 999;
+			break ;
+		}
+	}
+}
 
 void	ft_raycast(t_mlx *mlx, int x)
 {

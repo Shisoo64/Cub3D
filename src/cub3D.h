@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/17 16:26:42 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/18 21:20:11 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,6 @@ enum e_keycode
 
 //
 //		STRUCTS
-typedef struct s_raycast {
-	//what cardinal point the raycast hit is perpendicular to
-	int		side;
-
-
-	//what type of wall the ray has hit
-	int		wall_type;
-
-	//what direction to step in x or y-direction (either +1 or -1)
-	int		stepX;
-	int		stepY;
-
-	double	raydirX;
-	double	raydirY;
-
-	//which box of the map we're in
-	int		mapX;
-	int		mapY;
-
-
-	int		tex_x;
-
-	//length of ray from current position to next x or y-side
-	double	sideDistX;
-	double	sideDistY;
-	double	DeltaDistX;
-	double	DeltaDistY;
-}				t_raycast;
 
 typedef struct s_player {
 	double	posX;
@@ -103,6 +75,11 @@ typedef struct s_player {
 	double	dirY_save;
 	double	posX_save;
 	double	posY_save;
+
+
+	//Bike
+	double	bike_x;
+	double	bike_y;
 
 	double speed;
 	int	inside;
@@ -136,6 +113,7 @@ typedef struct s_mlx {
 	int			map_x;
 	int			started;
 	int			crashed;
+	char		*message;
 	t_display	display;
 	t_player	player;
 

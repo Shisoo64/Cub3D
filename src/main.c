@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/17 16:15:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/18 21:57:05 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	open_door(t_mlx *mlx)
 
 void	close_door(t_mlx *mlx)
 {
-
 	printf("\nJE ME BARRE OF THE BAT\n");
 
 	mlx->mapname = "maps/map.cub";
@@ -83,6 +82,23 @@ int	frames(t_mlx *mlx)
 		ft_display(mlx);
 		input_manager(mlx);
 	}
+
+	if (mlx->player.biking == -1
+	&& mlx->player.posX - mlx->player.bike_x <= 0.25 && mlx->player.posX - mlx->player.bike_x >= -0.25 
+	&& mlx->player.posY - mlx->player.bike_y <= 0.25 && mlx->player.posY - mlx->player.bike_y >= -0.25)
+	{
+		printf("\e[1A\e[2KT MAX A PROXIMITÉ\n");
+		mlx->message = "Press F to get on the TMAX";
+		if (mlx->player.using == 1)
+			mlx->player.biking = 1;
+	}
+
+	if (mlx->player.biking == -1 && mlx->message)
+	{
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, mlx->message);
+		mlx->message = NULL;
+	}
+
 	return (0);
 }
 
@@ -111,8 +127,6 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
-
-
 
 
 	// GET SPRITES
@@ -172,9 +186,17 @@ int	main(int ac, char **av)
 	mlx.player.down = 0;
 	mlx.player.left = 0;
 	mlx.player.right = 0;
+	mlx.player.inside = 0;
+	mlx.player.using = 0;	
 	mlx.player.speed = 0;
 	mlx.player.biking = -1;
-	mlx.player.inside = 0;
+
+	//BIKE POS
+	mlx.player.bike_x = 2.5;
+	mlx.player.bike_y = 25.5;
+
+
+	mlx.message = NULL;
 	mlx.started = 0;
 	mlx.crashed = 0;
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
