@@ -88,6 +88,8 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 		draw_line_texture(&mlx->bat_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 	else if (ray->wall_type == 2)
 		draw_line_texture(&mlx->bat2_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	else if (ray->wall_type == 3)
+		draw_line_texture(&mlx->bat3_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 	else if (ray->wall_type == 999)
 	{
 		if (perpWallDist <= 0.15)
@@ -222,6 +224,12 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			&& mlx->map[ray->mapY][ray->mapX] == '2')
 		{
 			ray->wall_type = 2;
+			break ;
+		}
+		else if (mlx->map[ray->mapY][ray->mapX]
+			&& mlx->map[ray->mapY][ray->mapX] == '3')
+		{
+			ray->wall_type = 3;
 			break ;
 		}
 		//Check if ray has hit an enterable building

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/19 14:55:55 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:07:51 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	frames(t_mlx *mlx)
 			i = 0;
 	}
 
+	// DISPLAY THE IMG
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+
 	// MESSAGES
 	if (mlx->player.biking == -1
 	&& mlx->player.posX - mlx->player.bike_x <= 0.25 && mlx->player.posX - mlx->player.bike_x >= -0.25 
@@ -114,11 +117,6 @@ int	frames(t_mlx *mlx)
 		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, mlx->message);
 		mlx->message = NULL;
 	}
-
-
-
-	// DISPLAY THE IMG
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 	
 	return (0);
 }
@@ -167,6 +165,9 @@ void	ft_parsing(t_mlx *mlx)
 
 	mlx->bat2_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_wall2.xpm", &mlx->bat2_tex.tex_width, &mlx->bat2_tex.tex_height);
 	mlx->bat2_tex.addr = mlx_get_data_addr(mlx->bat2_tex.img, &mlx->bat2_tex.bits_per_pixel, &mlx->bat2_tex.line_length, &mlx->bat2_tex.endian);
+
+	mlx->bat3_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_wall3.xpm", &mlx->bat3_tex.tex_width, &mlx->bat3_tex.tex_height);
+	mlx->bat3_tex.addr = mlx_get_data_addr(mlx->bat3_tex.img, &mlx->bat3_tex.bits_per_pixel, &mlx->bat3_tex.line_length, &mlx->bat3_tex.endian);
 
 	mlx->door_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_door.xpm", &mlx->door_tex.tex_width, &mlx->door_tex.tex_height);
 	mlx->door_tex.addr = mlx_get_data_addr(mlx->door_tex.img, &mlx->door_tex.bits_per_pixel, &mlx->door_tex.line_length, &mlx->door_tex.endian);

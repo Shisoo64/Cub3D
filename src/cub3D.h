@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/19 14:44:26 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:08:29 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_mlx {
 	t_display	in_wall2;
 	t_display	bat_tex;
 	t_display	bat2_tex;
+	t_display	bat3_tex;
 	t_display	door_tex;
 	t_display	in_door_tex;
 	t_display	crash;
