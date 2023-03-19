@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/18 21:20:11 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:44:26 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ typedef struct s_mlx {
 	char		*message;
 	t_display	display;
 	t_player	player;
+
+	t_display	hand;
+	t_display	hand2;
 
 	t_display	in_wall;
 	t_display	in_wall2;

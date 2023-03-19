@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/18 21:57:05 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:55:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ void	close_door(t_mlx *mlx)
 
 
 // Render the backdrop in the img,
-// raycast each vertical lines and render them in the img,
-// then display the img
+// raycast each vertical lines and render them in the img
 void	ft_display(t_mlx *mlx)
 {
 	int	x;
@@ -68,7 +67,6 @@ void	ft_display(t_mlx *mlx)
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, x++);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 }
 
 int	frames(t_mlx *mlx)
@@ -83,22 +81,45 @@ int	frames(t_mlx *mlx)
 		input_manager(mlx);
 	}
 
+
+	// WALK ANIM
+	// DOWN PARCE QUE LES CONTROLES SONT INVERSÉS
+	if (mlx->player.biking == -1 && mlx->player.down)
+	{
+		static int i;
+
+		//printf("\e[1A\e[2Ki:%d\n", i);
+		if (i >= 0 && i <= 50)
+			put_img_transp(mlx, mlx->hand, WIN_W / 2 - 228, WIN_H - 118);
+		else
+			put_img_transp(mlx, mlx->hand2, WIN_W / 2 + 70, WIN_H - 118);
+		if (i++ == 100)
+			i = 0;
+	}
+
+	// MESSAGES
 	if (mlx->player.biking == -1
 	&& mlx->player.posX - mlx->player.bike_x <= 0.25 && mlx->player.posX - mlx->player.bike_x >= -0.25 
 	&& mlx->player.posY - mlx->player.bike_y <= 0.25 && mlx->player.posY - mlx->player.bike_y >= -0.25)
 	{
-		printf("\e[1A\e[2KT MAX A PROXIMITÉ\n");
+		// Message
+		printf("\e[1A\e[2KT-MAX A PROXIMITÉ\n");
+		
 		mlx->message = "Press F to get on the TMAX";
 		if (mlx->player.using == 1)
 			mlx->player.biking = 1;
 	}
-
-	if (mlx->player.biking == -1 && mlx->message)
+	if (mlx->message)
 	{
 		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, mlx->message);
 		mlx->message = NULL;
 	}
 
+
+
+	// DISPLAY THE IMG
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+	
 	return (0);
 }
 
@@ -150,6 +171,15 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->door_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_door.xpm", &mlx->door_tex.tex_width, &mlx->door_tex.tex_height);
 	mlx->door_tex.addr = mlx_get_data_addr(mlx->door_tex.img, &mlx->door_tex.bits_per_pixel, &mlx->door_tex.line_length, &mlx->door_tex.endian);
 
+
+
+
+	mlx->hand.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/hand.xpm", &mlx->hand.tex_width, &mlx->hand.tex_height);
+	mlx->hand.addr = mlx_get_data_addr(mlx->hand.img, &mlx->hand.bits_per_pixel, &mlx->hand.line_length, &mlx->hand.endian);
+
+	mlx->hand2.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/hand2.xpm", &mlx->hand2.tex_width, &mlx->hand2.tex_height);
+	mlx->hand2.addr = mlx_get_data_addr(mlx->hand2.img, &mlx->hand2.bits_per_pixel, &mlx->hand2.line_length, &mlx->hand2.endian);
+	
 
 
 
