@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/17 15:10:39 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/03/20 15:46:18 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS =	src/main.c \
 		src/input_manager.c \
 		src/foot_movement.c \
 		src/bike_movement.c \
+		src/sprites.c \
 		src/screens.c \
 		src/utils.c \
 		src/parsing.c \

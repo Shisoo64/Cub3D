@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 15:28:31 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:34:58 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,40 @@
 # include "../libft/libft.h"
 #include "player_settings.h"
 
-
 //
 //		STRUCTS
+typedef struct s_raycast {
+	//what cardinal point the raycast hit is perpendicular to
+	int		side;
+
+
+	//what type of wall the ray has hit
+	int		wall_type;
+
+	//what direction to step in x or y-direction (either +1 or -1)
+	int		stepX;
+	int		stepY;
+
+	double	raydirX;
+	double	raydirY;
+
+	//which box of the map we're in
+	int		mapX;
+	int		mapY;
+
+
+	int		tex_x;
+
+
+	//For sprites
+	int		ZBuffer[WIN_W];
+
+	//length of ray from current position to next x or y-side
+	double	sideDistX;
+	double	sideDistY;
+	double	DeltaDistX;
+	double	DeltaDistY;
+}				t_raycast;
 
 typedef struct s_player {
 	double	posX;
@@ -68,6 +99,12 @@ typedef struct s_display {
 	int		tex_height;
 }				t_display;
 
+typedef struct s_sprite {
+	double		x;
+	double		y;
+	t_display	tex;
+}	t_sprite;
+
 typedef struct s_mlx {
 	void		*mlx;
 	void		*win;
@@ -83,6 +120,8 @@ typedef struct s_mlx {
 
 	t_display	hand;
 	t_display	hand2;
+
+	t_sprite	jul;
 
 	t_display	in_wall;
 	t_display	in_wall2;
@@ -127,7 +166,8 @@ void	close_door(t_mlx *mlx);
 //		RENDER
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
-void	ft_raycast(t_mlx *mlx, int x);
+void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
+void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
 
 //
 //		SCREENS

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 15:34:25 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:25:54 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,6 @@ void	close_door(t_mlx *mlx)
 
 	free_map(mlx, mlx->map);
 	mlx->map = create_map(mlx);
-}
-
-
-// Render the backdrop in the img,
-// raycast each vertical lines and render them in the img
-void	ft_display(t_mlx *mlx)
-{
-	int	x;
-
-	draw_backdrop(mlx);
-	x = 0;
-	while (x < WIN_W)
-		ft_raycast(mlx, x++);
 }
 
 int	frames(t_mlx *mlx)
@@ -179,7 +166,12 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->door_tex.addr = mlx_get_data_addr(mlx->door_tex.img, &mlx->door_tex.bits_per_pixel, &mlx->door_tex.line_length, &mlx->door_tex.endian);
 
 
-
+	// JUL SPRITE
+    mlx->jul.x = 5;
+    mlx->jul.y = 25;
+	mlx->jul.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/jul.xpm", &mlx->jul.tex.tex_width, &mlx->jul.tex.tex_height);
+	mlx->jul.tex.addr = mlx_get_data_addr(mlx->jul.tex.img, &mlx->jul.tex.bits_per_pixel, &mlx->jul.tex.line_length, &mlx->jul.tex.endian);
+	
 
 	mlx->hand.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/hand.xpm", &mlx->hand.tex_width, &mlx->hand.tex_height);
 	mlx->hand.addr = mlx_get_data_addr(mlx->hand.img, &mlx->hand.bits_per_pixel, &mlx->hand.line_length, &mlx->hand.endian);

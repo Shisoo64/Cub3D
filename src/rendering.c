@@ -54,6 +54,7 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 	else
 		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
 
+	ray->ZBuffer[x] = perpWallDist;
 	lineHeight = (int)(WIN_H / perpWallDist);
 
 	//calculate lowest and highest pixel to fill in current stripe
@@ -142,6 +143,8 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
 	else
 		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
+
+	ray->ZBuffer[x] = perpWallDist;
 
 	lineHeight = (int)(WIN_H / perpWallDist);
 
@@ -242,53 +245,66 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 	}
 }
 
-void	ft_raycast(t_mlx *mlx, int x)
+void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 {
-	t_raycast	ray;
 	double	cameraX;
 
 	cameraX = 2 * x / (double)WIN_W - 1;
 
-	ray.raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
-	ray.raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
+	ray->raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
+	ray->raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
 
-	ray.mapX = (int)mlx->player.posX;
-	ray.mapY = (int)mlx->player.posY;
+	ray->mapX = (int)mlx->player.posX;
+	ray->mapY = (int)mlx->player.posY;
 
-	if (ray.raydirX == 0)
-		ray.DeltaDistX = 1000;
+	if (ray->raydirX == 0)
+		ray->DeltaDistX = 1000;
 	else
-		ray.DeltaDistX = fabs(1 / ray.raydirX);
+		ray->DeltaDistX = fabs(1 / ray->raydirX);
 
-	if (ray.raydirY == 0)
-		ray.DeltaDistY = 1000;
+	if (ray->raydirY == 0)
+		ray->DeltaDistY = 1000;
 	else
-		ray.DeltaDistY = fabs(1 / ray.raydirY);
+		ray->DeltaDistY = fabs(1 / ray->raydirY);
 
 	//calculate step and initial sideDist
-	if (ray.raydirX < 0)
+	if (ray->raydirX < 0)
 	{
-		ray.stepX = -1;
-		ray.sideDistX = (mlx->player.posX - ray.mapX) * ray.DeltaDistX;
+		ray->stepX = -1;
+		ray->sideDistX = (mlx->player.posX - ray->mapX) * ray->DeltaDistX;
 	}
 	else
 	{
-		ray.stepX = 1;
-		ray.sideDistX = (ray.mapX + 1.0 - mlx->player.posX) * ray.DeltaDistX;
+		ray->stepX = 1;
+		ray->sideDistX = (ray->mapX + 1.0 - mlx->player.posX) * ray->DeltaDistX;
 	}
-	if (ray.raydirY < 0)
+	if (ray->raydirY < 0)
 	{
-		ray.stepY = -1;
-		ray.sideDistY = (mlx->player.posY - ray.mapY) * ray.DeltaDistY;
+		ray->stepY = -1;
+		ray->sideDistY = (mlx->player.posY - ray->mapY) * ray->DeltaDistY;
 	}
 	else
 	{
-		ray.stepY = 1;
-		ray.sideDistY = (ray.mapY + 1.0 - mlx->player.posY) * ray.DeltaDistY;
+		ray->stepY = 1;
+		ray->sideDistY = (ray->mapY + 1.0 - mlx->player.posY) * ray->DeltaDistY;
 	}
-	ft_dda(mlx, &ray);
+	ft_dda(mlx, ray);
 	if (mlx->player.inside == 0)
-		ft_render_out_vline(&ray, mlx, x);
+		ft_render_out_vline(ray, mlx, x);
 	else
-		ft_render_in_vline(&ray, mlx, x);
+		ft_render_in_vline(ray, mlx, x);
+}
+
+// Render the backdrop in the img,
+// raycast each vertical lines and render them in the img
+void	ft_display(t_mlx *mlx)
+{
+	t_raycast	ray;
+	int	x;
+
+	draw_backdrop(mlx);
+	x = 0;
+	while (x < WIN_W)
+		ft_raycast(mlx, &ray, x++);
+	ft_render_sprite(&ray, mlx, mlx->jul);
 }
