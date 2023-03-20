@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:25:54 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:53:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	open_door(t_mlx *mlx)
 
 	mlx->mapname = "maps/julbat.cub";
 
-	mlx->player.dirX_save = mlx->player.dirX;
-	mlx->player.dirY_save = mlx->player.dirY;
+	mlx->player.dirX_save = -mlx->player.dirX;
+	mlx->player.dirY_save = -mlx->player.dirY;
 	mlx->player.posX_save = mlx->player.posX;
 	mlx->player.posY_save = mlx->player.posY;
-	mlx->player.planeX_save = mlx->player.planeX;
-	mlx->player.planeY_save = mlx->player.planeY;
+	mlx->player.planeX_save = -mlx->player.planeX;
+	mlx->player.planeY_save = -mlx->player.planeY;
 
 	mlx->player.inside = 1;
 	mlx->player.biking = -1;
@@ -95,15 +95,19 @@ int	frames(t_mlx *mlx)
 
 	// MESSAGES
 	if (mlx->player.biking == -1
-	&& mlx->player.posX - mlx->player.bike_x <= 0.25 && mlx->player.posX - mlx->player.bike_x >= -0.25 
-	&& mlx->player.posY - mlx->player.bike_y <= 0.25 && mlx->player.posY - mlx->player.bike_y >= -0.25)
+	&& mlx->player.posX - mlx->tmax.x <= 0.25 && mlx->player.posX - mlx->tmax.x >= -0.25 
+	&& mlx->player.posY - mlx->tmax.y <= 0.25 && mlx->player.posY - mlx->tmax.y >= -0.25)
 	{
 		// Message
 		printf("\e[1A\e[2KT-MAX A PROXIMITÉ\n");
 		
 		mlx->message = "Press F to get on the TMAX";
 		if (mlx->player.using == 1)
+		{
+			mlx->tmax.x = 0;
+			mlx->tmax.y = 0;
 			mlx->player.biking = 1;
+		}
 	}
 	if (mlx->message)
 	{
@@ -172,6 +176,11 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->jul.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/jul.xpm", &mlx->jul.tex.tex_width, &mlx->jul.tex.tex_height);
 	mlx->jul.tex.addr = mlx_get_data_addr(mlx->jul.tex.img, &mlx->jul.tex.bits_per_pixel, &mlx->jul.tex.line_length, &mlx->jul.tex.endian);
 	
+	// TMAX SPRITE
+    mlx->tmax.x = TMAX_START_X;
+    mlx->tmax.y = TMAX_START_Y;
+	mlx->tmax.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/tmax_onfoot.xpm", &mlx->tmax.tex.tex_width, &mlx->tmax.tex.tex_height);
+	mlx->tmax.tex.addr = mlx_get_data_addr(mlx->tmax.tex.img, &mlx->tmax.tex.bits_per_pixel, &mlx->tmax.tex.line_length, &mlx->tmax.tex.endian);
 
 	mlx->hand.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/hand.xpm", &mlx->hand.tex_width, &mlx->hand.tex_height);
 	mlx->hand.addr = mlx_get_data_addr(mlx->hand.img, &mlx->hand.bits_per_pixel, &mlx->hand.line_length, &mlx->hand.endian);
@@ -221,10 +230,6 @@ int	main(int ac, char **av)
 	mlx.player.using = 0;	
 	mlx.player.speed = 0;
 	mlx.player.biking = -1;
-
-	//BIKE POS
-	mlx.player.bike_x = 2.5;
-	mlx.player.bike_y = 25.5;
 
 
 	mlx.message = NULL;

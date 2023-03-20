@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:34:58 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:47:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,6 @@ typedef struct s_player {
 	double	posX_save;
 	double	posY_save;
 
-
-	//Bike
-	double	bike_x;
-	double	bike_y;
-
 	double speed;
 	int	inside;
 	int	biking;
@@ -122,6 +117,7 @@ typedef struct s_mlx {
 	t_display	hand2;
 
 	t_sprite	jul;
+	t_sprite	tmax;
 
 	t_display	in_wall;
 	t_display	in_wall2;

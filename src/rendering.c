@@ -306,5 +306,5 @@ void	ft_display(t_mlx *mlx)
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);
-	ft_render_sprite(&ray, mlx, mlx->jul);
+	ft_render_sprite(&ray, mlx, mlx->tmax);
 }

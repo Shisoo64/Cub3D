@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 15:08:08 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:46:39 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 
 
 # define CRASH_SPEED 750
+
+
+
+
+# define TMAX_START_X 2.5
+# define TMAX_START_Y 25.5
+
+
 
 enum e_keycode
 {
