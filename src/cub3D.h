@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/19 15:08:29 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:28:31 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,7 @@
 # include <stdio.h>
 # include "../mlx_linux/mlx.h"
 # include "../libft/libft.h"
-
-// Colors
-# define SKYCOLOR 0x2faee0
-# define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
-
-# define CEILINGCOLOR 0xc4c4c4
-# define IN_FLOORCOLOR 0xc4c4c4
-
-
-# define FOV 0.8
-# define FPS 60
-
-// Screen size
-# define WIN_W 1024
-# define WIN_H 768
-
-// Movement
-# define MOVESPEED 0.00001//0.05
-# define ROTSPEED 0.000005
-
-
-# define CRASH_SPEED 750
-
-enum e_keycode
-{
-	KEY_W = 115,
-	KEY_S = 119,
-	KEY_A = 97,
-	KEY_D = 100,
-	KEY_Q = 113,
-	KEY_E = 101,
-	KEY_F = 102,
-	KEY_M = 109,
-	KEY_ARROW_L = 65361,
-	KEY_ARROW_R = 65363,
-	ESC = 0xFF1B
-};
+#include "player_settings.h"
 
 
 //
@@ -127,6 +91,7 @@ typedef struct s_mlx {
 	t_display	bat3_tex;
 	t_display	door_tex;
 	t_display	in_door_tex;
+	t_display	startscreen;
 	t_display	crash;
 	t_display	bike;
 	t_display	bike_wheel;

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/19 15:07:51 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:34:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,15 @@ void	ft_display(t_mlx *mlx)
 int	frames(t_mlx *mlx)
 {
 	if (mlx->started == 0)
+	{
 		start_screen(mlx);
+		return (0);
+	}
 	else if (mlx->crashed == 1)
+	{
 		crash_screen(mlx);
+		return (0);
+	}
 	else
 	{
 		ft_display(mlx);
@@ -192,6 +198,8 @@ void	ft_parsing(t_mlx *mlx)
 
 
 	mlx->crash.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/crash.xpm", &mlx->crash.tex_width, &mlx->crash.tex_height);
+
+	mlx->startscreen.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/startscreen.xpm", &mlx->startscreen.tex_width, &mlx->startscreen.tex_height);
 
 }
 

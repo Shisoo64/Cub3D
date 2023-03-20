@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/15 19:35:39 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:41:18 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	draw_backdrop(t_mlx *mlx)
 	int	y;
 	int	x;
 	int	sky;
-	int floor;
+	int	floor;
 
 	sky = SKYCOLOR;
 	floor = FLOORCOLOR;
@@ -49,14 +49,12 @@ void	start_screen(t_mlx *mlx)
 
 	if (i++ == 0)
 	{
-		draw_backdrop(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 24, WIN_H - 70, 0xffffff, "Press any key to start");
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->startscreen.img, 0, 0);
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 75, WIN_H - 225, 0xffffff, "Press any key to start");
 	}
 	else if (i == 50000)
 	{
-		draw_backdrop(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->startscreen.img, 0, 0);
 	}
 	if (i >= 100000)
 		i = -1;
@@ -70,7 +68,7 @@ void	crash_screen(t_mlx *mlx)
 	if (i++ == 0)
 	{
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->crash.img, 0, 0);
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 24, WIN_H - 70, 0xffffff, "Press any key");
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 25, WIN_H - 70, 0xffffff, "Press any key");
 	}
 	else if (i == 50000)
 	{
