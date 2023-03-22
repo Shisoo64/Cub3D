@@ -92,8 +92,8 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
       stripe = drawStartX;
       while (stripe < drawEndX)
       {
-        int tex_x = (int)(258 * (stripe - (-spriteWidth / 2 + spriteScreenX)) *  texture.tex.tex_width / spriteWidth) / 256;
-        if(transformY > 0 && stripe > 0 && stripe < WIN_W && transformY < ray->ZBuffer[stripe])
+        int tex_x = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) *  texture.tex.tex_width / spriteWidth) / 256;
+        if(transformY > 0 && stripe > 0 && stripe < WIN_W && transformY - 0.6 < ray->ZBuffer[stripe])
           draw_line_sprite(&texture.tex, &mlx->display, stripe, spriteHeight, drawStartY, drawEndY, tex_x);
         stripe++;
     }
