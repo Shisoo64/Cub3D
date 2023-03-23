@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/15 14:27:23 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:08:55 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	get_map_dimension(t_mlx *mlx)
-{
-	int		fd;
-	int		i;
-	char	*line;
-
-	i = 0;
-	fd = open(mlx->mapname, 0);
-	if (fd == -1)
-	{
-		ft_printf("Error\nProblem with mapname", "%s");
-		exit (0);
-	}
-	line = get_next_line(fd);
-	mlx->map_x = ft_strlen(line) - 1;
-	while (line)
-	{
-		i++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
-	return (i);
-}
 
 void	print_map(char **map)
 {
@@ -89,35 +63,48 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 	mlx->player.dirY = 0.0;
 }
 
-char	**create_map(t_mlx *mlx)
+void	ft_map_height(t_mlx *mlx)
 {
-	char	**map;
-	char	*buf;
+	int		i;
 	int		fd;
-	int		y;
-	int		x;
+	char	*line;
 
-	y = -1;
-	mlx->map_y = get_map_dimension(mlx);
-	fd = open(mlx->mapname, 0);
-	map = malloc(sizeof(int *) * (mlx->map_y + 1));
-	while (++y < mlx->map_y)
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	line = get_next_line(fd);
+	if (!line)
 	{
-		buf = get_next_line(fd);
-		map[y] = malloc(sizeof(int) * (ft_strlen(buf) + 1));
-		if (!buf)
-			break ;
-		x = -1;
-		while (++x < mlx->map_x - 1)
-			map[y][x] = buf[x];
-		map[y][x] = '\0';
-		free(buf);
+		ft_printf("Error\nMap file does not exist or is empty, try again.");
+		exit(0);
 	}
-	map[y] = NULL;
+	mlx->map_x = ft_strlen(line) - 1;
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		i++;
+	}
+	mlx->map_y = i;
+	free(line);
 	close(fd);
+}
 
-	//printmap
-	print_map(map);
+void	ft_fill_map(t_mlx *mlx)
+{
+	int	i;
+	int	fd;
 
-	return (map);
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	ft_map_height(mlx);
+	mlx->map = malloc(sizeof(char *) * mlx->map_y + 1);
+	if (!mlx->map)
+		return ;
+	while (i < mlx->map_y)
+	{
+		mlx->map[i] = get_next_line(fd);
+		printf("map[%d] is %s", i, mlx->map[i]);
+		i++;
+	}
+	close(fd);
 }

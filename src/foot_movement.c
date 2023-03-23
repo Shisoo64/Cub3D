@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   foot_movement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 15:11:16 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:33:52 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,10 @@ void	rotate_player(int multi, t_player *player)
 
 void	input_manager_foot(t_mlx *mlx)
 {
-	int	mult;
-
-	mult = 1;
-	if (mlx->player.inside == 1)
-		mult = 2;
 	if (mlx->player.up == 1)
-		move_player(-750 * mult, &mlx->player, mlx->map);
+		move_player(-750, &mlx->player, mlx->map);
 	if (mlx->player.down == 1)
-		move_player(500 * mult, &mlx->player, mlx->map);
+		move_player(500, &mlx->player, mlx->map);
 
 	if (mlx->player.rot_r == 1)
 		rotate_player(-4200, &mlx->player);
@@ -71,10 +66,9 @@ void	input_manager_foot(t_mlx *mlx)
 		rotate_player(4200, &mlx->player);
 
 	if (mlx->player.left == 1)
-		strafe_player(-300 * mult, &mlx->player, mlx->map);
+		strafe_player(-300, &mlx->player, mlx->map);
 	if (mlx->player.right == 1)
-		strafe_player(300 * mult, &mlx->player, mlx->map);
-
+		strafe_player(300, &mlx->player, mlx->map);
 
 	int mouse_x = 0;
 	int mouse_y = 0;

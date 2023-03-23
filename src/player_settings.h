@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_settings.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:46:39 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:59:39 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@
 # define SKYCOLOR 0x2faee0
 # define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
 
-# define CEILINGCOLOR 0xc4c4c4
-# define IN_FLOORCOLOR 0xc4c4c4
 
-
-# define FOV 0.8
+# define FOV 0.6
 # define FPS 60
 
 // Screen size
@@ -31,17 +28,6 @@
 // Movement
 # define MOVESPEED 0.00001//0.05
 # define ROTSPEED 0.000005
-
-
-# define CRASH_SPEED 750
-
-
-
-
-# define TMAX_START_X 2.5
-# define TMAX_START_Y 25.5
-
-
 
 enum e_keycode
 {
@@ -57,6 +43,5 @@ enum e_keycode
 	KEY_ARROW_R = 65363,
 	ESC = 0xFF1B
 };
-
 
 #endif

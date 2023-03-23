@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:45:05 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:04:23 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 int	key_press(int key, t_mlx *mlx)
 {
 	if (key == ESC)
-		exit_game(mlx);
-	else if (mlx->started == 0)
-		mlx->started = 1;
-	else if (mlx->crashed == 1)
 		exit_game(mlx);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 1;
@@ -32,18 +28,6 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->player.left = 1;
 	else if (key == KEY_D)
 		mlx->player.right = 1;
-	else if (key == KEY_F)
-		mlx->player.using = 1;
-
-	// Stop biking
-	if (mlx->player.biking == 1 && mlx->player.using && mlx->player.speed == 0)
-	{
-		mlx->player.biking = -1;
-		mlx->player.using = 0;
-		mlx->tmax.x = mlx->player.posX;
-		mlx->tmax.y = mlx->player.posY;
-	}
-
 	return (0);
 }
 
@@ -63,16 +47,11 @@ int	key_release(int key, t_mlx *mlx)
 		mlx->player.left = 0;
 	else if (key == KEY_D)
 		mlx->player.right = 0;
-	else if (key == KEY_F)
-		mlx->player.using = 0;
 	return (0);
 }
 
 int	input_manager(t_mlx *mlx)
 {
-	if (mlx->player.inside != 1 && mlx->player.biking == 1)
-		input_manager_bike(mlx);
-	else
-		input_manager_foot(mlx);
+	input_manager_foot(mlx);
 	return (0);
 }

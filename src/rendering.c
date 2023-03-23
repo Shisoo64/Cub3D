@@ -12,103 +12,6 @@
 
 #include "rendering.h"
 
-//
-//		OUTSIDE
-void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
-{
-	double	step;
-	double	tex_pos;
-	int		color;
-	int		tex_y;
-	int		y;
-
-	step = 0.75 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 0.82) * step;
-	y = draw_start;
-	tex_x = texture->tex_width - tex_x;
-	while (y < draw_end)
-	{
-		tex_y = (int)tex_pos;
-		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
-
-		// CODE POUR FAIRE DE L'OMBRE SUR LES TEXTURES VVVV
-		//if (ray->side == 1)
-		//	color = color / 2;
-		
-		my_mlx_pixel_put(display, x, y, color);
-		y++;
-	}
-}
-
-// Draw a vertical line of pixels in the img
-void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
-{
-	int 	drawStart;
-	int 	drawEnd;
-	double	perpWallDist;
-	int		lineHeight;
-
-	if (ray->side == 0)
-		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
-	else
-		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
-
-	ray->ZBuffer[x] = perpWallDist;
-	lineHeight = (int)(WIN_H / perpWallDist);
-
-	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight * 2.1 + WIN_H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight * 0.1 + WIN_H / 2;
-	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
-
-
-	/// Couper la fonction ici ///
-
-	//Get line on texture
-
-	double	wall_x;
-	int		tex_x;
-
-	if (ray->side == 0)
-		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
-	else
-		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
-	wall_x -= floor(wall_x);
-	// bat_tex = texture en fonction du wall_type. Pas toujours bat_tex
-	tex_x = (int)(wall_x * (double)mlx->bat_tex.tex_width);
-	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->bat_tex.tex_width - tex_x - 1;
-	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->bat_tex.tex_width - tex_x - 1;
-
-	if (ray->wall_type == 1)
-		draw_line_texture(&mlx->bat_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 2)
-		draw_line_texture(&mlx->bat2_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 3)
-		draw_line_texture(&mlx->bat3_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 999)
-	{
-		if (perpWallDist <= 0.15)
-		{
-			if (mlx->player.using == 1)
-				open_door(mlx);
-			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
-			else
-				mlx->message = "Press F to open door";
-		}
-		draw_line_texture(&mlx->door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	}
-}
-
-
-
-//		INSIDE
-//
 void    draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
@@ -132,7 +35,7 @@ void    draw_short_line_texture(t_display *texture, t_display *display, int x, i
 }
 
 // Draw a vertical line of pixels in the img
-void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
+void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 {
 	int 	drawStart;
 	int 	drawEnd;
@@ -143,8 +46,6 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
 	else
 		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
-
-	ray->ZBuffer[x] = perpWallDist;
 
 	lineHeight = (int)(WIN_H / perpWallDist);
 
@@ -160,7 +61,6 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 	/// Couper la fonction ici ///
 
 	//Get line on texture
-
 	double	wall_x;
 	int		tex_x;
 
@@ -171,31 +71,15 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 	wall_x -= floor(wall_x);
 
 	// in_wall = texture en fonction du wall_type. Pas toujours in_wall
-	tex_x = (int)(wall_x * (double)mlx->in_wall.tex_width);
+	tex_x = (int)(wall_x * (double)mlx->wall.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->in_wall.tex_width - tex_x - 1;
+		tex_x = mlx->wall.tex_width - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->in_wall.tex_width - tex_x - 1;
+		tex_x = mlx->wall.tex_width - tex_x - 1;
 
 	if (ray->wall_type == 1)
-		draw_short_line_texture(&mlx->in_wall, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 2)
-		draw_short_line_texture(&mlx->in_wall2, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 999)
-	{
-		if (perpWallDist <= 0.15)
-		{
-			if (mlx->player.using == 1)
-				close_door(mlx);
-			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
-			else
-				mlx->message = "Press F to open door";
-		}
-		draw_short_line_texture(&mlx->in_door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	}
+		draw_short_line_texture(&mlx->wall, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 }
-
-
 
 // Digital Differential Analysis
 // iterate through each line in the grid the ray intersect until it hit a wall
@@ -221,25 +105,6 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			&& mlx->map[ray->mapY][ray->mapX] == '1')
 		{
 			ray->wall_type = 1;
-			break ;
-		}
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '2')
-		{
-			ray->wall_type = 2;
-			break ;
-		}
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '3')
-		{
-			ray->wall_type = 3;
-			break ;
-		}
-		//Check if ray has hit an enterable building
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == 'D')
-		{
-			ray->wall_type = 999;
 			break ;
 		}
 	}
@@ -289,10 +154,7 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 		ray->sideDistY = (ray->mapY + 1.0 - mlx->player.posY) * ray->DeltaDistY;
 	}
 	ft_dda(mlx, ray);
-	if (mlx->player.inside == 0)
-		ft_render_out_vline(ray, mlx, x);
-	else
-		ft_render_in_vline(ray, mlx, x);
+	ft_render_vline(ray, mlx, x);
 }
 
 // Render the backdrop in the img,
@@ -306,5 +168,4 @@ void	ft_display(t_mlx *mlx)
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);
-	ft_render_sprite(&ray, mlx, mlx->tmax);
 }

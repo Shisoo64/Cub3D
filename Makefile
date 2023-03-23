@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
+#    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/20 15:46:18 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/03/23 15:26:24 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,21 @@ NAME = cub3D
 SRCS =	src/main.c \
 		src/input_manager.c \
 		src/foot_movement.c \
-		src/bike_movement.c \
-		src/sprites.c \
 		src/screens.c \
 		src/utils.c \
 		src/parsing.c \
 		src/rendering.c \
 		src/map.c \
 		src/free.c \
-		src/error.c
+		src/error.c \
 
 SRCS_BONUS =	src_bonus/main.c \
+				src_bonus/bike_movement.c \
+				src_bonus/sprites.c \
 				src_bonus/pathfinding.c \
 				src_bonus/utils.c \
 				src_bonus/utils2.c \
 				src_bonus/enemies.c \
-				src_bonus/sprites.c \
 				src_bonus/map.c \
 				src_bonus/free.c \
 				src_bonus/error.c \
