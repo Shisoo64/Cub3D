@@ -97,7 +97,6 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 		{
 			if (mlx->player.using == 1)
 				open_door(mlx);
-			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
 			else
 				mlx->message = "Press F to open door";
 		}
@@ -187,7 +186,6 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 		{
 			if (mlx->player.using == 1)
 				close_door(mlx);
-			// Mettre une str dans player et juste changer le msg et faire le string_put dans frames???
 			else
 				mlx->message = "Press F to open door";
 		}
@@ -195,6 +193,36 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 	}
 }
 
+//Check if ray has hit a wall
+//and set the type of wall that was hit 
+int	check_wall(t_mlx *mlx, t_raycast *ray)
+{
+	if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == '1')
+	{
+		ray->wall_type = 1;
+		return (1);
+	}
+	else if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == '2')
+	{
+		ray->wall_type = 2;
+		return (1);
+	}
+	else if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == '3')
+	{
+		ray->wall_type = 3;
+		return (1);
+	}
+	else if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == 'D')
+	{
+		ray->wall_type = 999;
+		return (1);
+	}
+	return (0);
+}
 
 
 // Digital Differential Analysis
@@ -215,44 +243,19 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 			ray->mapY += ray->stepY;
 			ray->side = 1;
 		}
-
-		//Check if ray has hit a wall
-		if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '1')
-		{
-			ray->wall_type = 1;
+		if (check_wall(mlx, ray))
 			break ;
-		}
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '2')
-		{
-			ray->wall_type = 2;
-			break ;
-		}
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '3')
-		{
-			ray->wall_type = 3;
-			break ;
-		}
-		//Check if ray has hit an enterable building
-		else if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == 'D')
-		{
-			ray->wall_type = 999;
-			break ;
-		}
 	}
 }
 
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 {
-	double	cameraX;
+	double	camera_x;
 
-	cameraX = 2 * x / (double)WIN_W - 1;
+	camera_x = 2 * x / (double)WIN_W - 1;
 
-	ray->raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
-	ray->raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
+	ray->raydirX = mlx->player.dirX + mlx->player.planeX * camera_x;
+	ray->raydirY = mlx->player.dirY + mlx->player.planeY * camera_x;
 
 	ray->mapX = (int)mlx->player.posX;
 	ray->mapY = (int)mlx->player.posY;
@@ -295,16 +298,22 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 		ft_render_in_vline(ray, mlx, x);
 }
 
+void	ft_sprites_controller(t_mlx *mlx, t_raycast *ray)
+{
+	ft_render_sprite(ray, mlx, mlx->tmax);
+	ft_render_sprite(ray, mlx, mlx->jul);
+}
+
 // Render the backdrop in the img,
 // raycast each vertical lines and render them in the img
 void	ft_display(t_mlx *mlx)
 {
 	t_raycast	ray;
-	int	x;
+	int			x;
 
 	draw_backdrop(mlx);
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);
-	ft_render_sprite(&ray, mlx, mlx->tmax);
+	ft_sprites_controller(mlx, &ray);
 }

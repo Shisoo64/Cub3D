@@ -41,7 +41,7 @@ void    draw_line_sprite(t_display *texture, t_display *display, int x, int line
 
 void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
 {
-    int stripe;
+	int	stripe;
 
     /*for(int i = 0; i < numSprites; i++)
     {

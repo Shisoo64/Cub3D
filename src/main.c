@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 18:13:59 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:08:53 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,46 @@ void	close_door(t_mlx *mlx)
 	mlx->map = create_map(mlx);
 }
 
+void	ft_dialog(t_mlx *mlx)
+{
+	static int	i;
+
+
+	printf ("Dialog value:%d\n", mlx->dialog);
+
+	if (i++ == 0)
+	{
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 25, WIN_H - 70, 0xffffff, "Press any key");
+	}
+	if (mlx->dialog != 0)
+	{
+		if (mlx->dialog == 1)
+			mlx->message = NULL;
+		else if (mlx->dialog == 2)
+			mlx->message = "Heeeeey, salut mon gars, c'est bel et bien moi, le jul en personne";
+		else if (mlx->dialog == 3)
+			mlx->message = "eh bah c'est super";
+		else if (mlx->dialog == 4)
+			mlx->message = "Allez la bise";
+		else
+		{
+			mlx->dialog = 0;
+			return ;
+		}
+
+		if (mlx->player.using == -1)
+			mlx->dialog++;
+	}
+	if (i >= 100000)
+		i = -1;
+}
+
 int	frames(t_mlx *mlx)
 {
+
+	if (mlx->dialog != 0)
+		ft_dialog(mlx);
+
 	if (mlx->started == 0)
 	{
 		start_screen(mlx);
@@ -94,19 +132,26 @@ int	frames(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 
 	// MESSAGES
-	if (mlx->player.biking == -1
-	&& mlx->player.posX - mlx->tmax.x <= 0.25 && mlx->player.posX - mlx->tmax.x >= -0.25 
-	&& mlx->player.posY - mlx->tmax.y <= 0.25 && mlx->player.posY - mlx->tmax.y >= -0.25)
+	if (mlx->player.biking == -1)
 	{
-		// Message
-		printf("\e[1A\e[2KT-MAX A PROXIMITÉ\n");
-		
-		mlx->message = "Press F to get on the TMAX";
-		if (mlx->player.using == 1)
+		if (mlx->player.posX - mlx->tmax.x <= 0.25 && mlx->player.posX - mlx->tmax.x >= -0.25 
+			&& mlx->player.posY - mlx->tmax.y <= 0.25 && mlx->player.posY - mlx->tmax.y >= -0.25)
 		{
-			mlx->tmax.x = 0;
-			mlx->tmax.y = 0;
-			mlx->player.biking = 1;
+			mlx->message = "Press F to ride the T-MAX";
+			if (mlx->player.using == 1)
+			{
+				mlx->tmax.x = 0;
+				mlx->tmax.y = 0;
+				mlx->player.biking = 1;
+			}
+		}
+		else if (mlx->dialog == 0
+			&& mlx->player.posX - mlx->jul.x <= 0.25 && mlx->player.posX - mlx->jul.x >= -0.25 
+			&& mlx->player.posY - mlx->jul.y <= 0.25 && mlx->player.posY - mlx->jul.y >= -0.25)
+		{
+			mlx->message = "Press F to talk";
+			if (mlx->player.using == 1)
+				mlx->dialog = 1;
 		}
 	}
 	if (mlx->message)
@@ -114,22 +159,16 @@ int	frames(t_mlx *mlx)
 		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, mlx->message);
 		mlx->message = NULL;
 	}
-	
+
+
+	mlx->player.using = 0;
+
 	return (0);
 }
 
 int	exit_hook(t_mlx *mlx)
 {
 	exit_game(mlx);
-	return (0);
-}
-
-int	mouse_hook(int key, t_mlx *mlx)
-{
-	(void)mlx;
-	//printf("key:%d\n", key);
-	if (key == 1)
-		printf("\e[2APAN                            \n                                \n");
 	return (0);
 }
 
@@ -155,7 +194,7 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->in_door_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/in_door.xpm", &mlx->in_door_tex.tex_width, &mlx->in_door_tex.tex_height);
 	mlx->in_door_tex.addr = mlx_get_data_addr(mlx->in_door_tex.img, &mlx->in_door_tex.bits_per_pixel, &mlx->in_door_tex.line_length, &mlx->in_door_tex.endian);
 
-	
+
 
 	mlx->bat_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_wall.xpm", &mlx->bat_tex.tex_width, &mlx->bat_tex.tex_height);
 	mlx->bat_tex.addr = mlx_get_data_addr(mlx->bat_tex.img, &mlx->bat_tex.bits_per_pixel, &mlx->bat_tex.line_length, &mlx->bat_tex.endian);
@@ -227,18 +266,20 @@ int	main(int ac, char **av)
 	mlx.player.left = 0;
 	mlx.player.right = 0;
 	mlx.player.inside = 0;
-	mlx.player.using = 0;	
+	mlx.player.using = 0;
 	mlx.player.speed = 0;
 	mlx.player.biking = -1;
 
 
+	mlx.dialog = 0;
 	mlx.message = NULL;
 	mlx.started = 0;
 	mlx.crashed = 0;
+
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
 
-	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
+
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);

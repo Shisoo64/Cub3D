@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:47:07 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:52:27 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_mlx {
 	int			map_x;
 	int			started;
 	int			crashed;
+	int			dialog;
 	char		*message;
 	t_display	display;
 	t_player	player;

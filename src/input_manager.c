@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:45:05 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:01:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	key_release(int key, t_mlx *mlx)
 	else if (key == KEY_D)
 		mlx->player.right = 0;
 	else if (key == KEY_F)
-		mlx->player.using = 0;
+		mlx->player.using = -1;
 	return (0);
 }
 
