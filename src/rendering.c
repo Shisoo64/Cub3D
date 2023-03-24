@@ -23,7 +23,7 @@ void    draw_line_texture(t_display *texture, t_display *display, int x, int lin
 	int		y;
 
 	step = 0.75 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 0.82) * step;
+	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 0.93) * step;
 	y = draw_start;
 	tex_x = texture->tex_width - tex_x;
 	while (y < draw_end)
@@ -61,7 +61,7 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 	drawStart = -lineHeight * 2.1 + WIN_H / 2;
 	if (drawStart < 0)
 		drawStart = 0;
-	drawEnd = lineHeight * 0.1 + WIN_H / 2;
+	drawEnd = lineHeight * 0.25 + WIN_H / 2;
 	if (drawEnd >= WIN_H)
 		drawEnd = WIN_H - 1;
 
@@ -300,8 +300,14 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 
 void	ft_sprites_controller(t_mlx *mlx, t_raycast *ray)
 {
-	ft_render_sprite(ray, mlx, mlx->tmax);
-	ft_render_sprite(ray, mlx, mlx->jul);
+	if (mlx->player.inside)
+	{
+		ft_render_sprite(ray, mlx, mlx->jul);
+	}
+	else
+	{
+		ft_render_sprite(ray, mlx, mlx->tmax);
+	}
 }
 
 // Render the backdrop in the img,

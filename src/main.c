@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 18:08:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 01:03:36 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,60 @@ void	close_door(t_mlx *mlx)
 	mlx->map = create_map(mlx);
 }
 
+void	draw_dialog(t_mlx *mlx)
+{
+	int	y;
+	int	x;
+
+	y = WIN_H - (WIN_H / 5);
+	while (++y <= WIN_H)
+	{
+		x = -1;
+		while (++x <= WIN_W)
+			my_mlx_pixel_put(&mlx->display, x, y, 0);
+	}
+}
+
 void	ft_dialog(t_mlx *mlx)
 {
-	static int	i;
+	draw_dialog(mlx);
 
-
-	printf ("Dialog value:%d\n", mlx->dialog);
-
-	if (i++ == 0)
-	{
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 25, WIN_H - 70, 0xffffff, "Press any key");
-	}
-	if (mlx->dialog != 0)
+	if (mlx->dialog >= 1 && mlx->dialog < 10)
 	{
 		if (mlx->dialog == 1)
 			mlx->message = NULL;
 		else if (mlx->dialog == 2)
-			mlx->message = "Heeeeey, salut mon gars, c'est bel et bien moi, le jul en personne";
+			mlx->message = "wsh mon sang sa va ou koi??";
 		else if (mlx->dialog == 3)
-			mlx->message = "eh bah c'est super";
+			mlx->message = "g besoin ke tu maide sur un truk";
 		else if (mlx->dialog == 4)
-			mlx->message = "Allez la bise";
+			mlx->message = "fodrai ke tu prene le t-max et ke taille fere des tour a fond";
+		else if (mlx->dialog == 5)
+			mlx->message = "c ok pr toi????";
+		else if (mlx->dialog == 6)
+			mlx->message = "Aller tien pren les cle il et garer juste a teco";
+		else if (mlx->dialog == 7)
+			mlx->message = "*you've obtained the keys of a T-MAX*";
+		else
+		{
+			mlx->tmaxkeys = 1;
+			mlx->dialog = 0;
+			return ;
+		}
+
+		if (mlx->player.using == -1)
+			mlx->dialog++;
+	}
+	else if (mlx->dialog >= 10 && mlx->dialog < 20)
+	{
+		if (mlx->dialog == 10)
+			mlx->message = NULL;
+		else if (mlx->dialog == 12)
+			mlx->message = "Heeeeey, salut mon gars, c'est bel et bien moi, le jul en personne";
+		else if (mlx->dialog == 13)
+			mlx->message = "eh bah c'est super";
+		else if (mlx->dialog == 14)
+			mlx->message = "Allez, bye mon pote";
 		else
 		{
 			mlx->dialog = 0;
@@ -86,15 +119,10 @@ void	ft_dialog(t_mlx *mlx)
 		if (mlx->player.using == -1)
 			mlx->dialog++;
 	}
-	if (i >= 100000)
-		i = -1;
 }
 
 int	frames(t_mlx *mlx)
 {
-
-	if (mlx->dialog != 0)
-		ft_dialog(mlx);
 
 	if (mlx->started == 0)
 	{
@@ -128,6 +156,9 @@ int	frames(t_mlx *mlx)
 			i = 0;
 	}
 
+	if (mlx->dialog != 0)
+		ft_dialog(mlx);
+
 	// DISPLAY THE IMG
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 
@@ -137,8 +168,11 @@ int	frames(t_mlx *mlx)
 		if (mlx->player.posX - mlx->tmax.x <= 0.25 && mlx->player.posX - mlx->tmax.x >= -0.25 
 			&& mlx->player.posY - mlx->tmax.y <= 0.25 && mlx->player.posY - mlx->tmax.y >= -0.25)
 		{
-			mlx->message = "Press F to ride the T-MAX";
-			if (mlx->player.using == 1)
+			if (mlx->tmaxkeys)
+				mlx->message = "Press F to ride the T-MAX";
+			else
+				mlx->message = "You don't have the keys!";
+			if (mlx->player.using == 1 && mlx->tmaxkeys)
 			{
 				mlx->tmax.x = 0;
 				mlx->tmax.y = 0;
@@ -156,7 +190,7 @@ int	frames(t_mlx *mlx)
 	}
 	if (mlx->message)
 	{
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, mlx->message);
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 3, WIN_H - 50, 0xffffff, mlx->message);
 		mlx->message = NULL;
 	}
 
@@ -210,8 +244,8 @@ void	ft_parsing(t_mlx *mlx)
 
 
 	// JUL SPRITE
-    mlx->jul.x = 5;
-    mlx->jul.y = 25;
+    mlx->jul.x = 4.3;
+    mlx->jul.y = 6.2;
 	mlx->jul.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/jul.xpm", &mlx->jul.tex.tex_width, &mlx->jul.tex.tex_height);
 	mlx->jul.tex.addr = mlx_get_data_addr(mlx->jul.tex.img, &mlx->jul.tex.bits_per_pixel, &mlx->jul.tex.line_length, &mlx->jul.tex.endian);
 	
@@ -267,9 +301,12 @@ int	main(int ac, char **av)
 	mlx.player.right = 0;
 	mlx.player.inside = 0;
 	mlx.player.using = 0;
+
+
 	mlx.player.speed = 0;
 	mlx.player.biking = -1;
 
+	mlx.tmaxkeys = 0;
 
 	mlx.dialog = 0;
 	mlx.message = NULL;

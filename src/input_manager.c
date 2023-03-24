@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 17:01:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 00:18:04 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	key_release(int key, t_mlx *mlx)
 
 int	input_manager(t_mlx *mlx)
 {
+	if (mlx->dialog != 0)
+		return (0);
 	if (mlx->player.inside != 1 && mlx->player.biking == 1)
 		input_manager_bike(mlx);
 	else
