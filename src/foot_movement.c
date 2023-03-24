@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 13:01:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:14:43 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	move_player(int multi, t_player *player, char **map)
 {
-	if (!ft_strchr("123JSD" ,map[(int)player->posY]
+	if (!ft_strchr("123JAD" ,map[(int)player->posY]
 		[(int)(player->posX + (player->dirX * MOVESPEED * multi))]))
 		player->posX += (player->dirX * MOVESPEED) * multi;
-	if (!ft_strchr("123JSD" ,map[(int)(player->posY + (player->dirY * MOVESPEED * multi))]
+	if (!ft_strchr("123JAD" ,map[(int)(player->posY + (player->dirY * MOVESPEED * multi))]
 		[(int)player->posX]))
 		player->posY += (player->dirY * MOVESPEED) * multi;
 	//printf("\e[2AposX:%lf             \n", player->posX);
@@ -26,11 +26,11 @@ void	move_player(int multi, t_player *player, char **map)
 
 void	strafe_player(int multi, t_player *player, char **map)
 {
-	if (map[(int)player->posY]
-		[(int)(player->posX + (player->planeX * MOVESPEED * multi))] != '1')
+	if (!ft_strchr("123JAD" ,map[(int)player->posY]
+		[(int)(player->posX + (player->planeX * MOVESPEED * multi))]))
 		player->posX += (player->planeX * MOVESPEED) * multi;
-	if (map[(int)(player->posY + (player->planeY * MOVESPEED * multi))]
-		[(int)player->posX] != '1')
+	if (!ft_strchr("123JAD" ,map[(int)(player->posY + (player->planeY * MOVESPEED * multi))]
+		[(int)player->posX]))
 		player->posY += (player->planeY * MOVESPEED) * multi;
 	//printf("\e[2AposX:%lf             \n", player->posX);
 	//printf("posY:%lf              \n", player->posY);
@@ -65,9 +65,9 @@ void	input_manager_foot(t_mlx *mlx)
 	if (mlx->player.down == 1)
 		move_player(500 * mult, &mlx->player, mlx->map);
 
-	if (mlx->player.rot_r == 1)
-		rotate_player(-4200, &mlx->player);
 	if (mlx->player.rot_l == 1)
+		rotate_player(-4200, &mlx->player);
+	if (mlx->player.rot_r == 1)
 		rotate_player(4200, &mlx->player);
 
 	if (mlx->player.left == 1)

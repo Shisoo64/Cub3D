@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/15 14:27:23 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:07:37 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 		{
 			if (map[y][x] == 'N')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
@@ -74,13 +74,13 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 			}
 			else if (map[y][x] == 'E')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 			else if (map[y][x] == 'W')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}

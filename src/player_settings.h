@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 17:46:39 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:37:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 
 
 
-# define TMAX_START_X 2.5
-# define TMAX_START_Y 25.5
+# define TMAX_START_X 8.75
+# define TMAX_START_Y 30.5
 
 
 

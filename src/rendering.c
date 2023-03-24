@@ -233,7 +233,7 @@ int	check_wall(t_mlx *mlx, t_raycast *ray)
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
-		&& mlx->map[ray->mapY][ray->mapX] == 'S')
+		&& mlx->map[ray->mapY][ray->mapX] == 'A')
 	{
 		ray->wall_type = 91;
 		return (1);

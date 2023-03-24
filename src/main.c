@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 13:07:50 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:02:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,61 @@ void	draw_dialog(t_mlx *mlx)
 	}
 }
 
-void	ft_dialog(t_mlx *mlx)
-{
-	draw_dialog(mlx);
 
-	if (mlx->dialog >= 1 && mlx->dialog < 10)
+
+
+
+void	starting_dialog(t_mlx *mlx)
+{
+	if (mlx->dialog == 1)
 	{
-		if (mlx->dialog == 1)
+		// Jouer une musique de jul
+		mlx->message = "*sonnerie de telephone*";
+	}
+	else if (mlx->dialog == 2)
+	{
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		mlx->message = "slt la famille c JuL";
+	}
+	else if (mlx->dialog == 3)
+	{
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		mlx->message = "oe fodrai juste ke tu viene me voir vite fai";
+	}
+	else if (mlx->dialog == 4)
+	{
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		mlx->message = "jui dan le bat tou seul o mileu tu pe pa louper";
+	}
+	else if (mlx->dialog == 5)
+	{
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		mlx->message = "aller a tte";
+	}
+	else
+	{
+		mlx->dialog = 0;
+		return ;
+	}
+	if (mlx->player.using == -1)
+		mlx->dialog++;
+}
+
+void	jul_dialog(t_mlx *mlx)
+{
+	if (mlx->dialog == 10)
 			mlx->message = NULL;
-		else if (mlx->dialog == 2)
+		else if (mlx->dialog == 11)
 			mlx->message = "wsh mon sang sa va ou koi??";
-		else if (mlx->dialog == 3)
+		else if (mlx->dialog == 12)
 			mlx->message = "g besoin ke tu maide sur un truk";
-		else if (mlx->dialog == 4)
+		else if (mlx->dialog == 13)
 			mlx->message = "fodrai ke tu prene le t-max et ke taille fere des tour a fond";
-		else if (mlx->dialog == 5)
+		else if (mlx->dialog == 14)
 			mlx->message = "c ok pr toi????";
-		else if (mlx->dialog == 6)
+		else if (mlx->dialog == 15)
 			mlx->message = "Aller tien pren les cle il et garer juste a teco";
-		else if (mlx->dialog == 7)
+		else if (mlx->dialog == 16)
 			mlx->message = "*you've obtained the keys of a T-MAX*";
 		else
 		{
@@ -99,26 +135,15 @@ void	ft_dialog(t_mlx *mlx)
 
 		if (mlx->player.using == -1)
 			mlx->dialog++;
-	}
-	else if (mlx->dialog >= 10 && mlx->dialog < 20)
-	{
-		if (mlx->dialog == 10)
-			mlx->message = NULL;
-		else if (mlx->dialog == 12)
-			mlx->message = "Heeeeey, salut mon gars, c'est bel et bien moi, le jul en personne";
-		else if (mlx->dialog == 13)
-			mlx->message = "eh bah c'est super";
-		else if (mlx->dialog == 14)
-			mlx->message = "Allez, bye mon pote";
-		else
-		{
-			mlx->dialog = 0;
-			return ;
-		}
+}
 
-		if (mlx->player.using == -1)
-			mlx->dialog++;
-	}
+void	ft_dialog(t_mlx *mlx)
+{
+	if (mlx->dialog >= 1 && mlx->dialog < 10)
+		starting_dialog(mlx);
+	else if (mlx->dialog >= 10 && mlx->dialog < 20)
+		jul_dialog(mlx);
+	draw_dialog(mlx);
 }
 
 int	frames(t_mlx *mlx)
@@ -185,7 +210,7 @@ int	frames(t_mlx *mlx)
 		{
 			mlx->message = "Press F to talk";
 			if (mlx->player.using == 1)
-				mlx->dialog = 1;
+				mlx->dialog = 10;
 		}
 	}
 	if (mlx->message)
@@ -261,6 +286,8 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->hand2.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/hand2.xpm", &mlx->hand2.tex_width, &mlx->hand2.tex_height);
 	mlx->hand2.addr = mlx_get_data_addr(mlx->hand2.img, &mlx->hand2.bits_per_pixel, &mlx->hand2.line_length, &mlx->hand2.endian);
 	
+	mlx->phone.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/phone.xpm", &mlx->phone.tex_width, &mlx->phone.tex_height);
+	mlx->phone.addr = mlx_get_data_addr(mlx->phone.img, &mlx->phone.bits_per_pixel, &mlx->phone.line_length, &mlx->phone.endian);
 
 
 
@@ -308,7 +335,7 @@ int	main(int ac, char **av)
 
 	mlx.tmaxkeys = 0;
 
-	mlx.dialog = 0;
+	mlx.dialog = 1;
 	mlx.message = NULL;
 	mlx.started = 0;
 	mlx.crashed = 0;

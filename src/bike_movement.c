@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:05:19 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 13:08:02 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:14:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 {
-	if (!ft_strchr("123JSD" ,mlx->map[(int)player->posY]
+	if (!ft_strchr("123JAD" ,mlx->map[(int)player->posY]
 		[(int)(player->posX + (player->dirX * MOVESPEED * speed))]))
 		player->posX += (player->dirX * MOVESPEED) * speed;
-	if (!ft_strchr("123JSD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
+	if (!ft_strchr("123JAD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
 		[(int)player->posX]))
 		player->posY += (player->dirY * MOVESPEED) * speed;
 
 
 	// CHECK WALL CRASH
-	if (ft_strchr("123JSD" ,mlx->map[(int)player->posY]
+	if (ft_strchr("123JAD" ,mlx->map[(int)player->posY]
 		[(int)(player->posX + (player->dirX * MOVESPEED * speed))]) && speed >= CRASH_SPEED)
 		mlx->crashed = 1;
-	if (ft_strchr("123JSD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
+	if (ft_strchr("123JAD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
 		[(int)player->posX]) && speed >= CRASH_SPEED)
 		mlx->crashed = 1;
 }
@@ -78,9 +78,9 @@ void	input_manager_bike(t_mlx *mlx)
 	if (mlx->player.up == 0 && mlx->player.speed <= 0)
 		mlx->player.speed += 20 * (1.3 - coef);
 
-	if (mlx->player.rot_l == 1)
-		rotate_player((5000 - mlx->player.speed) * coef, &mlx->player);
 	if (mlx->player.rot_r == 1)
+		rotate_player((5000 - mlx->player.speed) * coef, &mlx->player);
+	if (mlx->player.rot_l == 1)
 		rotate_player((-5000 + mlx->player.speed) * coef, &mlx->player);
 
 	if (mlx->player.speed <= 10 && mlx->player.speed >= -10)
