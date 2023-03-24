@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 15:02:40 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:46:23 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,22 @@ void	starting_dialog(t_mlx *mlx)
 	}
 	else if (mlx->dialog == 2)
 	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "slt la famille c JuL";
 	}
 	else if (mlx->dialog == 3)
 	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "oe fodrai juste ke tu viene me voir vite fai";
 	}
 	else if (mlx->dialog == 4)
 	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "jui dan le bat tou seul o mileu tu pe pa louper";
 	}
 	else if (mlx->dialog == 5)
 	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 42, WIN_H - 332);
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "aller a tte";
 	}
 	else
@@ -123,7 +123,7 @@ void	jul_dialog(t_mlx *mlx)
 		else if (mlx->dialog == 14)
 			mlx->message = "c ok pr toi????";
 		else if (mlx->dialog == 15)
-			mlx->message = "Aller tien pren les cle il et garer juste a teco";
+			mlx->message = "Aller tien pren les cle il et garer juste derier le batimen";
 		else if (mlx->dialog == 16)
 			mlx->message = "*you've obtained the keys of a T-MAX*";
 		else
