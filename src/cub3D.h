@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 00:41:42 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:50:42 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int		input_manager(t_mlx *mlx);
 
 //
 //		TRUCS
-void	open_door(t_mlx *mlx);
+void	open_door(t_mlx *mlx, char *mapname);
 void	close_door(t_mlx *mlx);
 
 //

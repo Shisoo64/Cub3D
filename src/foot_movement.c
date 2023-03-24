@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/20 15:11:16 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:01:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	move_player(int multi, t_player *player, char **map)
 {
-	if (map[(int)player->posY]
-		[(int)(player->posX + (player->dirX * MOVESPEED * multi))] != '1')
+	if (!ft_strchr("123JSD" ,map[(int)player->posY]
+		[(int)(player->posX + (player->dirX * MOVESPEED * multi))]))
 		player->posX += (player->dirX * MOVESPEED) * multi;
-	if (map[(int)(player->posY + (player->dirY * MOVESPEED * multi))]
-		[(int)player->posX] != '1')
+	if (!ft_strchr("123JSD" ,map[(int)(player->posY + (player->dirY * MOVESPEED * multi))]
+		[(int)player->posX]))
 		player->posY += (player->dirY * MOVESPEED) * multi;
 	//printf("\e[2AposX:%lf             \n", player->posX);
 	//printf("posY:%lf              \n", player->posY);

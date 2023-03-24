@@ -6,18 +6,18 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 01:03:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:07:50 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	open_door(t_mlx *mlx)
+void	open_door(t_mlx *mlx, char *mapname)
 {
 
 	printf("\nENTERING THE BAT\n");
 
-	mlx->mapname = "maps/julbat.cub";
+	mlx->mapname = mapname;
 
 	mlx->player.dirX_save = -mlx->player.dirX;
 	mlx->player.dirY_save = -mlx->player.dirY;

@@ -91,12 +91,23 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 		draw_line_texture(&mlx->bat2_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 	else if (ray->wall_type == 3)
 		draw_line_texture(&mlx->bat3_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 999)
+	else if (ray->wall_type == 90)
 	{
 		if (perpWallDist <= 0.15)
 		{
 			if (mlx->player.using == 1)
-				open_door(mlx);
+				open_door(mlx, "maps/julbat.cub");
+			else
+				mlx->message = "Press F to open door";
+		}
+		draw_line_texture(&mlx->door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	}
+	else if (ray->wall_type == 91)
+	{
+		if (perpWallDist <= 0.15)
+		{
+			if (mlx->player.using == 1)
+				open_door(mlx, "maps/bat2.cub");
 			else
 				mlx->message = "Press F to open door";
 		}
@@ -213,6 +224,18 @@ int	check_wall(t_mlx *mlx, t_raycast *ray)
 		&& mlx->map[ray->mapY][ray->mapX] == '3')
 	{
 		ray->wall_type = 3;
+		return (1);
+	}
+	else if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == 'J')
+	{
+		ray->wall_type = 90;
+		return (1);
+	}
+	else if (mlx->map[ray->mapY][ray->mapX]
+		&& mlx->map[ray->mapY][ray->mapX] == 'S')
+	{
+		ray->wall_type = 91;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
