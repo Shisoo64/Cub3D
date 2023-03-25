@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 15:46:23 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/25 01:02:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,8 @@ int	frames(t_mlx *mlx)
 	// MESSAGES
 	if (mlx->player.biking == -1)
 	{
-		if (mlx->player.posX - mlx->tmax.x <= 0.25 && mlx->player.posX - mlx->tmax.x >= -0.25 
-			&& mlx->player.posY - mlx->tmax.y <= 0.25 && mlx->player.posY - mlx->tmax.y >= -0.25)
+		if (mlx->player.posX - mlx->tmax.x <= 0.5 && mlx->player.posX - mlx->tmax.x >= -0.5 
+			&& mlx->player.posY - mlx->tmax.y <= 0.5 && mlx->player.posY - mlx->tmax.y >= -0.5)
 		{
 			if (mlx->tmaxkeys)
 				mlx->message = "Press F to ride the T-MAX";
@@ -205,8 +205,8 @@ int	frames(t_mlx *mlx)
 			}
 		}
 		else if (mlx->dialog == 0
-			&& mlx->player.posX - mlx->jul.x <= 0.25 && mlx->player.posX - mlx->jul.x >= -0.25 
-			&& mlx->player.posY - mlx->jul.y <= 0.25 && mlx->player.posY - mlx->jul.y >= -0.25)
+			&& mlx->player.posX - mlx->jul.x <= 0.5 && mlx->player.posX - mlx->jul.x >= -0.5 
+			&& mlx->player.posY - mlx->jul.y <= 0.5 && mlx->player.posY - mlx->jul.y >= -0.5)
 		{
 			mlx->message = "Press F to talk";
 			if (mlx->player.using == 1)

@@ -70,7 +70,7 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
       int spriteScreenX = (int)((WIN_W / 2) * (1 + transformX / transformY));
 
       //calculate height of the sprite on screen
-      int spriteHeight = abs((int)(WIN_H / 2 / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
+      int spriteHeight = abs((int)(WIN_H * 1.2 / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
       //calculate lowest and highest pixel to fill in current stripe
       int drawStartY = -spriteHeight / 2 + WIN_H / 2;
       if (drawStartY < 0)
@@ -80,7 +80,7 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
         drawEndY = WIN_H - 1;
 
       //calculate width of the sprite
-      int spriteWidth = abs((int)(WIN_H / 2 / (transformY)));
+      int spriteWidth = abs((int)(WIN_H * 1.2 / (transformY)));
       int drawStartX = -spriteWidth / 2 + spriteScreenX;
       if(drawStartX < 0)
         drawStartX = 0;
