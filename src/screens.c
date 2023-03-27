@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 15:40:03 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:22:54 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	draw_backdrop(t_mlx *mlx)
 	sky = SKYCOLOR;
 	floor = FLOORCOLOR;
 
-	if (mlx->player.inside == 1)
+	if (mlx->player.inside != 0)
 	{
 		sky = CEILINGCOLOR;
 		floor = IN_FLOORCOLOR;

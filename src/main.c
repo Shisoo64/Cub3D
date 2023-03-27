@@ -6,13 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/25 01:02:48 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:06:20 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	open_door(t_mlx *mlx, char *mapname)
+void	open_door(t_mlx *mlx, char *mapname, int batnbr)
 {
 
 	printf("\nENTERING THE BAT\n");
@@ -26,7 +26,7 @@ void	open_door(t_mlx *mlx, char *mapname)
 	mlx->player.planeX_save = -mlx->player.planeX;
 	mlx->player.planeY_save = -mlx->player.planeY;
 
-	mlx->player.inside = 1;
+	mlx->player.inside = batnbr;
 	mlx->player.biking = -1;
 
 	mlx->player.planeX = 0;
@@ -106,6 +106,7 @@ void	starting_dialog(t_mlx *mlx)
 		mlx->dialog = 0;
 		return ;
 	}
+
 	if (mlx->player.using == -1)
 		mlx->dialog++;
 }
@@ -119,7 +120,7 @@ void	jul_dialog(t_mlx *mlx)
 		else if (mlx->dialog == 12)
 			mlx->message = "g besoin ke tu maide sur un truk";
 		else if (mlx->dialog == 13)
-			mlx->message = "fodrai ke tu prene le t-max et ke taille fere des tour a fond";
+			mlx->message = "fodrai ke tu prene le t-max et ke taille passer se sac au S dan la tour la ba";
 		else if (mlx->dialog == 14)
 			mlx->message = "c ok pr toi????";
 		else if (mlx->dialog == 15)
@@ -128,6 +129,9 @@ void	jul_dialog(t_mlx *mlx)
 			mlx->message = "*you've obtained the keys of a T-MAX*";
 		else
 		{
+			mlx->bag_status = 1;
+			mlx->bag.x = 0;
+			mlx->bag.y = 0;
 			mlx->tmaxkeys = 1;
 			mlx->dialog = 0;
 			return ;
@@ -137,12 +141,42 @@ void	jul_dialog(t_mlx *mlx)
 			mlx->dialog++;
 }
 
+void	sch_dialog(t_mlx *mlx)
+{
+	if (mlx->dialog == 20)
+			mlx->message = NULL;
+		else if (mlx->dialog == 21)
+			mlx->message = "Salut mon gate, comment va?";
+		else if (mlx->dialog == 22)
+			mlx->message = "La famille, les amis, la bonne mere";
+		else if (mlx->dialog == 23)
+			mlx->message = "Bon parfait alors";
+		else if (mlx->dialog == 24)
+			mlx->message = "Ca fait plaisir que t'ai pu nous depanner";
+		else if (mlx->dialog == 25)
+			mlx->message = "Aller on se capte une autre fois";
+		else
+		{
+			mlx->bag_status = 2;
+			mlx->bag.x = 12.5;
+			mlx->bag.y = 1.1;
+			mlx->dialog = 0;
+			return ;
+		}
+
+		if (mlx->player.using == -1)
+			mlx->dialog++;
+}
+
+
 void	ft_dialog(t_mlx *mlx)
 {
 	if (mlx->dialog >= 1 && mlx->dialog < 10)
 		starting_dialog(mlx);
 	else if (mlx->dialog >= 10 && mlx->dialog < 20)
 		jul_dialog(mlx);
+	else if (mlx->dialog >= 20 && mlx->dialog < 30)
+		sch_dialog(mlx);
 	draw_dialog(mlx);
 }
 
@@ -212,7 +246,17 @@ int	frames(t_mlx *mlx)
 			if (mlx->player.using == 1)
 				mlx->dialog = 10;
 		}
+		else if (mlx->dialog == 0
+			&& mlx->player.posX - mlx->sch.x <= 0.5 && mlx->player.posX - mlx->sch.x >= -0.5 
+			&& mlx->player.posY - mlx->sch.y <= 0.5 && mlx->player.posY - mlx->sch.y >= -0.5)
+		{
+			mlx->message = "Press F to talk";
+			if (mlx->player.using == 1)
+				mlx->dialog = 20;
+		}
 	}
+
+	// DISPLAY MESSAGE
 	if (mlx->message)
 	{
 		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 3, WIN_H - 50, 0xffffff, mlx->message);
@@ -274,6 +318,18 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->jul.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/jul.xpm", &mlx->jul.tex.tex_width, &mlx->jul.tex.tex_height);
 	mlx->jul.tex.addr = mlx_get_data_addr(mlx->jul.tex.img, &mlx->jul.tex.bits_per_pixel, &mlx->jul.tex.line_length, &mlx->jul.tex.endian);
 	
+	// SCH SPRITE
+    mlx->sch.x = 12.3;
+    mlx->sch.y = 1.1;
+	mlx->sch.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/sch.xpm", &mlx->sch.tex.tex_width, &mlx->sch.tex.tex_height);
+	mlx->sch.tex.addr = mlx_get_data_addr(mlx->sch.tex.img, &mlx->sch.tex.bits_per_pixel, &mlx->sch.tex.line_length, &mlx->sch.tex.endian);
+
+	// BAG SPRITE
+    mlx->bag.x = 4.6;
+    mlx->bag.y = 6.2;
+	mlx->bag.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/bag.xpm", &mlx->bag.tex.tex_width, &mlx->bag.tex.tex_height);
+	mlx->bag.tex.addr = mlx_get_data_addr(mlx->bag.tex.img, &mlx->bag.tex.bits_per_pixel, &mlx->bag.tex.line_length, &mlx->bag.tex.endian);
+
 	// TMAX SPRITE
     mlx->tmax.x = TMAX_START_X;
     mlx->tmax.y = TMAX_START_Y;
@@ -334,6 +390,7 @@ int	main(int ac, char **av)
 	mlx.player.biking = -1;
 
 	mlx.tmaxkeys = 0;
+	mlx.bag_status = 0;
 
 	mlx.dialog = 1;
 	mlx.message = NULL;

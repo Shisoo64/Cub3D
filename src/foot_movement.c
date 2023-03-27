@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/25 01:05:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:37:58 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	input_manager_foot(t_mlx *mlx)
 	int	mult;
 
 	mult = 1;
-	if (mlx->player.inside == 1)
+	if (mlx->player.inside != 0)
 		mult = 2;
 	if (mlx->player.up == 1)
 		move_player(-500 * mult, &mlx->player, mlx->map);

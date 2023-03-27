@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 14:48:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:58:24 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_mlx {
 	char		*message;
 
 	int			tmaxkeys;
+	int			bag_status;
 
 	t_display	display;
 	t_player	player;
@@ -123,7 +124,10 @@ typedef struct s_mlx {
 	t_display	hand2;
 	t_display	phone;
 
+
 	t_sprite	jul;
+	t_sprite	sch;
+	t_sprite	bag;
 	t_sprite	tmax;
 
 	t_display	in_wall;
@@ -162,7 +166,7 @@ int		input_manager(t_mlx *mlx);
 
 //
 //		TRUCS
-void	open_door(t_mlx *mlx, char *mapname);
+void	open_door(t_mlx *mlx, char *mapname, int batnbr);
 void	close_door(t_mlx *mlx);
 
 //

@@ -96,7 +96,7 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 		if (perpWallDist <= 0.15)
 		{
 			if (mlx->player.using == 1)
-				open_door(mlx, "maps/julbat.cub");
+				open_door(mlx, "maps/julbat.cub", 1);
 			else
 				mlx->message = "Press F to open door";
 		}
@@ -107,7 +107,7 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 		if (perpWallDist <= 0.15)
 		{
 			if (mlx->player.using == 1)
-				open_door(mlx, "maps/bat2.cub");
+				open_door(mlx, "maps/bat2.cub", 2);
 			else
 				mlx->message = "Press F to open door";
 		}
@@ -323,9 +323,17 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 
 void	ft_sprites_controller(t_mlx *mlx, t_raycast *ray)
 {
-	if (mlx->player.inside)
+	if (mlx->player.inside == 1)
 	{
 		ft_render_sprite(ray, mlx, mlx->jul);
+		if (mlx->bag_status == 0)
+			ft_render_sprite(ray, mlx, mlx->bag);
+	}
+	else if (mlx->player.inside == 2)
+	{
+		ft_render_sprite(ray, mlx, mlx->sch);
+		if (mlx->bag_status == 2)
+			ft_render_sprite(ray, mlx, mlx->bag);
 	}
 	else
 	{
