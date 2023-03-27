@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 17:23:58 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/27 16:24:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,16 @@ typedef struct s_mlx {
 	char		*mapname;
 	int			map_y;
 	int			map_x;
+	int			color_f;
+	int			color_c;
 	t_display	display;
+
 	t_player	player;
-	t_display	wall;
+
+	t_display	NO_tex;
+	t_display	SO_tex;
+	t_display	WE_tex;
+	t_display	EA_tex;
 }				t_mlx;
 
 //

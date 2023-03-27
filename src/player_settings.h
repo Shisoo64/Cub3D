@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 15:59:39 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/27 16:22:07 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # define SKYCOLOR 0x2faee0
 # define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
 
-
 # define FOV 0.6
 # define FPS 60
 
@@ -26,8 +25,8 @@
 # define WIN_H 768
 
 // Movement
-# define MOVESPEED 0.00001//0.05
-# define ROTSPEED 0.000005
+# define MOVESPEED 0.0001//0.05
+# define ROTSPEED 0.000008
 
 enum e_keycode
 {

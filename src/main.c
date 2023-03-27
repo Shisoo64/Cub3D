@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 17:23:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/27 18:56:32 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,32 @@ int	mouse_hook(int key, t_mlx *mlx)
 	return (0);
 }
 
+void	get_wall_textures(t_mlx *mlx)
+{
+	char	*line;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	line = get_next_line(fd);
+	if (!line)
+	{
+		ft_printf("Error\nMap file does not exist or is empty, try again.");
+		exit(0);
+	}
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		i++;
+	}
+}
+
 void	ft_parsing(t_mlx *mlx)
 {
 	check_map_ext(mlx);
-	//mlx->map = create_map(mlx);
+
 	ft_fill_map(mlx);
 	place_player_on_map(mlx, mlx->map);
 	mlx->mlx = mlx_init();
@@ -48,8 +70,9 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
 
-	// GET SPRITES
-	mlx->wall.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/in_wall.xpm", &mlx->wall.tex_width, &mlx->wall.tex_height);
+	// GET TEXTURES WALL
+
+	mlx->wall.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/SO.xpm", &mlx->wall.tex_width, &mlx->wall.tex_height);
 	mlx->wall.addr = mlx_get_data_addr(mlx->wall.img, &mlx->wall.bits_per_pixel, &mlx->wall.line_length, &mlx->wall.endian);
 
 }
