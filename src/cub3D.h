@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 16:58:24 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:53:13 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ typedef struct s_mlx {
 	t_display	hand;
 	t_display	hand2;
 	t_display	phone;
-
 
 	t_sprite	jul;
 	t_sprite	sch;
