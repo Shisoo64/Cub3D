@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 17:06:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/28 19:18:46 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	sch_dialog(t_mlx *mlx)
 		else
 		{
 			mlx->bag_status = 2;
-			mlx->bag.x = 12.5;
+			mlx->bag.x = 12.65;
 			mlx->bag.y = 1.1;
 			mlx->dialog = 0;
 			return ;
@@ -214,6 +214,9 @@ int	frames(t_mlx *mlx)
 		if (i++ == 100)
 			i = 0;
 	}
+
+	if (mlx->bag_status == 1)
+		put_img_transp(mlx, mlx->handbag, WIN_W - 244, WIN_H - 160);
 
 	if (mlx->dialog != 0)
 		ft_dialog(mlx);
@@ -297,6 +300,8 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->in_door_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/in_door.xpm", &mlx->in_door_tex.tex_width, &mlx->in_door_tex.tex_height);
 	mlx->in_door_tex.addr = mlx_get_data_addr(mlx->in_door_tex.img, &mlx->in_door_tex.bits_per_pixel, &mlx->in_door_tex.line_length, &mlx->in_door_tex.endian);
 
+	mlx->handbag.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/handbag.xpm", &mlx->handbag.tex_width, &mlx->handbag.tex_height);
+	mlx->handbag.addr = mlx_get_data_addr(mlx->handbag.img, &mlx->handbag.bits_per_pixel, &mlx->handbag.line_length, &mlx->handbag.endian);
 
 
 	mlx->bat_tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/out_wall.xpm", &mlx->bat_tex.tex_width, &mlx->bat_tex.tex_height);
@@ -320,7 +325,7 @@ void	ft_parsing(t_mlx *mlx)
 	
 	// SCH SPRITE
     mlx->sch.x = 12.3;
-    mlx->sch.y = 1.1;
+    mlx->sch.y = 1.15;
 	mlx->sch.tex.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/sch.xpm", &mlx->sch.tex.tex_width, &mlx->sch.tex.tex_height);
 	mlx->sch.tex.addr = mlx_get_data_addr(mlx->sch.tex.img, &mlx->sch.tex.bits_per_pixel, &mlx->sch.tex.line_length, &mlx->sch.tex.endian);
 
