@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 18:56:32 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:48:28 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ int	mouse_hook(int key, t_mlx *mlx)
 	return (0);
 }
 
+void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
+{
+	char *str;
+
+	str = ft_strnstr(line, "./", ft_strlen(line));
+	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
+	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width, &texture->tex_height);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
+	free(str);
+}
+
 void	get_wall_textures(t_mlx *mlx)
 {
 	char	*line;
@@ -44,20 +55,62 @@ void	get_wall_textures(t_mlx *mlx)
 
 	i = 0;
 	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	if (!line)
+	if (fd == -1)
 	{
 		ft_printf("Error\nMap file does not exist or is empty, try again.");
 		exit(0);
 	}
-	while (line)
+	while (1)
 	{
-		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (ft_strnstr(line, "NO", ft_strlen(line)) != NULL)
+			fill_wall_tex(mlx, &mlx->NO_tex, line);
+		else if (ft_strnstr(line, "SO", ft_strlen(line)) != NULL)
+			fill_wall_tex(mlx, &mlx->SO_tex, line);
+		else if (ft_strnstr(line, "WE", ft_strlen(line)) != NULL)
+			fill_wall_tex(mlx, &mlx->WE_tex, line);
+		else if (ft_strnstr(line, "EA", ft_strlen(line)) != NULL)
+			fill_wall_tex(mlx, &mlx->EA_tex, line);
+		free(line);
 		i++;
 	}
+	close(fd);
+}
+/*
+int	fill_color(int color, char *line)
+{
 }
 
+void	get_colors(t_mlx *mlx)
+{
+	char	*line;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf("Error\nMap file does not exist or is empty, try again.");
+		exit(0);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (ft_strnstr(line, "F", ft_strlen(line)) != NULL)
+			mlx->color_f = fill_color(mlx->color_f, line);
+		else if (ft_strnstr(line, "C", ft_strlen(line)) != NULL)
+			mlx->color_c = fill_color(mlx->color_f, line);
+		free(line);
+		i++;
+	}
+	close(fd);
+}
+*/
 void	ft_parsing(t_mlx *mlx)
 {
 	check_map_ext(mlx);
@@ -71,10 +124,8 @@ void	ft_parsing(t_mlx *mlx)
 			&mlx->display.line_length, &mlx->display.endian);
 
 	// GET TEXTURES WALL
-
-	mlx->wall.img = mlx_xpm_file_to_image(mlx->mlx, "./sprites/SO.xpm", &mlx->wall.tex_width, &mlx->wall.tex_height);
-	mlx->wall.addr = mlx_get_data_addr(mlx->wall.img, &mlx->wall.bits_per_pixel, &mlx->wall.line_length, &mlx->wall.endian);
-
+	get_wall_textures(mlx);
+	//get_colors(mlx);
 }
 
 int	main(int ac, char **av)
@@ -89,8 +140,6 @@ int	main(int ac, char **av)
 	mlx.mapname = av[1];
 
 	ft_parsing(&mlx);
-
-	mlx_mouse_hide(mlx.mlx, mlx.win);
 
 	// INIT VARS
 	mlx.player.rot_r = 0;
@@ -107,4 +156,5 @@ int	main(int ac, char **av)
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);
+
 }

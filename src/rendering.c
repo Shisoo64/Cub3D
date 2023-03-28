@@ -59,7 +59,6 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 
 
 	/// Couper la fonction ici ///
-
 	//Get line on texture
 	double	wall_x;
 	int		tex_x;
@@ -70,15 +69,16 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
 	wall_x -= floor(wall_x);
 
-	// in_wall = texture en fonction du wall_type. Pas toujours in_wall
-	tex_x = (int)(wall_x * (double)mlx->wall.tex_width);
+	tex_x = (int)(wall_x * (double)mlx->NO_tex.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->wall.tex_width - tex_x - 1;
+		tex_x = mlx->NO_tex.tex_width - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->wall.tex_width - tex_x - 1;
+		tex_x = mlx->SO_tex.tex_width - tex_x - 1;
 
-	if (ray->wall_type == 1)
-		draw_short_line_texture(&mlx->wall, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	if (ray->side == 1)
+		draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	else
+		draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
 }
 
 // Digital Differential Analysis
@@ -87,6 +87,7 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 {
 	while (1)
 	{
+		// ADD LES AUTRES TEXTS DE MUR
 		if (ray->sideDistX < ray->sideDistY)
 		{
 			ray->sideDistX += ray->DeltaDistX;
@@ -103,10 +104,7 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 		//Check if ray has hit a wall
 		if (mlx->map[ray->mapY][ray->mapX]
 			&& mlx->map[ray->mapY][ray->mapX] == '1')
-		{
-			ray->wall_type = 1;
 			break ;
-		}
 	}
 }
 

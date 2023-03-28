@@ -1,7 +1,7 @@
-NO ../sprites/NO.xpm
-SO ../sprites/SO.xpm
-WE ../sprites/WE.xpm
-EA ../sprites/EA.xpm
+NO ./sprites/NO.xpm
+SO ./sprites/SO.xpm
+WE ./sprites/WE.xpm
+EA ./sprites/EA.xpm
 
 F 220,100,0
 C 190,160,100

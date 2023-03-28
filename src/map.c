@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 16:32:34 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:27:11 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 		{
 			if (map[y][x] == 'N')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
@@ -48,13 +48,13 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 			}
 			else if (map[y][x] == 'E')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 			else if (map[y][x] == 'W')
 			{
-				mlx->player.dirX = -1;
+				mlx->player.dirX = 1;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
@@ -103,7 +103,6 @@ void	ft_fill_map(t_mlx *mlx)
 	while (i < mlx->map_y)
 	{
 		mlx->map[i] = get_next_line(fd);
-		printf("map[%d] is %s", i, mlx->map[i]);
 		i++;
 	}
 	close(fd);

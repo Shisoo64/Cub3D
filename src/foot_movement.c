@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/23 15:33:52 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:44:18 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	input_manager_foot(t_mlx *mlx)
 		move_player(500, &mlx->player, mlx->map);
 
 	if (mlx->player.rot_r == 1)
-		rotate_player(-4200, &mlx->player);
-	if (mlx->player.rot_l == 1)
 		rotate_player(4200, &mlx->player);
+	if (mlx->player.rot_l == 1)
+		rotate_player(-4200, &mlx->player);
 
 	if (mlx->player.left == 1)
 		strafe_player(-300, &mlx->player, mlx->map);

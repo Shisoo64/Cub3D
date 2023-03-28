@@ -6,16 +6,12 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 16:22:07 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:22:11 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PLAYER_SETTINGS_H
 # define PLAYER_SETTINGS_H
-
-// Colors
-# define SKYCOLOR 0x2faee0
-# define FLOORCOLOR 0xFFECD1//0x000000//0xFFECD1
 
 # define FOV 0.6
 # define FPS 60
