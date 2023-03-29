@@ -71,14 +71,26 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 
 	tex_x = (int)(wall_x * (double)mlx->NO_tex.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->NO_tex.tex_width - tex_x - 1;
+		tex_x = mlx->WE_tex.tex_width - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
 		tex_x = mlx->SO_tex.tex_width - tex_x - 1;
 
+	// printf("ray->dirX is %f\n", ray->raydirX);
+	// printf("ray->dirY is %f\n", ray->raydirY);
 	if (ray->side == 1)
-		draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	{
+		if (ray->stepY > 0)
+			draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		else
+			draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	}
 	else
-		draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	{
+		if (ray->stepX > 0)
+			draw_short_line_texture(&mlx->WE_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		else
+			draw_short_line_texture(&mlx->EA_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+	}
 }
 
 // Digital Differential Analysis

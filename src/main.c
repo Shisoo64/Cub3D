@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 19:48:28 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:26:18 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,6 @@ int	frames(t_mlx *mlx)
 int	exit_hook(t_mlx *mlx)
 {
 	exit_game(mlx);
-	return (0);
-}
-
-int	mouse_hook(int key, t_mlx *mlx)
-{
-	(void)mlx;
-	//printf("key:%d\n", key);
-	if (key == 1)
-		printf("\e[2APAN                            \n                                \n");
 	return (0);
 }
 
@@ -78,9 +69,31 @@ void	get_wall_textures(t_mlx *mlx)
 	}
 	close(fd);
 }
-/*
-int	fill_color(int color, char *line)
+
+int	fill_color(char *line)
 {
+	int 	i;
+	int		color;
+	char	*str;
+	char	*buf;
+
+	i = 0;
+	color = 0;
+	str = line;
+	while (*str && !ft_isdigit(*str))
+		str++;
+	while (i < 3)
+	{
+		i++;
+		buf = ft_strdup(str);
+		buf = ft_strtok(buf, ",\n");
+		str++;
+		while (*str && ft_isdigit(*str))
+			str++;
+		color |= (ft_atoi(buf) << ((3 - i) * 8));
+	//	free(buf);
+	}
+	return (color);
 }
 
 void	get_colors(t_mlx *mlx)
@@ -102,15 +115,15 @@ void	get_colors(t_mlx *mlx)
 		if (!line)
 			break ;
 		if (ft_strnstr(line, "F", ft_strlen(line)) != NULL)
-			mlx->color_f = fill_color(mlx->color_f, line);
+			mlx->color_f = fill_color(line);
 		else if (ft_strnstr(line, "C", ft_strlen(line)) != NULL)
-			mlx->color_c = fill_color(mlx->color_f, line);
+			mlx->color_c = fill_color(line);
 		free(line);
 		i++;
 	}
 	close(fd);
 }
-*/
+
 void	ft_parsing(t_mlx *mlx)
 {
 	check_map_ext(mlx);
@@ -125,7 +138,7 @@ void	ft_parsing(t_mlx *mlx)
 
 	// GET TEXTURES WALL
 	get_wall_textures(mlx);
-	//get_colors(mlx);
+	get_colors(mlx);
 }
 
 int	main(int ac, char **av)
@@ -152,7 +165,6 @@ int	main(int ac, char **av)
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
 
-	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);

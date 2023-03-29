@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 19:48:19 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:53:30 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ typedef struct s_raycast {
 	int		mapY;
 
 	int		tex_x;
-
-	//For sprites
-	int		ZBuffer[WIN_W];
 
 	//length of ray from current position to next x or y-side
 	double	sideDistX;

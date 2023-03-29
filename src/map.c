@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 19:27:11 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:10:36 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,38 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 		{
 			if (map[y][x] == 'N')
 			{
-				mlx->player.dirX = 1;
+				mlx->player.dirX = 0.0;
+				mlx->player.dirY = -1.0;
+				mlx->player.planeX = 0.66;
+				mlx->player.planeY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 			else if (map[y][x] == 'S')
 			{
-				mlx->player.dirX = 1;
+				mlx->player.dirX = 0;
+				mlx->player.dirY = 1;
+				mlx->player.planeX = -0.66;
+				mlx->player.planeY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 			else if (map[y][x] == 'E')
 			{
 				mlx->player.dirX = 1;
+				mlx->player.dirY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 			else if (map[y][x] == 'W')
 			{
-				mlx->player.dirX = 1;
+				mlx->player.dirX = -1;
+				mlx->player.dirY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 			}
 		}
 	}
-	mlx->player.dirY = 0.0;
 }
 
 void	ft_map_height(t_mlx *mlx)
