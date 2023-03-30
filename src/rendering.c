@@ -119,7 +119,7 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 
 //		INSIDE
 //
-void    draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void    draw_short_line_texture(t_display *texture, t_raycast *ray, int x, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
 	double	tex_pos;
@@ -127,8 +127,8 @@ void    draw_short_line_texture(t_display *texture, t_display *display, int x, i
 	int		tex_y;
 	int		y;
 
-	step = 1.0 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
+	step = 1.0 * texture->tex_height / ray->lineHeight;
+	tex_pos = (draw_start - WIN_H / 2 + ray->lineHeight / 2) * step;
 	y = draw_start;
 	tex_x = texture->tex_width - tex_x;
 	while (y < draw_end)
@@ -136,48 +136,21 @@ void    draw_short_line_texture(t_display *texture, t_display *display, int x, i
 		tex_y = (int)tex_pos;
 		tex_pos += step;
 		color = my_mlx_get_color(texture, tex_x, tex_y);
-		my_mlx_pixel_put(display, x, y, color);
+		my_mlx_pixel_put(ray->display, x, y, color);
 		y++;
 	}
 }
 
-// Draw a vertical line of pixels in the img
-void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
+//Get line on texture
+void	get_tex_line(t_raycast *ray, t_mlx *mlx, int x)
 {
-	int 	drawStart;
-	int 	drawEnd;
-	double	perpWallDist;
-	int		lineHeight;
-
-	if (ray->side == 0)
-		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
-	else
-		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
-
-	ray->ZBuffer[x] = perpWallDist;
-
-	lineHeight = (int)(WIN_H / perpWallDist);
-
-	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight / 2 + WIN_H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + WIN_H / 2;
-	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
-
-
-	/// Couper la fonction ici ///
-
-	//Get line on texture
-
 	double	wall_x;
 	int		tex_x;
 
 	if (ray->side == 0)
-		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
+		wall_x = mlx->player.posY + ray->ZBuffer[x] * ray->raydirY;
 	else
-		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
+		wall_x = mlx->player.posX + ray->ZBuffer[x] * ray->raydirX;
 	wall_x -= floor(wall_x);
 
 	// in_wall = texture en fonction du wall_type. Pas toujours in_wall
@@ -188,20 +161,47 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 		tex_x = mlx->in_wall.tex_width - tex_x - 1;
 
 	if (ray->wall_type == 1)
-		draw_short_line_texture(&mlx->in_wall, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		draw_short_line_texture(&mlx->in_wall, ray, x, drawStart, drawEnd, tex_x);
 	else if (ray->wall_type == 2)
-		draw_short_line_texture(&mlx->in_wall2, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		draw_short_line_texture(&mlx->in_wall2, ray, x, drawStart, drawEnd, tex_x);
 	else if (ray->wall_type == 999)
 	{
-		if (perpWallDist <= 0.15)
+		if (ray->ZBuffer[x] <= 0.15)
 		{
 			if (mlx->player.using == 1)
 				close_door(mlx);
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_short_line_texture(&mlx->in_door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		draw_short_line_texture(&mlx->in_door_tex, ray, x, drawStart, drawEnd, tex_x);
 	}
+}
+
+
+// Draw a vertical line of pixels in the img
+void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
+{
+	int 	drawStart;
+	int 	drawEnd;
+	double	perpWallDist;
+
+	if (ray->side == 0)
+		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
+	else
+		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
+
+	ray->ZBuffer[x] = perpWallDist;
+
+	ray->lineHeight = (int)(WIN_H / perpWallDist);
+
+	//calculate lowest and highest pixel to fill in current stripe
+	drawStart = -ray->lineHeight / 2 + WIN_H / 2;
+	if (drawStart < 0)
+		drawStart = 0;
+	drawEnd = ray->lineHeight / 2 + WIN_H / 2;
+	if (drawEnd >= WIN_H)
+		drawEnd = WIN_H - 1;
+	get_tex_line(ray, mlx, x);
 }
 
 //Check if ray has hit a wall
@@ -349,6 +349,7 @@ void	ft_display(t_mlx *mlx)
 	int			x;
 
 	draw_backdrop(mlx);
+	ray.display = &mlx->display;
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);

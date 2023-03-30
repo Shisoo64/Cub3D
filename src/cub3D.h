@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 18:31:18 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:53:23 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 
 //
 //		STRUCTS
+typedef struct s_display {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		tex_width;
+	int		tex_height;
+}				t_display;
+
 typedef struct s_raycast {
 	//what cardinal point the raycast hit is perpendicular to
 	int		side;
@@ -44,15 +54,15 @@ typedef struct s_raycast {
 
 	int		tex_x;
 
-
-	//For sprites
 	int		ZBuffer[WIN_W];
+	int		lineHeight;
 
 	//length of ray from current position to next x or y-side
 	double	sideDistX;
 	double	sideDistY;
 	double	DeltaDistX;
 	double	DeltaDistY;
+	t_display	*display;
 }				t_raycast;
 
 typedef struct s_player {
@@ -83,16 +93,6 @@ typedef struct s_player {
 	int down;
 
 }				t_player;
-
-typedef struct s_display {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		tex_width;
-	int		tex_height;
-}				t_display;
 
 typedef struct s_sprite {
 	double		x;
@@ -129,7 +129,6 @@ typedef struct s_mlx {
 	t_sprite	bag;
 	t_sprite	tmax;
 
-
 	t_display	handbag;
 	t_display	in_wall;
 	t_display	in_wall2;
@@ -151,7 +150,6 @@ void	check_map_ext(t_mlx *v);
 char	**create_map(t_mlx *mlx);
 void	place_player_on_map(t_mlx *mlx, char **map);
 
-
 //
 //		MOVEMENT
 void	input_manager_foot(t_mlx *mlx);
@@ -163,7 +161,6 @@ void	rotate_player(int multi, t_player *player);
 int		key_press(int key, t_mlx *mlx);
 int		key_release(int key, t_mlx *mlx);
 int		input_manager(t_mlx *mlx);
-
 
 //
 //		TRUCS
@@ -182,7 +179,7 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
 void	start_screen(t_mlx *mlx);
 void	crash_screen(t_mlx *mlx);
 void	draw_backdrop(t_mlx *mlx);
-
+void	ft_dialog(t_mlx *mlx);
 
 
 void	free_map(t_mlx *mlx, char **map);
