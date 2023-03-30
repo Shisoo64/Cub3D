@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/28 19:47:59 by bchabot          ###   ########.fr        #
+#    Updated: 2023/03/30 15:44:18 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ SRCS =	src/main.c \
 		src/map.c \
 		src/free.c \
 		src/error.c \
+		src/ft_strtok.c \
+		src/ft_strcspn.c \
+		src/ft_strspn.c
 
 SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/bike_movement.c \

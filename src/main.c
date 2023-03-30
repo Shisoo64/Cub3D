@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/29 14:26:18 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:58:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,42 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	free(str);
 }
 
-void	get_wall_textures(t_mlx *mlx)
+void	get_wall_textures(t_mlx *mlx, int fd)
 {
 	char	*line;
-	int		fd;
 	int		i;
+	int		nbr;
 
 	i = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error\nMap file does not exist or is empty, try again.");
-		exit(0);
-	}
+	nbr = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (!line)
+		if (nbr == 4)
 			break ;
 		if (ft_strnstr(line, "NO", ft_strlen(line)) != NULL)
+		{
 			fill_wall_tex(mlx, &mlx->NO_tex, line);
+			nbr++;
+		}
 		else if (ft_strnstr(line, "SO", ft_strlen(line)) != NULL)
+		{
 			fill_wall_tex(mlx, &mlx->SO_tex, line);
+			nbr++;
+		}
 		else if (ft_strnstr(line, "WE", ft_strlen(line)) != NULL)
+		{
 			fill_wall_tex(mlx, &mlx->WE_tex, line);
+			nbr++;
+		}
 		else if (ft_strnstr(line, "EA", ft_strlen(line)) != NULL)
+		{
 			fill_wall_tex(mlx, &mlx->EA_tex, line);
+			nbr++;
+		}
 		free(line);
 		i++;
 	}
-	close(fd);
 }
 
 int	fill_color(char *line)
@@ -96,49 +102,49 @@ int	fill_color(char *line)
 	return (color);
 }
 
-void	get_colors(t_mlx *mlx)
+void	get_colors(t_mlx *mlx, int fd)
 {
 	char	*line;
-	int		fd;
 	int		i;
+	int		nbr;
 
 	i = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error\nMap file does not exist or is empty, try again.");
-		exit(0);
-	}
+	nbr = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (!line)
+		if (nbr == 2)
 			break ;
-		if (ft_strnstr(line, "F", ft_strlen(line)) != NULL)
+		if (is_asset(line) && ft_strchr(line, 'F'))
+		{
 			mlx->color_f = fill_color(line);
+			nbr++;
+		}
 		else if (ft_strnstr(line, "C", ft_strlen(line)) != NULL)
+		{
 			mlx->color_c = fill_color(line);
+			nbr++;
+		}
 		free(line);
 		i++;
 	}
-	close(fd);
 }
 
 void	ft_parsing(t_mlx *mlx)
 {
-	check_map_ext(mlx);
+	int	fd;
 
-	ft_fill_map(mlx);
-	place_player_on_map(mlx, mlx->map);
+	//check_assets(mlx);
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
 	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
-
-	// GET TEXTURES WALL
-	get_wall_textures(mlx);
-	get_colors(mlx);
+	fd = open(mlx->mapname, O_RDONLY);
+	get_wall_textures(mlx, fd);
+	get_colors(mlx, fd);
+	ft_fill_map(mlx, fd);
+//	place_player_on_map(mlx);
 }
 
 int	main(int ac, char **av)
@@ -153,7 +159,7 @@ int	main(int ac, char **av)
 	mlx.mapname = av[1];
 
 	ft_parsing(&mlx);
-
+/*
 	// INIT VARS
 	mlx.player.rot_r = 0;
 	mlx.player.rot_l = 0;
@@ -168,5 +174,5 @@ int	main(int ac, char **av)
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);
-
+*/
 }

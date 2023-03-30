@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/29 14:53:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:35:21 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ typedef struct s_mlx {
 //		PARSING
 void	check_map_ext(t_mlx *v);
 char	**create_map(t_mlx *mlx);
-void	ft_fill_map(t_mlx *mlx);
-void	place_player_on_map(t_mlx *mlx, char **map);
+void	ft_fill_map(t_mlx *mlx, int fd);
+void	place_player_on_map(t_mlx *mlx);
+int		is_asset(char *line);
 
 
 //
@@ -134,5 +135,9 @@ void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int		my_mlx_get_color(t_display *texture, int x, int y);
 void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void	exit_game(t_mlx *mlx);
+
+int		ft_strcspn(char *s, const char *rejects);
+int		ft_strspn(char *s, const char *accepts);
+char	*ft_strtok(char *str, char *token);
 
 #endif

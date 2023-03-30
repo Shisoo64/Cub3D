@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/02/02 15:14:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/30 18:18:57 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 /*
-void	check_map(char **map, t_mlx *v)
+void	check_assets(t_mlx *v)
 {
 	check_map_ext(v);
-	check_rectangle(map, v);
-	check_borders(map, v);
-	check_items(map, v);
+	check_items(v);
+	check_rectangle(v);
+	check_borders(v);
 }
 
 int	check_rectangle(char **map, t_mlx *v)

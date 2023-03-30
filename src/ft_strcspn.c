@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_settings.h                                  :+:      :+:    :+:   */
+/*   ft_strcspn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 17:21:09 by bchabot          ###   ########.fr       */
+/*   Created: 2022/12/19 15:52:31 by bchabot           #+#    #+#             */
+/*   Updated: 2023/03/30 15:44:02 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAYER_SETTINGS_H
-# define PLAYER_SETTINGS_H
+#include "cub3D.h"
 
-# define FOV 0.6
-# define FPS 60
-
-// Screen size
-# define WIN_W 1024
-# define WIN_H 768
-
-// Movement
-# define MOVESPEED 0.0001//0.05
-# define ROTSPEED 0.000004
-
-enum e_keycode
+int	ft_strcspn(char *s, const char *rejects)
 {
-	KEY_W = 115,
-	KEY_S = 119,
-	KEY_A = 97,
-	KEY_D = 100,
-	KEY_Q = 113,
-	KEY_E = 101,
-	KEY_F = 102,
-	KEY_M = 109,
-	KEY_ARROW_L = 65361,
-	KEY_ARROW_R = 65363,
-	ESC = 0xFF1B
-};
+	char	*tmp;
 
-#endif
+	tmp = s;
+	while (*tmp)
+	{
+		if (ft_strchr(rejects, *tmp))
+			return (tmp - s);
+		tmp++;
+	}
+	return (tmp - s);
+}
