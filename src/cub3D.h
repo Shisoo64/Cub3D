@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 16:53:23 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/30 18:06:57 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ typedef struct s_raycast {
 	//what cardinal point the raycast hit is perpendicular to
 	int		side;
 
-
-	//what type of wall the ray has hit
-	int		wall_type;
+	int		hit_type;
 
 	//what direction to step in x or y-direction (either +1 or -1)
 	int		stepX;
@@ -54,7 +52,7 @@ typedef struct s_raycast {
 
 	int		tex_x;
 
-	int		ZBuffer[WIN_W];
+	double	perpwalldists[WIN_W];
 	int		lineHeight;
 
 	//length of ray from current position to next x or y-side

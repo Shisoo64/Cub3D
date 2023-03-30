@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 15:47:45 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/30 18:32:53 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,47 @@ void	close_door(t_mlx *mlx)
 	mlx->map = create_map(mlx);
 }
 
+
+int	ft_check_prox(t_mlx *mlx, t_sprite tex)
+{
+	if (mlx->player.posX - tex.x <= 0.5 && mlx->player.posX - tex.x >= -0.5
+		&& mlx->player.posY - tex.y <= 0.5 && mlx->player.posY - tex.y >= -0.5)
+		return (1);
+	return (0);
+}
+
+void	ft_start_dialog_check(t_mlx *mlx)
+{
+	if (ft_check_prox(mlx, mlx->tmax))
+	{
+		if (mlx->tmaxkeys)
+			mlx->message = "Press F to ride the T-MAX";
+		else
+			mlx->message = "You don't have the keys!";
+		if (mlx->player.using == 1 && mlx->tmaxkeys)
+		{
+			mlx->tmax.x = 0;
+			mlx->tmax.y = 0;
+			mlx->player.biking = 1;
+		}
+	}
+	else if (mlx->dialog == 0 && ft_check_prox(mlx, mlx->jul))
+	{
+		mlx->message = "Press F to talk";
+		if (mlx->player.using == 1)
+			mlx->dialog = 10;
+	}
+	else if (mlx->dialog == 0 && mlx->bag_status == 1
+		&& ft_check_prox(mlx, mlx->sch))
+	{
+		mlx->message = "Press F to talk";
+		if (mlx->player.using == 1)
+			mlx->dialog = 20;
+	}
+}
+
 int	frames(t_mlx *mlx)
 {
-
 	if (mlx->started == 0)
 	{
 		start_screen(mlx);
@@ -102,38 +140,7 @@ int	frames(t_mlx *mlx)
 
 	// MESSAGES
 	if (mlx->player.biking == -1)
-	{
-		if (mlx->player.posX - mlx->tmax.x <= 0.5 && mlx->player.posX - mlx->tmax.x >= -0.5 
-			&& mlx->player.posY - mlx->tmax.y <= 0.5 && mlx->player.posY - mlx->tmax.y >= -0.5)
-		{
-			if (mlx->tmaxkeys)
-				mlx->message = "Press F to ride the T-MAX";
-			else
-				mlx->message = "You don't have the keys!";
-			if (mlx->player.using == 1 && mlx->tmaxkeys)
-			{
-				mlx->tmax.x = 0;
-				mlx->tmax.y = 0;
-				mlx->player.biking = 1;
-			}
-		}
-		else if (mlx->dialog == 0
-			&& mlx->player.posX - mlx->jul.x <= 0.5 && mlx->player.posX - mlx->jul.x >= -0.5 
-			&& mlx->player.posY - mlx->jul.y <= 0.5 && mlx->player.posY - mlx->jul.y >= -0.5)
-		{
-			mlx->message = "Press F to talk";
-			if (mlx->player.using == 1)
-				mlx->dialog = 10;
-		}
-		else if (mlx->dialog == 0
-			&& mlx->player.posX - mlx->sch.x <= 0.5 && mlx->player.posX - mlx->sch.x >= -0.5 
-			&& mlx->player.posY - mlx->sch.y <= 0.5 && mlx->player.posY - mlx->sch.y >= -0.5)
-		{
-			mlx->message = "Press F to talk";
-			if (mlx->player.using == 1)
-				mlx->dialog = 20;
-		}
-	}
+		ft_start_dialog_check(mlx);
 
 	// DISPLAY MESSAGE
 	if (mlx->message)

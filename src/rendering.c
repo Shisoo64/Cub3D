@@ -14,7 +14,7 @@
 
 //
 //		OUTSIDE
-void    draw_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void    draw_line_texture(t_display *texture, t_raycast *ray, int x, int draw_coord[2])
 {
 	double	step;
 	double	tex_pos;
@@ -22,104 +22,99 @@ void    draw_line_texture(t_display *texture, t_display *display, int x, int lin
 	int		tex_y;
 	int		y;
 
-	step = 0.75 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 0.93) * step;
-	y = draw_start;
-	tex_x = texture->tex_width - tex_x;
-	while (y < draw_end)
+	step = 0.75 * texture->tex_height / ray->lineHeight;
+	tex_pos = (draw_coord[0] - WIN_H / 2 + ray->lineHeight / 0.93) * step;
+	y = draw_coord[0];
+	ray->tex_x = texture->tex_width - ray->tex_x;
+	while (y < draw_coord[1])
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
+		color = my_mlx_get_color(texture, ray->tex_x, tex_y);
 
 		// CODE POUR FAIRE DE L'OMBRE SUR LES TEXTURES VVVV
 		//if (ray->side == 1)
 		//	color = color / 2;
 		
-		my_mlx_pixel_put(display, x, y, color);
+		my_mlx_pixel_put(ray->display, x, y, color);
 		y++;
 	}
 }
 
-// Draw a vertical line of pixels in the img
-void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
+
+//Get line on texture
+void	get_tex_line2(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 {
-	int 	drawStart;
-	int 	drawEnd;
-	double	perpWallDist;
-	int		lineHeight;
-
-	if (ray->side == 0)
-		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
-	else
-		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
-
-	ray->ZBuffer[x] = perpWallDist;
-	lineHeight = (int)(WIN_H / perpWallDist);
-
-	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight * 2.1 + WIN_H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight * 0.25 + WIN_H / 2;
-	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
-
-
-	/// Couper la fonction ici ///
-
-	//Get line on texture
-
 	double	wall_x;
-	int		tex_x;
 
 	if (ray->side == 0)
-		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
+		wall_x = mlx->player.posY + ray->perpwalldists[x] * ray->raydirY;
 	else
-		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
+		wall_x = mlx->player.posX + ray->perpwalldists[x] * ray->raydirX;
 	wall_x -= floor(wall_x);
-	// bat_tex = texture en fonction du wall_type. Pas toujours bat_tex
-	tex_x = (int)(wall_x * (double)mlx->bat_tex.tex_width);
+	ray->tex_x = (int)(wall_x * (double)mlx->bat_tex.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->bat_tex.tex_width - tex_x - 1;
+		ray->tex_x = mlx->bat_tex.tex_width - ray->tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->bat_tex.tex_width - tex_x - 1;
+		ray->tex_x = mlx->bat_tex.tex_width - ray->tex_x - 1;
 
-	if (ray->wall_type == 1)
-		draw_line_texture(&mlx->bat_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 2)
-		draw_line_texture(&mlx->bat2_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 3)
-		draw_line_texture(&mlx->bat3_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 90)
+	if (ray->hit_type == 1)
+		draw_line_texture(&mlx->bat_tex, ray, x, draw_coord);
+	else if (ray->hit_type == 2)
+		draw_line_texture(&mlx->bat2_tex, ray, x, draw_coord);
+	else if (ray->hit_type == 3)
+		draw_line_texture(&mlx->bat3_tex, ray, x, draw_coord);
+	else if (ray->hit_type == 90)
 	{
-		if (perpWallDist <= 0.15)
+		if (ray->perpwalldists[x] <= 0.15)
 		{
 			if (mlx->player.using == 1)
 				open_door(mlx, "maps/julbat.cub", 1);
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_line_texture(&mlx->door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		draw_line_texture(&mlx->door_tex, ray, x, draw_coord);
 	}
-	else if (ray->wall_type == 91)
+	else if (ray->hit_type == 91)
 	{
-		if (perpWallDist <= 0.15)
+		if (ray->perpwalldists[x] <= 0.15)
 		{
 			if (mlx->player.using == 1)
 				open_door(mlx, "maps/bat2.cub", 2);
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_line_texture(&mlx->door_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+		draw_line_texture(&mlx->door_tex, ray, x, draw_coord);
 	}
+}
+
+
+// Draw a vertical line of pixels in the img
+void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
+{
+	int	draw_coord[2];
+
+	if (ray->side == 0)
+		ray->perpwalldists[x] = (ray->sideDistX - ray->DeltaDistX);
+	else
+		ray->perpwalldists[x] = (ray->sideDistY - ray->DeltaDistY);
+
+	ray->lineHeight = (int)(WIN_H / ray->perpwalldists[x]);
+
+	draw_coord[0] = -ray->lineHeight * 2.1 + WIN_H / 2;
+	if (draw_coord[0] < 0)
+		draw_coord[0] = 0;
+	draw_coord[1] = ray->lineHeight * 0.25 + WIN_H / 2;
+	if (draw_coord[1] >= WIN_H)
+		draw_coord[1] = WIN_H - 1;
+	get_tex_line2(ray, mlx, draw_coord, x);
 }
 
 
 
 //		INSIDE
 //
-void    draw_short_line_texture(t_display *texture, t_raycast *ray, int x, int draw_start, int draw_end, int tex_x)
+void    draw_short_line_texture(t_display *texture, t_raycast *ray, int x, int draw_coord[2])
 {
 	double	step;
 	double	tex_pos;
@@ -128,52 +123,49 @@ void    draw_short_line_texture(t_display *texture, t_raycast *ray, int x, int d
 	int		y;
 
 	step = 1.0 * texture->tex_height / ray->lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + ray->lineHeight / 2) * step;
-	y = draw_start;
-	tex_x = texture->tex_width - tex_x;
-	while (y < draw_end)
+	tex_pos = (draw_coord[0] - WIN_H / 2 + ray->lineHeight / 2) * step;
+	y = draw_coord[0];
+	ray->tex_x = texture->tex_width - ray->tex_x;
+	while (y < draw_coord[1])
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
+		color = my_mlx_get_color(texture, ray->tex_x, tex_y);
 		my_mlx_pixel_put(ray->display, x, y, color);
 		y++;
 	}
 }
 
 //Get line on texture
-void	get_tex_line(t_raycast *ray, t_mlx *mlx, int x)
+void	get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 {
 	double	wall_x;
-	int		tex_x;
 
 	if (ray->side == 0)
-		wall_x = mlx->player.posY + ray->ZBuffer[x] * ray->raydirY;
+		wall_x = mlx->player.posY + ray->perpwalldists[x] * ray->raydirY;
 	else
-		wall_x = mlx->player.posX + ray->ZBuffer[x] * ray->raydirX;
+		wall_x = mlx->player.posX + ray->perpwalldists[x] * ray->raydirX;
 	wall_x -= floor(wall_x);
-
-	// in_wall = texture en fonction du wall_type. Pas toujours in_wall
-	tex_x = (int)(wall_x * (double)mlx->in_wall.tex_width);
+	ray->tex_x = (int)(wall_x * (double)mlx->in_wall.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->in_wall.tex_width - tex_x - 1;
+		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->in_wall.tex_width - tex_x - 1;
+		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
 
-	if (ray->wall_type == 1)
-		draw_short_line_texture(&mlx->in_wall, ray, x, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 2)
-		draw_short_line_texture(&mlx->in_wall2, ray, x, drawStart, drawEnd, tex_x);
-	else if (ray->wall_type == 999)
+	if (ray->hit_type == 1)
+		draw_short_line_texture(&mlx->in_wall, ray, x, draw_coord);
+	else if (ray->hit_type == 2)
+		draw_short_line_texture(&mlx->in_wall2, ray, x, draw_coord);
+	else if (ray->hit_type == 999)
 	{
-		if (ray->ZBuffer[x] <= 0.15)
+		if (ray->perpwalldists[x] <= 0.15)
 		{
 			if (mlx->player.using == 1)
 				close_door(mlx);
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_short_line_texture(&mlx->in_door_tex, ray, x, drawStart, drawEnd, tex_x);
+		draw_short_line_texture(&mlx->in_door_tex, ray, x, draw_coord);
 	}
 }
 
@@ -181,8 +173,7 @@ void	get_tex_line(t_raycast *ray, t_mlx *mlx, int x)
 // Draw a vertical line of pixels in the img
 void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 {
-	int 	drawStart;
-	int 	drawEnd;
+	int 	draw_coord[2];
 	double	perpWallDist;
 
 	if (ray->side == 0)
@@ -190,18 +181,19 @@ void	ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x)
 	else
 		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
 
-	ray->ZBuffer[x] = perpWallDist;
+	ray->perpwalldists[x] = perpWallDist;
 
 	ray->lineHeight = (int)(WIN_H / perpWallDist);
 
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -ray->lineHeight / 2 + WIN_H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = ray->lineHeight / 2 + WIN_H / 2;
-	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
-	get_tex_line(ray, mlx, x);
+	draw_coord[0] = -ray->lineHeight / 2 + WIN_H / 2;
+	if (draw_coord[0] < 0)
+		draw_coord[0] = 0;
+	draw_coord[1] = ray->lineHeight / 2 + WIN_H / 2;
+	if (draw_coord[1] >= WIN_H)
+		draw_coord[1] = WIN_H - 1;
+
+	get_tex_line(ray, mlx, draw_coord, x);
 }
 
 //Check if ray has hit a wall
@@ -211,37 +203,37 @@ int	check_wall(t_mlx *mlx, t_raycast *ray)
 	if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == '1')
 	{
-		ray->wall_type = 1;
+		ray->hit_type = 1;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == '2')
 	{
-		ray->wall_type = 2;
+		ray->hit_type = 2;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == '3')
 	{
-		ray->wall_type = 3;
+		ray->hit_type = 3;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == 'J')
 	{
-		ray->wall_type = 90;
+		ray->hit_type = 90;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == 'A')
 	{
-		ray->wall_type = 91;
+		ray->hit_type = 91;
 		return (1);
 	}
 	else if (mlx->map[ray->mapY][ray->mapX]
 		&& mlx->map[ray->mapY][ray->mapX] == 'D')
 	{
-		ray->wall_type = 999;
+		ray->hit_type = 999;
 		return (1);
 	}
 	return (0);
