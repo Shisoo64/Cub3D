@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/31 16:23:31 by bchabot          ###   ########.fr        #
+#    Updated: 2023/03/31 20:37:43 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ LIBFT = libft/libft.a
 
 MLX = mlx_linux/libmlx.a
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 16:25:41 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 20:33:51 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,9 @@ void	ft_map_height(t_mlx *mlx);
 int		is_input(char *line);
 void	place_player_on_map(t_mlx *mlx);
 int		is_asset(char *line);
-void	get_colors(t_mlx *mlx);
-void	get_wall_textures(t_mlx *mlx);
+void	fetch_assets(t_mlx *mlx);
+void	get_colors(t_mlx *mlx, char *line);
+void	get_wall_textures(t_mlx *mlx, char *line);
 
 
 //

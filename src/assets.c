@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/03/31 16:27:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 20:34:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,16 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	free(str);
 }
 
-void	get_wall_textures(t_mlx *mlx)
+void	get_wall_textures(t_mlx *mlx, char *line)
 {
-	char	*line;
-	int		nbr;
-	int		fd;
-
-	nbr = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	while (1)
-	{
-		if (!line || nbr == 4)
-			break ;
-		if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
-		{
-			fill_wall_tex(mlx, &mlx->NO_tex, line);
-			nbr++;
-		}
-		else if (is_asset(line) == 1 && ft_strnstr(line, "SO", ft_strlen(line)) != NULL)
-		{
-			fill_wall_tex(mlx, &mlx->SO_tex, line);
-			nbr++;
-		}
-		else if (is_asset(line) == 1 && ft_strnstr(line, "WE", ft_strlen(line)) != NULL)
-		{
-			fill_wall_tex(mlx, &mlx->WE_tex, line);
-			nbr++;
-		}
-		else if (is_asset(line) == 1 && ft_strnstr(line, "EA", ft_strlen(line)) != NULL)
-		{
-			fill_wall_tex(mlx, &mlx->EA_tex, line);
-			nbr++;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	if (nbr != 4)
-	{
-		printf("error in wall textures\n");
-		exit_game(mlx);
-	}
-	free(line);
-	close(fd);
+	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
+		fill_wall_tex(mlx, &mlx->NO_tex, line);
+	else if (is_asset(line) == 1 && ft_strnstr(line, "SO", ft_strlen(line)) != NULL)
+		fill_wall_tex(mlx, &mlx->SO_tex, line);
+	else if (is_asset(line) == 1 && ft_strnstr(line, "WE", ft_strlen(line)) != NULL)
+		fill_wall_tex(mlx, &mlx->WE_tex, line);
+	else if (is_asset(line) == 1 && ft_strnstr(line, "EA", ft_strlen(line)) != NULL)
+		fill_wall_tex(mlx, &mlx->EA_tex, line);
 }
 
 int	fill_color(char *line)
@@ -118,36 +85,12 @@ int	fill_color(char *line)
 	return (color);
 }
 
-void	get_colors(t_mlx *mlx)
+void	get_colors(t_mlx *mlx, char *line)
 {
-	char	*line;
-	int		nbr;
-	int		fd;
-
-	nbr = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	printf("line is %s\n", line);
-	while (line)
-	{
-		if (is_asset(line) && ft_strchr(line, 'F'))
-		{
-			printf("color F is : %s\n", line);
-			mlx->color_f = fill_color(line);
-			nbr++;
-		}
-		else if (is_asset(line) && ft_strchr(line, 'C'))
-		{
-			printf("color C is : %s\n", line);
-			mlx->color_c = fill_color(line);
-			nbr++;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	if (nbr != 2)
-		printf("Color error\n");
-	close(fd);
+	if (is_asset(line) && ft_strchr(line, 'F'))
+		mlx->color_f = fill_color(line);
+	else if (is_asset(line) && ft_strchr(line, 'C'))
+		mlx->color_c = fill_color(line);
 }
 
 void	fetch_assets(t_mlx *mlx)
@@ -161,14 +104,13 @@ void	fetch_assets(t_mlx *mlx)
 	{
 		if (*line != '\n' && ft_strnstr(line,"11", ft_strlen(line)) && !is_asset(line))
 			break ;
-		if (is_asset(line) == 1 && check_wall_textures(line))
-			exit_game_light(mlx, fd);
-		if (is_asset(line) == 2 && check_colors(line))
-			exit_game_light(mlx, fd);
+		if (is_asset(line) == 1)
+			get_wall_textures(mlx, line);
+		if (is_asset(line) == 2)
+			get_colors(mlx, line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (check_map(line, fd))
-		exit_game_light(mlx, fd);
+	ft_fill_map(mlx);
 	close(fd);
 }
