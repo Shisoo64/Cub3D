@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 19:02:23 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 03:14:12 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	print_map(char **map)
 	y = -1;
 	ft_printf("map:\n");
 	while (map[++y])
-		ft_printf("%s\n", map[y]);
-	ft_printf("\n\n\n");
+		ft_printf("%s", map[y]);
+	ft_printf("\n");
 }
 
 void	place_player_on_map(t_mlx *mlx)
@@ -29,14 +29,14 @@ void	place_player_on_map(t_mlx *mlx)
 	int		x;
 
 	y = -1;
-	while (++y < mlx->map_y)
+	printf("x len is : %d\n", mlx->map_x);
+	printf("y len is : %d\n", mlx->map_y);
+	print_map(mlx->map);
+	while (++y < (mlx->map_y - 1))
 	{
 		x = -1;
-		while (++x < mlx->map_x - 1)
+		while (++x < (mlx->map_x - 5))
 		{
-			printf("x is : %d\n", x);
-			printf("y is : %d\n", y);
-			printf("map[y][x] is : %c\n", mlx->map[y][x]);
 			if (mlx->map[y][x] == 'N')
 			{
 				mlx->player.dirX = 0.0;
@@ -45,6 +45,7 @@ void	place_player_on_map(t_mlx *mlx)
 				mlx->player.planeY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
+				break ;
 			}
 			else if (mlx->map[y][x] == 'S')
 			{
@@ -54,6 +55,7 @@ void	place_player_on_map(t_mlx *mlx)
 				mlx->player.planeY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
+				break ;
 			}
 			else if (mlx->map[y][x] == 'E')
 			{
@@ -61,6 +63,7 @@ void	place_player_on_map(t_mlx *mlx)
 				mlx->player.dirY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
+				break ;
 			}
 			else if (mlx->map[y][x] == 'W')
 			{
@@ -68,35 +71,12 @@ void	place_player_on_map(t_mlx *mlx)
 				mlx->player.dirY = 0.0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
+				break ;
 			}
 		}
 	}
-}
-
-void	ft_map_height(t_mlx *mlx)
-{
-	int		i;
-	int		fd;
-	char	*line;
-
-	i = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (ft_strnstr(line, "111", ft_strlen(line)) || ft_strnstr(line, "000", ft_strlen(line)))
-		{
-			mlx->map_x = ft_strlen(line) - 1;
-			i++;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	printf("map x is : %d\n", mlx->map_x);
-	mlx->map_y = i;
-	printf("map y is : %d\n", mlx->map_y);
-	free(line);
-	close(fd);
+	printf("posx is : %f\n", mlx->player.posY);
+	printf("posy is : %f\n", mlx->player.posX);
 }
 
 int	is_asset(char *line)
@@ -122,31 +102,57 @@ int	is_asset(char *line)
 	return (0);
 }
 
+void	ft_map_height(t_mlx *mlx)
+{
+	int		i;
+	int		fd;
+	int		len;
+	char	*line;
+
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	line = get_next_line(fd);
+	len = 0;
+	while (line)
+	{
+		if (*line >= 32 && !is_input(line))
+		{
+			if (len < ft_strlen(line))
+				len = ft_strlen(line);
+			i++;
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	mlx->map_y = i;
+	mlx->map_x = len - 1;
+	printf("map x is : %d\n", mlx->map_x);
+	printf("map y is : %d\n", mlx->map_y);
+	free(line);
+	close(fd);
+}
+
 void	ft_fill_map(t_mlx *mlx, int fd)
 {
 	int	i;
 	char	*line;
 
-	ft_map_height(mlx);
+	//ft_map_height(mlx);
 	mlx->map = malloc(sizeof(char *) * mlx->map_y + 1);
 	if (!mlx->map)
 		return ;
-	line = get_next_line(fd);
-	while (line && ft_strcmp(line, "\n"))
-		line = get_next_line(fd);
-	printf("final line is : %s\n", line);
 	i = 0;
 	while (i < mlx->map_y)
 	{
+		line = get_next_line(fd);
 		if (!line)
 			break ;
-		mlx->map[i] = ft_substr(line, 0, ft_strlen(line) - 2);
-		printf("mlx map[%d] is : %s\n", i, mlx->map[i]);
-		i++;
+		if (*line >= 32)
+		{
+			mlx->map[i] = ft_strdup(line);
+			i++;
+		}
 		free(line);
-		line = get_next_line(fd);
 	}
-	printf("mlx map[%d] is : %s\n", i, mlx->map[i]);
-//	print_map(mlx->map);
 	close(fd);
 }

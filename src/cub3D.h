@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 18:35:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 03:12:29 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ char	**create_map(t_mlx *mlx);
 void	ft_fill_map(t_mlx *mlx, int fd);
 void	place_player_on_map(t_mlx *mlx);
 int		is_asset(char *line);
+void	ft_map_height(t_mlx *mlx);
+int		is_input(char *line);
 
 
 //
@@ -130,11 +132,16 @@ void	draw_backdrop(t_mlx *mlx);
 void	free_map(t_mlx *mlx, char **map);
 
 //
+//		ERRORS
+void	check_assets(t_mlx *mlx);
+
+//
 //		MLX
 void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int		my_mlx_get_color(t_display *texture, int x, int y);
 void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void	exit_game(t_mlx *mlx);
+void	exit_game_light(t_mlx *mlx, int fd);
 
 int		ft_strcspn(char *s, const char *rejects);
 int		ft_strspn(char *s, const char *accepts);
