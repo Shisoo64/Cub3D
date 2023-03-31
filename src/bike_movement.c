@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:05:19 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/24 15:14:55 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:14:27 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,29 @@
 
 void	move_player_bike(t_mlx *mlx, int speed, t_player *player)
 {
-	if (!ft_strchr("123JAD" ,mlx->map[(int)player->posY]
-		[(int)(player->posX + (player->dirX * MOVESPEED * speed))]))
-		player->posX += (player->dirX * MOVESPEED) * speed;
-	if (!ft_strchr("123JAD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
-		[(int)player->posX]))
-		player->posY += (player->dirY * MOVESPEED) * speed;
+	if (!ft_strchr("123JAD", mlx->map[(int)player->pos_y]
+			[(int)(player->pos_x + (player->dir_x * MOVESPEED * speed))]))
+		player->pos_x += (player->dir_x * MOVESPEED) * speed;
+	if (!ft_strchr("123JAD",
+			mlx->map[(int)(player->pos_y + (player->dir_y * MOVESPEED * speed))]
+		[(int)player->pos_x]))
+		player->pos_y += (player->dir_y * MOVESPEED) * speed;
 
 
 	// CHECK WALL CRASH
-	if (ft_strchr("123JAD" ,mlx->map[(int)player->posY]
-		[(int)(player->posX + (player->dirX * MOVESPEED * speed))]) && speed >= CRASH_SPEED)
+	if (ft_strchr("123JAD", mlx->map[(int)player->pos_y]
+			[(int)(player->pos_x + (player->dir_x * MOVESPEED * speed))])
+		&& speed >= CRASH_SPEED)
 		mlx->crashed = 1;
-	if (ft_strchr("123JAD" ,mlx->map[(int)(player->posY + (player->dirY * MOVESPEED * speed))]
-		[(int)player->posX]) && speed >= CRASH_SPEED)
+	if (ft_strchr("123JAD",
+			mlx->map[(int)(player->pos_y + (player->dir_y * MOVESPEED * speed))]
+		[(int)player->pos_x]) && speed >= CRASH_SPEED)
 		mlx->crashed = 1;
 }
 
 void	input_manager_bike(t_mlx *mlx)
 {
-	static double coef;
+	static double	coef;
 
 	if (mlx->player.speed > 6000)
 		mlx->player.speed = 6000;
@@ -62,11 +65,9 @@ void	input_manager_bike(t_mlx *mlx)
 	if (mlx->player.up == 1)
 		mlx->player.speed -= 15;
 
-
 	// Reculer avec les pieds
 	if (mlx->player.up == 1 && mlx->player.speed <= 0)
 		mlx->player.speed -= 20;
-	
 	// Accelerer
 	if (mlx->player.down == 1 && mlx->player.speed >= 0)
 		mlx->player.speed += 12 * coef;
@@ -74,6 +75,7 @@ void	input_manager_bike(t_mlx *mlx)
 	// Frein moteur
 	if (mlx->player.down == 0 && mlx->player.speed >= 0)
 		mlx->player.speed -= 12 * (1.15 - coef);
+
 	// Frein moteur en marche arriere
 	if (mlx->player.up == 0 && mlx->player.speed <= 0)
 		mlx->player.speed += 20 * (1.3 - coef);
@@ -86,7 +88,6 @@ void	input_manager_bike(t_mlx *mlx)
 	if (mlx->player.speed <= 10 && mlx->player.speed >= -10)
 		mlx->player.speed = 0;
 
-	mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 12, WIN_H - 70, 0xffffff, ft_itoa(mlx->player.speed / 30));
-	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2Kspeed:%fkmh	(%f)\n", mlx->player.speed / 30, mlx->player.speed);
+	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2Kspeed:%fkmh - (%f)\n", mlx->player.speed / 30, mlx->player.speed);
 	move_player_bike(mlx, mlx->player.speed, &mlx->player);
 }

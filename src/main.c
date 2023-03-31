@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 18:32:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:58:30 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	open_door(t_mlx *mlx, char *mapname, int batnbr)
 
 	mlx->mapname = mapname;
 
-	mlx->player.dirX_save = -mlx->player.dirX;
-	mlx->player.dirY_save = -mlx->player.dirY;
-	mlx->player.posX_save = mlx->player.posX;
-	mlx->player.posY_save = mlx->player.posY;
-	mlx->player.planeX_save = -mlx->player.planeX;
-	mlx->player.planeY_save = -mlx->player.planeY;
+	mlx->player.dir_x_save = -mlx->player.dir_x;
+	mlx->player.dir_y_save = -mlx->player.dir_y;
+	mlx->player.pos_x_save = mlx->player.pos_x;
+	mlx->player.pos_y_save = mlx->player.pos_y;
+	mlx->player.plane_x_save = -mlx->player.plane_x;
+	mlx->player.plane_y_save = -mlx->player.plane_y;
 
 	mlx->player.inside = batnbr;
 	mlx->player.biking = -1;
 
-	mlx->player.planeX = 0;
-	mlx->player.planeY = FOV;
+	mlx->player.plane_x = 0;
+	mlx->player.plane_y = FOV;
 	free_map(mlx, mlx->map);
 	mlx->map = create_map(mlx);
 	place_player_on_map(mlx, mlx->map);
@@ -42,12 +42,12 @@ void	close_door(t_mlx *mlx)
 
 	mlx->mapname = "maps/map.cub";
 
-	mlx->player.posX = mlx->player.posX_save;
-	mlx->player.posY = mlx->player.posY_save;
-	mlx->player.planeX = mlx->player.planeX_save;
-	mlx->player.planeY = mlx->player.planeY_save;
-	mlx->player.dirX = mlx->player.dirX_save;
-	mlx->player.dirY = mlx->player.dirY_save;
+	mlx->player.pos_x = mlx->player.pos_x_save;
+	mlx->player.pos_y = mlx->player.pos_y_save;
+	mlx->player.plane_x = mlx->player.plane_x_save;
+	mlx->player.plane_y = mlx->player.plane_y_save;
+	mlx->player.dir_x = mlx->player.dir_x_save;
+	mlx->player.dir_y = mlx->player.dir_y_save;
 
 	mlx->player.inside = 0;
 	mlx->player.using = 0;
@@ -59,8 +59,8 @@ void	close_door(t_mlx *mlx)
 
 int	ft_check_prox(t_mlx *mlx, t_sprite tex)
 {
-	if (mlx->player.posX - tex.x <= 0.5 && mlx->player.posX - tex.x >= -0.5
-		&& mlx->player.posY - tex.y <= 0.5 && mlx->player.posY - tex.y >= -0.5)
+	if (mlx->player.pos_x - tex.x <= 0.5 && mlx->player.pos_x - tex.x >= -0.5
+		&& mlx->player.pos_y - tex.y <= 0.5 && mlx->player.pos_y - tex.y >= -0.5)
 		return (1);
 	return (0);
 }
@@ -252,8 +252,8 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	mlx.player.planeX = 0;
-	mlx.player.planeY = FOV;
+	mlx.player.plane_x = 0;
+	mlx.player.plane_y = FOV;
 
 	if (ac != 2)
 		return (1);

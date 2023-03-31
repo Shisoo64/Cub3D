@@ -16,7 +16,7 @@
 int spriteOrder[numSprites];
 double spriteDistance[numSprites];*/
 
-void    draw_line_sprite(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void    draw_line_sprite(t_display *texture, t_display *display, int x, int lineheight, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
 	double	tex_pos;
@@ -24,8 +24,8 @@ void    draw_line_sprite(t_display *texture, t_display *display, int x, int line
 	int		tex_y;
 	int		y;
 
-	step = 1.0 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
+	step = 1.0 * texture->tex_height / lineheight;
+	tex_pos = (draw_start - WIN_H / 2 + lineheight / 2) * step;
 	y = draw_start;
 	tex_x = texture->tex_width - tex_x;
 	while (y < draw_end)
@@ -34,7 +34,7 @@ void    draw_line_sprite(t_display *texture, t_display *display, int x, int line
 		tex_pos += step;
 		color = my_mlx_get_color(texture, tex_x, tex_y);
 		if (color != 0x00FF00)
-    		my_mlx_pixel_put(display, x, y, color);
+			my_mlx_pixel_put(display, x, y, color);
 		y++;
 	}
 }
@@ -46,7 +46,7 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
     /*for(int i = 0; i < numSprites; i++)
     {
       spriteOrder[i] = i;
-      spriteDistance[i] = ((posX - sprite[i].x) * (posX - sprite[i].x) + (posY - sprite[i].y) * (posY - sprite[i].y)); //sqrt not taken, unneeded
+      spriteDistance[i] = ((pos_x - sprite[i].x) * (pos_x - sprite[i].x) + (pos_y - sprite[i].y) * (pos_y - sprite[i].y)); //sqrt not taken, unneeded
     }
     sortSprites(spriteOrder, spriteDistance, numSprites);*/
 
@@ -54,18 +54,18 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
     //for(int i = 0; i < 1; i++)
     //{
       //translate sprite position to relative to camera
-      double spriteX = texture.x - mlx->player.posX;
-      double spriteY = texture.y - mlx->player.posY;
+      double spriteX = texture.x - mlx->player.pos_x;
+      double spriteY = texture.y - mlx->player.pos_y;
 
       //transform sprite with the inverse camera matrix
-      // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-      // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-      // [ planeY   dirY ]                                          [ -planeY  planeX ]
+      // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+      // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
+      // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
 
-      double invDet = 1.0 / (mlx->player.planeX * mlx->player.dirY - mlx->player.dirX * mlx->player.planeY); //required for correct matrix multiplication
+      double invDet = 1.0 / (mlx->player.plane_x * mlx->player.dir_y - mlx->player.dir_x * mlx->player.plane_y); //required for correct matrix multiplication
 
-      double transformX = invDet * (mlx->player.dirY * spriteX - mlx->player.dirX * spriteY);
-      double transformY = invDet * (-mlx->player.planeY * spriteX + mlx->player.planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+      double transformX = invDet * (mlx->player.dir_y * spriteX - mlx->player.dir_x * spriteY);
+      double transformY = invDet * (-mlx->player.plane_y * spriteX + mlx->player.plane_x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
 
       int spriteScreenX = (int)((WIN_W / 2) * (1 + transformX / transformY));
 
