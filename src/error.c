@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 02:56:19 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:20:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	check_wall_textures(char *line)
 {
 	char	*str;
 	int		fd;
-	
+
 	str = ft_strnstr(line, "./", ft_strlen(line));
 	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
@@ -85,6 +85,7 @@ int	check_wall_textures(char *line)
 		return (1);
 	}
 	free(str);
+	close(fd);
 	return (0);
 }
 
@@ -115,12 +116,15 @@ int	check_colors(char *line)
 		value = ft_atoi(buf);
 		if (value > 255)
 		{
-			printf("Error. The value of one of your color is wrong.\n");
+			error_message("Error. The value of one of your color is wrong. Check this line : ", line);
 			return (1);
 		}
+		else
+			i++;
 		//free(buf);
-		i++;
 	}
+	if (i != 3)
+		error_message("Error. Color values seems to be missing. Check this line : ", line);
 	free(buf);
 	return (0);
 }
@@ -135,17 +139,17 @@ int	is_input(char *line)
 	while (*line)
 	{
 		if (!ft_strchr(map_input, *line) && *line > 32)
-			return (1);
+			return (0);
 		line++;
 	}
-	return (0);
+	return (1);
 }
 
 int	check_map(char *line, int fd)
 {
 	while (line)
 	{
-		if (line && is_input(line))
+		if (line && !is_input(line) && !is_asset(line))
 		{
 			error_message("Check this map row in the map file : ", line);
 			return (1);

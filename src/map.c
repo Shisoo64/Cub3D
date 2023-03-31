@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 03:14:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:01:31 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ void	ft_map_height(t_mlx *mlx)
 	len = 0;
 	while (line)
 	{
-		if (*line >= 32 && !is_input(line))
+		if (*line >= 32 && is_input(line) && !is_asset(line))
 		{
-			if (len < ft_strlen(line))
-				len = ft_strlen(line);
+			if (len < (int)ft_strlen(line))
+				len = (int)ft_strlen(line);
 			i++;
 		}
 		free(line);
@@ -132,12 +132,14 @@ void	ft_map_height(t_mlx *mlx)
 	close(fd);
 }
 
-void	ft_fill_map(t_mlx *mlx, int fd)
+void	ft_fill_map(t_mlx *mlx)
 {
-	int	i;
 	char	*line;
+	int		i;
+	int		fd;
 
-	//ft_map_height(mlx);
+	ft_map_height(mlx);
+	fd = open(mlx->mapname, O_RDONLY);
 	mlx->map = malloc(sizeof(char *) * mlx->map_y + 1);
 	if (!mlx->map)
 		return ;
@@ -147,7 +149,7 @@ void	ft_fill_map(t_mlx *mlx, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (*line >= 32)
+		if (*line >= 32 && is_input(line) && !is_asset(line))
 		{
 			mlx->map[i] = ft_strdup(line);
 			i++;
