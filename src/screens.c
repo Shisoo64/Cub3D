@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 16:22:54 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:17:20 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ void	draw_backdrop(t_mlx *mlx)
 
 	sky = SKYCOLOR;
 	floor = FLOORCOLOR;
-
 	if (mlx->player.inside != 0)
 	{
 		sky = CEILINGCOLOR;
 		floor = IN_FLOORCOLOR;
 	}
-
 	y = -1;
 	while (++y <= WIN_H / 2)
 	{
@@ -50,7 +48,8 @@ void	start_screen(t_mlx *mlx)
 	if (i++ == 0)
 	{
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->startscreen.img, 0, 0);
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 75, WIN_H - 225, 0xffffff, "Press any key to start");
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 75, WIN_H - 225,
+			0xffffff, "Press any key to start");
 	}
 	else if (i == 50000)
 	{
@@ -68,7 +67,8 @@ void	crash_screen(t_mlx *mlx)
 	if (i++ == 0)
 	{
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->crash.img, 0, 0);
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 25, WIN_H - 70, 0xffffff, "Press any key");
+		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 2 - 25, WIN_H - 70,
+			0xffffff, "Press any key");
 	}
 	else if (i == 50000)
 	{

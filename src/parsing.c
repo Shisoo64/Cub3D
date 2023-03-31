@@ -26,9 +26,11 @@ void	check_map_ext(t_mlx *v)
 		exit(1);
 	}
 	while (++i < 5)
+	{
 		if (v->mapname[ft_strlen(v->mapname) - i] != ext[4 - i])
 		{
 			ft_printf("Error\nProblem with map extension.\n");
 			exit (1);
 		}
+	}
 }

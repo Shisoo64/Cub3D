@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 15:58:30 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:17:57 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->tmax.x = mlx->player.pos_x;
 		mlx->tmax.y = mlx->player.pos_y;
 	}
-
 	return (0);
 }
 
