@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/03/30 15:49:29 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/03/31 16:23:49 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,15 +28,18 @@ SRCS =	src/main.c \
 		src/error.c
 
 SRCS_BONUS =	src_bonus/main.c \
-				src_bonus/pathfinding.c \
-				src_bonus/utils.c \
-				src_bonus/utils2.c \
-				src_bonus/enemies.c \
+				src_bonus/input_manager.c \
+				src_bonus/foot_movement.c \
+				src_bonus/bike_movement.c \
 				src_bonus/sprites.c \
+				src_bonus/screens.c \
+				src_bonus/dialog.c \
+				src_bonus/utils.c \
+				src_bonus/parsing.c \
+				src_bonus/rendering.c \
 				src_bonus/map.c \
 				src_bonus/free.c \
-				src_bonus/error.c \
-				src_bonus/anim.c
+				src_bonus/error.c
 
 CC = @clang
 
@@ -70,6 +73,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX)
 
 bonus : $(OBJS_BONUS) $(LIBFT) $(MLX)
 	$(CC) $(OBJS_BONUS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
+	@echo "\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1;32m📦 Grand Theft Moto compiled!\n\n\033[0m"
 
 
 
