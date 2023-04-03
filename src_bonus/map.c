@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 15:58:30 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:53:14 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,6 @@ int	get_map_dimension(t_mlx *mlx)
 	return (i);
 }
 
-void	print_map(char **map)
-{
-	int	y;
-
-	y = -1;
-	ft_printf("map:\n");
-	while (map[++y])
-		ft_printf("%s\n", map[y]);
-	ft_printf("\n\n\n");
-}
-
 void	place_player_on_map(t_mlx *mlx, char **map)
 {
 	int		y;
@@ -61,24 +50,6 @@ void	place_player_on_map(t_mlx *mlx, char **map)
 		while (++x < mlx->map_x - 1)
 		{
 			if (map[y][x] == 'N')
-			{
-				mlx->player.dir_x = 1;
-				mlx->player.pos_y = y + 0.5f;
-				mlx->player.pos_x = x + 0.5f;
-			}
-			else if (map[y][x] == 'S')
-			{
-				mlx->player.dir_x = 1;
-				mlx->player.pos_y = y + 0.5f;
-				mlx->player.pos_x = x + 0.5f;
-			}
-			else if (map[y][x] == 'E')
-			{
-				mlx->player.dir_x = 1;
-				mlx->player.pos_y = y + 0.5f;
-				mlx->player.pos_x = x + 0.5f;
-			}
-			else if (map[y][x] == 'W')
 			{
 				mlx->player.dir_x = 1;
 				mlx->player.pos_y = y + 0.5f;
@@ -115,9 +86,5 @@ char	**create_map(t_mlx *mlx)
 	}
 	map[y] = NULL;
 	close(fd);
-
-	//printmap
-	print_map(map);
-
 	return (map);
 }
