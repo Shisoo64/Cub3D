@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 20:25:07 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/02 18:04:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,31 +181,6 @@ void	check_items(t_mlx *mlx)
 	if (check_map(line, fd))
 		exit_game_light(mlx, fd);
 	close(fd);
-	// int	x;
-	// int	y;
-	// int	i[3];
-
-	// i[0] = 0;
-	// i[1] = 0;
-	// i[2] = 0;
-	// y = -1;
-	// while (map[++y])
-	// {
-	// 	x = -1;
-	// 	while (map[y][++x] && map[y][x] != '\n')
-	// 	{
-	// 		if (map[y][x] == 'E')
-	// 			i[0]++;
-	// 		else if (map[y][x] == 'P')
-	// 			i[1]++;
-	// 		else if (map[y][x] == 'C')
-	// 			i[2]++;
-	// 		else if (map[y][x] != '1' && map[y][x] != '0' \
-	// 		&& map[y][x] != 'M' && map[y][x] != 'X')
-	// 			ft_error(v, "Error\nWrong item on map.\n");
-	// 	}
-	// }
-	// check_items_ext(i, v);
 }
 
 void	check_assets(t_mlx *mlx)

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 16:01:31 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/02 18:07:07 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ void	place_player_on_map(t_mlx *mlx)
 	while (++y < (mlx->map_y - 1))
 	{
 		x = -1;
-		while (++x < (mlx->map_x - 5))
+		while (++x < (mlx->map_x) - 1)
 		{
 			if (mlx->map[y][x] == 'N')
 			{
-				mlx->player.dirX = 0.0;
+				printf("mlx->map[y][x] : %c\n",mlx->map[y][x]);
+				mlx->player.dirX = 0;
 				mlx->player.dirY = -1.0;
-				mlx->player.planeX = 0.66;
-				mlx->player.planeY = 0.0;
+				mlx->player.planeX = FOV;
+				mlx->player.planeY = 0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 				break ;
@@ -51,8 +52,8 @@ void	place_player_on_map(t_mlx *mlx)
 			{
 				mlx->player.dirX = 0;
 				mlx->player.dirY = 1;
-				mlx->player.planeX = -0.66;
-				mlx->player.planeY = 0.0;
+				mlx->player.planeX = -FOV;
+				mlx->player.planeY = 0;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 				break ;
@@ -60,7 +61,9 @@ void	place_player_on_map(t_mlx *mlx)
 			else if (mlx->map[y][x] == 'E')
 			{
 				mlx->player.dirX = 1;
-				mlx->player.dirY = 0.0;
+				mlx->player.dirY = 0;
+				mlx->player.planeX = 0;
+				mlx->player.planeY = FOV;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 				break ;
@@ -69,14 +72,16 @@ void	place_player_on_map(t_mlx *mlx)
 			{
 				mlx->player.dirX = -1;
 				mlx->player.dirY = 0.0;
+				mlx->player.planeX = 0;
+				mlx->player.planeY = -FOV;
 				mlx->player.posY = y + 0.5f;
 				mlx->player.posX = x + 0.5f;
 				break ;
 			}
 		}
 	}
-	printf("posx is : %f\n", mlx->player.posY);
-	printf("posy is : %f\n", mlx->player.posX);
+	printf("posy is : %f\n", mlx->player.posY);
+	printf("posx is : %f\n", mlx->player.posX);
 }
 
 int	is_asset(char *line)
@@ -115,7 +120,7 @@ void	ft_map_height(t_mlx *mlx)
 	len = 0;
 	while (line)
 	{
-		if (*line >= 32 && is_input(line) && !is_asset(line))
+		if (*line >= 32 && is_input(line))
 		{
 			if (len < (int)ft_strlen(line))
 				len = (int)ft_strlen(line);
@@ -126,8 +131,6 @@ void	ft_map_height(t_mlx *mlx)
 	}
 	mlx->map_y = i;
 	mlx->map_x = len - 1;
-	printf("map x is : %d\n", mlx->map_x);
-	printf("map y is : %d\n", mlx->map_y);
 	free(line);
 	close(fd);
 }
@@ -149,7 +152,7 @@ void	ft_fill_map(t_mlx *mlx)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (*line >= 32 && is_input(line) && !is_asset(line))
+		if (*line >= 32  && is_input(line))
 		{
 			mlx->map[i] = ft_strdup(line);
 			i++;

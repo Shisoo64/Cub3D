@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/03/31 20:34:27 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/03/31 21:27:23 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	str = ft_strnstr(line, "./", ft_strlen(line));
 	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
-		printf("Error.\n");
 		error_message("Check this line provided in the map file : ", line);
 		exit_game(mlx);
 	}
 	printf("texture is : %s\n", str);
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
 	if (open(str, O_RDONLY) == -1)
-
+		error_message("Check this line provided in the map file : ", line);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width, &texture->tex_height);
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
 	free(str);
@@ -48,7 +47,6 @@ int	fill_color(char *line)
 {
 	int 	i;
 	int		color;
-	int 	value;
 	char	*str;
 	char	*buf;
 
@@ -57,28 +55,15 @@ int	fill_color(char *line)
 	str = line;
 	while (*str && !ft_isdigit(*str))
 		str++;
-	printf("Color is : %s", str);
 	while (i < 3)
 	{
 		i++;
 		buf = ft_strdup(str);
 		buf = ft_strtok(buf, ",\n");
-		if (!buf)
-		{
-			printf("Color error.\n");
-			exit(0);
-		}
 		while (*str && ft_isdigit(*str))
 			str++;
 		while (*str && !ft_isdigit(*str))
 			str++;
-		value = ft_atoi(buf);
-		printf("value is %d\n", value);
-		if (value > 255 || value < 0)
-		{
-			printf("Error. The value of one of your color is wrong.\n");
-			exit(0);
-		}
 		color |= (ft_atoi(buf) << ((3 - i) * 8));
 		//free(buf);
 	}
@@ -88,9 +73,15 @@ int	fill_color(char *line)
 void	get_colors(t_mlx *mlx, char *line)
 {
 	if (is_asset(line) && ft_strchr(line, 'F'))
+	{
 		mlx->color_f = fill_color(line);
+		printf("color of line %s is %d.\n", line, mlx->color_f);
+	}
 	else if (is_asset(line) && ft_strchr(line, 'C'))
+	{
 		mlx->color_c = fill_color(line);
+		printf("color of line %s is %d.\n", line, mlx->color_c);
+	}
 }
 
 void	fetch_assets(t_mlx *mlx)
@@ -111,6 +102,8 @@ void	fetch_assets(t_mlx *mlx)
 		free(line);
 		line = get_next_line(fd);
 	}
+	ft_printf("line before fill map is %s", line);
 	ft_fill_map(mlx);
+	place_player_on_map(mlx);
 	close(fd);
 }

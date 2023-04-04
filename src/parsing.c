@@ -42,8 +42,4 @@ void	ft_parsing(t_mlx *mlx)
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
 	fetch_assets(mlx);
-	//ft_fill_map(mlx);
-	//get_wall_textures(mlx);
-	//get_colors(mlx);
-	place_player_on_map(mlx);
 }
