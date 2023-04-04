@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/03 16:08:26 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:50:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ typedef struct s_mlx
 void			get_textures(t_mlx *mlx);
 char			**create_map(t_mlx *mlx);
 void			place_player_on_map(t_mlx *mlx, char **map);
+void			ft_parsing(t_mlx *mlx);
 
 //
 //		MOVEMENT
