@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/04 15:51:37 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:39:30 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_structs(t_mlx *mlx)
 {
+	mlx->mapname = "maps/map.cub";
 	mlx->player.rot_r = 0;
 	mlx->player.rot_l = 0;
 	mlx->player.up = 0;
@@ -31,7 +32,6 @@ void	init_structs(t_mlx *mlx)
 	mlx->started = 0;
 	mlx->crashed = 0;
 }
-
 
 void	ft_parsing(t_mlx *mlx)
 {

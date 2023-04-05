@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/04 15:50:48 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:35:58 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ int				frames(t_mlx *mlx);
 void			ft_display(t_mlx *mlx);
 void			ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
 void			ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
+void			ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x);
+void			ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x);
 
 //
 //		SCREENS
