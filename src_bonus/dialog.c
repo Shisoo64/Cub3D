@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/30 18:14:46 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:48:02 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	draw_dialog(t_mlx *mlx)
 	}
 }
 
-void	starting_dialog(t_mlx *mlx)
+void	starting_dialog_ext(t_mlx *mlx)
 {
 	if (mlx->dialog == 1)
 	{
@@ -53,7 +53,12 @@ void	starting_dialog(t_mlx *mlx)
 		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "aller a tte";
 	}
-	else
+}
+
+void	starting_dialog(t_mlx *mlx)
+{
+	starting_dialog_ext(mlx);
+	if (mlx->dialog > 5)
 	{
 		mlx->dialog = 0;
 		return ;
@@ -103,7 +108,8 @@ void	sch_dialog(t_mlx *mlx)
 	else if (mlx->dialog == 23)
 		mlx->message = "Bon parfait alors";
 	else if (mlx->dialog == 24)
-		mlx->message = "Ca fait plaisir que t'ai pu nous depanner";
+		mlx->message = "Ca fait plaisir que t'ai pu nous depanner,\
+		tiens garde le t-max en cadeau";
 	else if (mlx->dialog == 25)
 		mlx->message = "Aller on se capte une autre fois";
 	else
@@ -117,7 +123,6 @@ void	sch_dialog(t_mlx *mlx)
 	if (mlx->player.using == -1)
 		mlx->dialog++;
 }
-
 
 void	ft_dialog(t_mlx *mlx)
 {
