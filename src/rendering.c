@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rendering.h"
+#include "../includes/cub3D.h"
 
-void    draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void	draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
 {
 	double	step;
 	double	tex_pos;
@@ -37,8 +37,8 @@ void    draw_short_line_texture(t_display *texture, t_display *display, int x, i
 // Draw a vertical line of pixels in the img
 void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 {
-	int 	drawStart;
-	int 	drawEnd;
+	int		draw_start;
+	int		draw_end;
 	double	perpWallDist;
 	int		lineHeight;
 
@@ -50,12 +50,12 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	lineHeight = (int)(WIN_H / perpWallDist);
 
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight / 2 + WIN_H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + WIN_H / 2;
-	if (drawEnd >= WIN_H)
-		drawEnd = WIN_H - 1;
+	draw_start = -lineHeight / 2 + WIN_H / 2;
+	if (draw_start < 0)
+		draw_start = 0;
+	draw_end = lineHeight / 2 + WIN_H / 2;
+	if (draw_end >= WIN_H)
+		draw_end = WIN_H - 1;
 
 
 	/// Couper la fonction ici ///
@@ -68,28 +68,24 @@ void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 	else
 		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
 	wall_x -= floor(wall_x);
-
 	tex_x = (int)(wall_x * (double)mlx->NO_tex.tex_width);
 	if (ray->side == 0 && ray->raydirX > 0)
 		tex_x = mlx->WE_tex.tex_width - tex_x - 1;
 	if (ray->side == 1 && ray->raydirY < 0)
 		tex_x = mlx->SO_tex.tex_width - tex_x - 1;
-
-	// printf("ray->dirX is %f\n", ray->raydirX);
-	// printf("ray->dirY is %f\n", ray->raydirY);
 	if (ray->side == 1)
 	{
 		if (ray->stepY > 0)
-			draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+			draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
 		else
-			draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+			draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
 	}
 	else
 	{
 		if (ray->stepX > 0)
-			draw_short_line_texture(&mlx->WE_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+			draw_short_line_texture(&mlx->WE_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
 		else
-			draw_short_line_texture(&mlx->EA_tex, &mlx->display, x, lineHeight, drawStart, drawEnd, tex_x);
+			draw_short_line_texture(&mlx->EA_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
 	}
 }
 
@@ -172,7 +168,7 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 void	ft_display(t_mlx *mlx)
 {
 	t_raycast	ray;
-	int	x;
+	int			x;
 
 	draw_backdrop(mlx);
 	x = 0;

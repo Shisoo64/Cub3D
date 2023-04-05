@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 16:21:47 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:44:45 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 int	frames(t_mlx *mlx)
 {
@@ -19,6 +19,21 @@ int	frames(t_mlx *mlx)
 	// DISPLAY THE IMG
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
 	return (0);
+}
+
+void init_data(t_mlx *mlx)
+{
+	mlx->player.rot_r = 0;
+	mlx->player.rot_l = 0;
+	mlx->player.up = 0;
+	mlx->player.down = 0;
+	mlx->player.left = 0;
+	mlx->player.right = 0;
+
+	mlx->NO_tex.img = NULL;
+	mlx->SO_tex.img = NULL;
+	mlx->WE_tex.img = NULL;
+	mlx->EA_tex.img = NULL;
 }
 
 int	exit_hook(t_mlx *mlx)
@@ -31,22 +46,11 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	mlx.player.planeX = 0;
-	mlx.player.planeY = FOV;
-
 	if (ac != 2)
 		return (1);
 	mlx.mapname = av[1];
-
+	init_data(&mlx);
 	ft_parsing(&mlx);
-
-	// INIT VARS
-	mlx.player.rot_r = 0;
-	mlx.player.rot_l = 0;
-	mlx.player.up = 0;
-	mlx.player.down = 0;
-	mlx.player.left = 0;
-	mlx.player.right = 0;
 
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);

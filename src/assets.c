@@ -6,15 +6,15 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/03/31 21:27:23 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:33:56 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strnstr(line, "./", ft_strlen(line));
 	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
@@ -45,7 +45,7 @@ void	get_wall_textures(t_mlx *mlx, char *line)
 
 int	fill_color(char *line)
 {
-	int 	i;
+	int		i;
 	int		color;
 	char	*str;
 	char	*buf;
@@ -65,7 +65,6 @@ int	fill_color(char *line)
 		while (*str && !ft_isdigit(*str))
 			str++;
 		color |= (ft_atoi(buf) << ((3 - i) * 8));
-		//free(buf);
 	}
 	return (color);
 }
@@ -102,7 +101,6 @@ void	fetch_assets(t_mlx *mlx)
 		free(line);
 		line = get_next_line(fd);
 	}
-	ft_printf("line before fill map is %s", line);
 	ft_fill_map(mlx);
 	place_player_on_map(mlx);
 	close(fd);

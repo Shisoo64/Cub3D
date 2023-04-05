@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 19:23:05 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 09:47:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 void	draw_backdrop(t_mlx *mlx)
 {

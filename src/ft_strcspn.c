@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:52:31 by bchabot           #+#    #+#             */
-/*   Updated: 2023/03/30 15:44:02 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 09:48:28 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 int	ft_strcspn(char *s, const char *rejects)
 {

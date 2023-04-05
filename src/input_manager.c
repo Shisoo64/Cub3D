@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/27 16:20:04 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 09:48:07 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 int	key_press(int key, t_mlx *mlx)
 {

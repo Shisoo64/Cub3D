@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/02 18:07:07 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:35:53 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 void	print_map(char **map)
 {
@@ -23,15 +23,20 @@ void	print_map(char **map)
 	ft_printf("\n");
 }
 
+void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2])
+{
+	mlx->player.dirX = dir[0];
+	mlx->player.dirY = dir[1];
+	mlx->player.planeX = plane[0];
+	mlx->player.planeY = plane[1];
+}
+
 void	place_player_on_map(t_mlx *mlx)
 {
 	int		y;
 	int		x;
 
 	y = -1;
-	printf("x len is : %d\n", mlx->map_x);
-	printf("y len is : %d\n", mlx->map_y);
-	print_map(mlx->map);
 	while (++y < (mlx->map_y - 1))
 	{
 		x = -1;
@@ -39,59 +44,37 @@ void	place_player_on_map(t_mlx *mlx)
 		{
 			if (mlx->map[y][x] == 'N')
 			{
-				printf("mlx->map[y][x] : %c\n",mlx->map[y][x]);
-				mlx->player.dirX = 0;
-				mlx->player.dirY = -1.0;
-				mlx->player.planeX = FOV;
-				mlx->player.planeY = 0;
-				mlx->player.posY = y + 0.5f;
-				mlx->player.posX = x + 0.5f;
+				set_player_dir(mlx, (int []){0, -1}, (double []){FOV, 0});
 				break ;
 			}
 			else if (mlx->map[y][x] == 'S')
 			{
-				mlx->player.dirX = 0;
-				mlx->player.dirY = 1;
-				mlx->player.planeX = -FOV;
-				mlx->player.planeY = 0;
-				mlx->player.posY = y + 0.5f;
-				mlx->player.posX = x + 0.5f;
+				set_player_dir(mlx, (int []){0, 1}, (double []){-FOV, 0});
 				break ;
 			}
 			else if (mlx->map[y][x] == 'E')
 			{
-				mlx->player.dirX = 1;
-				mlx->player.dirY = 0;
-				mlx->player.planeX = 0;
-				mlx->player.planeY = FOV;
-				mlx->player.posY = y + 0.5f;
-				mlx->player.posX = x + 0.5f;
+				set_player_dir(mlx, (int []){1, 0}, (double []){0, FOV});
 				break ;
 			}
 			else if (mlx->map[y][x] == 'W')
 			{
-				mlx->player.dirX = -1;
-				mlx->player.dirY = 0.0;
-				mlx->player.planeX = 0;
-				mlx->player.planeY = -FOV;
-				mlx->player.posY = y + 0.5f;
-				mlx->player.posX = x + 0.5f;
+				set_player_dir(mlx, (int []){-1, 0}, (double []){0, -FOV});
 				break ;
 			}
 		}
 	}
-	printf("posy is : %f\n", mlx->player.posY);
-	printf("posx is : %f\n", mlx->player.posX);
+	mlx->player.posY = y + 0.5f;
+	mlx->player.posX = x + 0.5f;
 }
 
 int	is_asset(char *line)
 {
-	char *asset_text;
-	char *asset_color;
+	char	*asset_text;
+	char	*asset_color;
 
 	asset_text = "NSWE";
 	asset_color = "FC";
-
 	while (*asset_text)
 	{
 		if (ft_strchr(line, *asset_text))
@@ -152,7 +135,7 @@ void	ft_fill_map(t_mlx *mlx)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (*line >= 32  && is_input(line))
+		if (*line >= 32 && is_input(line))
 		{
 			mlx->map[i] = ft_strdup(line);
 			i++;

@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:50:27 by bchabot           #+#    #+#             */
-/*   Updated: 2023/03/30 15:44:06 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 09:48:11 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 char	*ft_strtok(char *str, char *token)
 {

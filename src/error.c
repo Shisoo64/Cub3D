@@ -6,56 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/02 18:04:09 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:30:05 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-/*
-int	check_rectangle(char **map, t_mlx *v)
-{
-	int		y;
-
-	y = -1;
-	while (map[++y])
-	{
-		if (map[y][ft_strlen(map[y]) - 1] == '\n')
-		{
-			if (ft_strlen(map[y]) != ft_strlen(map[0]))
-				ft_error(v, "Error\nMap is not a rectangle.\n");
-		}
-		else
-			if (ft_strlen(map[y]) != ft_strlen(map[0]) - 1)
-				ft_error(v, "Error\nMap is not rectangle AND you forgot the\\n, " \
-					"u tried to have me, you're a big crazy man, or manette\n");
-	}
-	return (0);
-}
-
-int	check_borders(char **map, t_mlx *v)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (map[++y])
-	{
-		x = -1;
-		while (map[y][++x] && map[y][x] != '\n')
-		{
-			if (y == 0 && map[y][x] != '1')
-				ft_error(v, "Error\nWrong map border.\n");
-			else if (y == v->map_y && map[y][x] != '1')
-				ft_error(v, "Error\nWrong map border.\n");
-			else if (x == 0 && map[y][x] != '1')
-				ft_error(v, "Error\nWrong map border.\n");
-			else if (x == v->map_x && map[y][x] != '1')
-				ft_error(v, "Error\nWrong map border.\n");
-		}
-	}
-	return (0);
-}
-*/
+#include "../includes/cub3D.h"
 
 void	error_message(char *msg, char *line)
 {
@@ -63,8 +18,8 @@ void	error_message(char *msg, char *line)
 	ft_putstr_fd(msg, 2);
 	if (line)
 		ft_putstr_fd(line, 2);
-
 }
+
 int	check_wall_textures(char *line)
 {
 	char	*str;
@@ -91,8 +46,8 @@ int	check_wall_textures(char *line)
 
 int	check_colors(char *line)
 {
-	int 	i;
-	int 	value;
+	int		i;
+	int		value;
 	char	*str;
 	char	*buf;
 
@@ -116,15 +71,14 @@ int	check_colors(char *line)
 		value = ft_atoi(buf);
 		if (value > 255)
 		{
-			error_message("Error. The value of one of your color is wrong. Check this line : ", line);
+			error_message("The value of one of your color is wrong. Check this line : ", line);
 			return (1);
 		}
 		else
 			i++;
-		//free(buf);
 	}
 	if (i != 3)
-		error_message("Error. Color values seems to be missing. Check this line : ", line);
+		error_message("Color values seems to be missing. Check this line : ", line);
 	free(buf);
 	return (0);
 }
@@ -145,48 +99,62 @@ int	is_input(char *line)
 	return (1);
 }
 
-int	check_map(char *line, int fd)
+int	check_map(char **data)
 {
-	while (line)
+	int	i;
+
+	i = 0;
+	while (data[i])
 	{
-		if (line && !is_input(line) && !is_asset(line))
+		if (data[i] && !is_input(data[i]) && !is_asset(data[i]))
 		{
-			error_message("Check this map row in the map file : ", line);
+			error_message("Check this map row in the map file : ", data[i]);
 			return (1);
 		}
-		free(line);
-		line = get_next_line(fd);
+		i++;
 	}
 	return (0);
 }
 
-void	check_items(t_mlx *mlx)
+void	check_items(t_mlx *mlx, char **data)
 {
-	int		fd;
-	char	*line;
+	int	i;
+	int	text;
+	int	color;
 
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
+	i = 0;
+	color = 0;
+	text = 0;
+	(void)mlx;
+	while (data[i])
 	{
-		if (*line != '\n' && ft_strnstr(line,"11", ft_strlen(line)) && !is_asset(line))
+		printf("data is : %s\n", data[i]);
+		printf("is_asset : %d\n", is_asset(data[i]));
+		printf("is_input : %d\n", is_input(data[i]));
+		if (is_input(data[i]) && !is_asset(data[i]))
 			break ;
-		if (is_asset(line) == 1 && check_wall_textures(line))
-			exit_game_light(mlx, fd);
-		if (is_asset(line) == 2 && check_colors(line))
-			exit_game_light(mlx, fd);
-		free(line);
-		line = get_next_line(fd);
+		if (is_asset(data[i]) == 1 && check_wall_textures(data[i]))
+		{
+			text++;
+			printf("text nbr is : %d\n", text);
+			//exit_game_light(mlx);
+		}
+		if (is_asset(data[i]) == 2 && check_colors(data[i]))
+		{
+			color++;
+			printf("color nbr is : %d\n", color);
+			//exit_game_light(mlx);
+		}
+		i++;
 	}
-	if (check_map(line, fd))
-		exit_game_light(mlx, fd);
-	close(fd);
+	if (check_map(data) || text != 2 || color != 4)
+	{
+		//exit_game_light(mlx);
+		printf("text nbr is : %d\n", text);
+	}
 }
 
-void	check_assets(t_mlx *mlx)
+void	check_assets(t_mlx *mlx, char **data)
 {
-	check_map_ext(mlx);
-	check_items(mlx);
-//	check_rectangle(v);
-//	check_borders(v);
+	check_items(mlx, data);
 }

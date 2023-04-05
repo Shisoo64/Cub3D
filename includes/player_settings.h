@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/02 18:02:15 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 09:40:49 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 // Movement
 # define MOVESPEED 0.0001//0.05
-# define ROTSPEED 0.0000025
+# define ROTSPEED 0.000005
 
 enum e_keycode
 {

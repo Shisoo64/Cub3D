@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 void	check_map_ext(t_mlx *v)
 {
@@ -33,9 +33,63 @@ void	check_map_ext(t_mlx *v)
 		}
 }
 
+int	file_size(t_mlx *mlx)
+{
+	char 	*line;
+	int		i;
+	int		fd;
+
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (*line >= 32)
+				i++;
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (i);
+}
+
+char **get_data_from_file(t_mlx *mlx)
+{
+	char	**data;
+	char	*line;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = open(mlx->mapname, O_RDONLY);
+	if (fd == -1)
+	{
+		error_message("Check the map file.", NULL);
+		return (NULL);
+	}
+	data = malloc(sizeof(char *) * file_size(mlx) + 1);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (*line >= 32)
+		{
+			data[i] = ft_strdup(line);
+			i++;
+		}
+		line = get_next_line(fd);
+	}
+	data[i] = NULL;
+	close(fd);
+	return (data);
+}
+
 void	ft_parsing(t_mlx *mlx)
 {
-	check_assets(mlx);
+	char	**data;
+
+	check_map_ext(mlx);
+	data = get_data_from_file(mlx);
+	print_map(data);
+	check_assets(mlx, data);
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
 	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);

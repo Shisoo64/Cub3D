@@ -6,14 +6,14 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/28 19:47:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:04:25 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../includes/cub3D.h"
 
 //	get the color of the pixel on the coordinates of the texture
-int    my_mlx_get_color(t_display *texture, int x, int y)
+int	my_mlx_get_color(t_display *texture, int x, int y)
 {
 	char	*color;
 
