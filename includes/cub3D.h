@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/05 15:43:32 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/06 23:53:57 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,12 @@ typedef struct s_mlx {
 //		PARSING
 void	ft_parsing(t_mlx *mlx);
 void	check_map_ext(t_mlx *v);
-void	ft_fill_map(t_mlx *mlx);
-void	ft_map_height(t_mlx *mlx);
+void	ft_fill_map(t_mlx *mlx, char **data);
+void	ft_map_height(t_mlx *mlx, char **data);
 int		is_input(char *line);
 void	place_player_on_map(t_mlx *mlx);
 int		is_asset(char *line);
-void	fetch_assets(t_mlx *mlx);
+void	fetch_assets(t_mlx *mlx, char **data);
 void	get_colors(t_mlx *mlx, char *line);
 void	get_wall_textures(t_mlx *mlx, char *line);
 
@@ -125,6 +125,7 @@ int		input_manager(t_mlx *mlx);
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
+void    draw_minimap(t_mlx *mlx);
 
 //
 //		SCREENS

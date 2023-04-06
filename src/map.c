@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/05 15:35:53 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/06 23:32:59 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,49 @@ void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2])
 	mlx->player.planeY = plane[1];
 }
 
+void	set_player_pos(t_mlx *mlx, char *row, int y)
+{
+	int x;
+	char	*player_orientation;
+
+	player_orientation = "NSWE";
+
+	x = 0;
+	while (row[x] && !ft_strchr(player_orientation, row[x]))
+		x++;
+	mlx->player.posY = y + 0.5f;
+	mlx->player.posX = x + 0.5f;
+}
+
 void	place_player_on_map(t_mlx *mlx)
 {
 	int		y;
-	int		x;
 
 	y = -1;
-	while (++y < (mlx->map_y - 1))
+	while (++y < mlx->map_y)
 	{
-		x = -1;
-		while (++x < (mlx->map_x) - 1)
+		if (ft_strchr(mlx->map[y], 'N'))
 		{
-			if (mlx->map[y][x] == 'N')
-			{
-				set_player_dir(mlx, (int []){0, -1}, (double []){FOV, 0});
-				break ;
-			}
-			else if (mlx->map[y][x] == 'S')
-			{
-				set_player_dir(mlx, (int []){0, 1}, (double []){-FOV, 0});
-				break ;
-			}
-			else if (mlx->map[y][x] == 'E')
-			{
-				set_player_dir(mlx, (int []){1, 0}, (double []){0, FOV});
-				break ;
-			}
-			else if (mlx->map[y][x] == 'W')
-			{
-				set_player_dir(mlx, (int []){-1, 0}, (double []){0, -FOV});
-				break ;
-			}
+			set_player_dir(mlx, (int []){0, -1}, (double []){FOV, 0});
+			break ;
 		}
+		else if (ft_strchr(mlx->map[y], 'S'))
+		{
+			set_player_dir(mlx, (int []){0, 1}, (double []){-FOV, 0});
+			break ;
+		}
+		else if (ft_strchr(mlx->map[y], 'E'))
+		{
+			set_player_dir(mlx, (int []){1, 0}, (double []){0, FOV});
+			break ;
+		}
+		else if (ft_strchr(mlx->map[y], 'W'))
+		{
+			set_player_dir(mlx, (int []){-1, 0}, (double []){0, -FOV});
+			break ;
+		}		
 	}
-	mlx->player.posY = y + 0.5f;
-	mlx->player.posX = x + 0.5f;
+	set_player_pos(mlx, mlx->map[y], y);
 }
 
 int	is_asset(char *line)
@@ -90,57 +98,45 @@ int	is_asset(char *line)
 	return (0);
 }
 
-void	ft_map_height(t_mlx *mlx)
+void	ft_map_height(t_mlx *mlx, char **data)
 {
 	int		i;
-	int		fd;
 	int		len;
-	char	*line;
 
 	i = 0;
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
 	len = 0;
-	while (line)
+	while (data[i])
 	{
-		if (*line >= 32 && is_input(line))
+		if (is_input(data[i]) && !is_asset(data[i]))
 		{
-			if (len < (int)ft_strlen(line))
-				len = (int)ft_strlen(line);
-			i++;
+			if (len < (int)ft_strlen(data[i]))
+				len = (int)ft_strlen(data[i]);
 		}
-		free(line);
-		line = get_next_line(fd);
+		i++;
 	}
 	mlx->map_y = i;
 	mlx->map_x = len - 1;
-	free(line);
-	close(fd);
 }
 
-void	ft_fill_map(t_mlx *mlx)
+void	ft_fill_map(t_mlx *mlx, char **data)
 {
-	char	*line;
 	int		i;
-	int		fd;
+	int		x;
 
-	ft_map_height(mlx);
-	fd = open(mlx->mapname, O_RDONLY);
+	ft_map_height(mlx, data);
 	mlx->map = malloc(sizeof(char *) * mlx->map_y + 1);
 	if (!mlx->map)
 		return ;
 	i = 0;
-	while (i < mlx->map_y)
+	x = 0;
+	while (data[i])
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (*line >= 32 && is_input(line))
+		if (is_input(data[i]))
 		{
-			mlx->map[i] = ft_strdup(line);
-			i++;
+			mlx->map[x] = ft_strdup(data[i]);
+			x++;
 		}
-		free(line);
+		i++;
 	}
-	close(fd);
+	mlx->map[x] = NULL;
 }

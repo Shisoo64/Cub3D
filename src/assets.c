@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/05 16:33:56 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/06 23:32:32 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,23 @@ void	get_colors(t_mlx *mlx, char *line)
 	}
 }
 
-void	fetch_assets(t_mlx *mlx)
+void	fetch_assets(t_mlx *mlx, char **data)
 {
-	int		fd;
-	char	*line;
+	int	i;
 
-	fd = open(mlx->mapname, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
+	i = 0;
+	while (data[i])
 	{
-		if (*line != '\n' && ft_strnstr(line,"11", ft_strlen(line)) && !is_asset(line))
+		if (is_input(data[i]) && !is_asset(data[i]))
 			break ;
-		if (is_asset(line) == 1)
-			get_wall_textures(mlx, line);
-		if (is_asset(line) == 2)
-			get_colors(mlx, line);
-		free(line);
-		line = get_next_line(fd);
+		if (is_asset(data[i]) == 1)
+			get_wall_textures(mlx, data[i]);
+		if (is_asset(data[i]) == 2)
+			get_colors(mlx, data[i]);
+		i++;
 	}
-	ft_fill_map(mlx);
+	ft_fill_map(mlx, data);
+	free_map(mlx, data);
+	print_map(mlx->map);
 	place_player_on_map(mlx);
-	close(fd);
 }

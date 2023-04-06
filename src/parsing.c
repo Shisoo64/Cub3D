@@ -66,6 +66,7 @@ char **get_data_from_file(t_mlx *mlx)
 		error_message("Check the map file.", NULL);
 		return (NULL);
 	}
+	data = NULL;
 	data = malloc(sizeof(char *) * file_size(mlx) + 1);
 	line = get_next_line(fd);
 	while (line)
@@ -77,7 +78,6 @@ char **get_data_from_file(t_mlx *mlx)
 		}
 		line = get_next_line(fd);
 	}
-	data[i] = NULL;
 	close(fd);
 	return (data);
 }
@@ -88,12 +88,11 @@ void	ft_parsing(t_mlx *mlx)
 
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
-	print_map(data);
 	check_assets(mlx, data);
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
 	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
-	fetch_assets(mlx);
+	fetch_assets(mlx, data);
 }

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/05 17:30:05 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/06 23:11:49 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,38 +123,39 @@ void	check_items(t_mlx *mlx, char **data)
 	int	color;
 
 	i = 0;
-	color = 0;
 	text = 0;
+	color = 0;
 	(void)mlx;
 	while (data[i])
 	{
-		printf("data is : %s\n", data[i]);
-		printf("is_asset : %d\n", is_asset(data[i]));
-		printf("is_input : %d\n", is_input(data[i]));
 		if (is_input(data[i]) && !is_asset(data[i]))
 			break ;
-		if (is_asset(data[i]) == 1 && check_wall_textures(data[i]))
+		if (is_asset(data[i]) == 1)
 		{
-			text++;
-			printf("text nbr is : %d\n", text);
-			//exit_game_light(mlx);
+			if (check_wall_textures(data[i]))
+				exit_game_light(mlx);
+			else
+				text++;
 		}
-		if (is_asset(data[i]) == 2 && check_colors(data[i]))
+		if (is_asset(data[i]) == 2)
 		{
-			color++;
-			printf("color nbr is : %d\n", color);
-			//exit_game_light(mlx);
+			if (check_colors(data[i]))
+				exit_game_light(mlx);
+			else
+				color++;
 		}
 		i++;
 	}
-	if (check_map(data) || text != 2 || color != 4)
+	if (text != 4 || color != 2)
 	{
-		//exit_game_light(mlx);
-		printf("text nbr is : %d\n", text);
+		error_message("Check this caca map row in the map file : ", NULL);
+		exit_game_light(mlx);
 	}
 }
 
 void	check_assets(t_mlx *mlx, char **data)
 {
 	check_items(mlx, data);
+	if (check_map(data))
+		exit_game_light(mlx);
 }
