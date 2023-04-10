@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/06 23:11:49 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/10 11:58:30 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,39 @@ int	check_map(char **data)
 	return (0);
 }
 
+int	closed_walls(char c)
+{
+	if (c == '1' || c == '0')
+		return (1);
+	return (0);
+}
+
+int	check_borders(char **data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (data[i] && !is_input(data[i]) && is_asset(data[i]))
+		i++;
+	while (data[i])
+	{
+		j = 0;
+		while (data[i][j])
+		{
+			if (data[i][j] != '1' && data[i][j] > 32)
+			{
+				if (!closed_walls(data[i - 1][j]) || !closed_walls(data[i][j - 1])
+				|| !closed_walls(data[i][j + 1]) || !closed_walls(data[i + 1][j]))
+					return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	check_items(t_mlx *mlx, char **data)
 {
 	int	i;
@@ -125,7 +158,6 @@ void	check_items(t_mlx *mlx, char **data)
 	i = 0;
 	text = 0;
 	color = 0;
-	(void)mlx;
 	while (data[i])
 	{
 		if (is_input(data[i]) && !is_asset(data[i]))
@@ -148,7 +180,7 @@ void	check_items(t_mlx *mlx, char **data)
 	}
 	if (text != 4 || color != 2)
 	{
-		error_message("Check this caca map row in the map file : ", NULL);
+		error_message("Check this map row in the map file : ", NULL);
 		exit_game_light(mlx);
 	}
 }
@@ -156,6 +188,6 @@ void	check_items(t_mlx *mlx, char **data)
 void	check_assets(t_mlx *mlx, char **data)
 {
 	check_items(mlx, data);
-	if (check_map(data))
+	if (check_map(data))// || !check_borders(data))
 		exit_game_light(mlx);
 }

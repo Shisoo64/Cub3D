@@ -176,5 +176,5 @@ void	ft_display(t_mlx *mlx)
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);
-	draw_minimap(mlx);
+	draw_minimap(mlx, &ray);
 }

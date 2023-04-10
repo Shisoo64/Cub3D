@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/06 23:53:57 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/09 22:41:53 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int		is_asset(char *line);
 void	fetch_assets(t_mlx *mlx, char **data);
 void	get_colors(t_mlx *mlx, char *line);
 void	get_wall_textures(t_mlx *mlx, char *line);
+void	draw_line(t_mlx *mlx, int beginX, int beginY, int endX, int endY, int color);
 
 
 //
@@ -125,7 +126,7 @@ int		input_manager(t_mlx *mlx);
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
-void    draw_minimap(t_mlx *mlx);
+void    draw_minimap(t_mlx *mlx, t_raycast *ray);
 
 //
 //		SCREENS
