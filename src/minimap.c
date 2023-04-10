@@ -45,12 +45,30 @@ void	draw_background(t_mlx *mlx, int pad_x, int pad_y)
 	}
 }
 
+void	draw_player(t_mlx *mlx, int x, int y)
+{
+	int player_x;
+	int player_y;
+
+	if (x < 0)
+		player_x = 4;
+	else if (x > 0)
+		player_x = 5;
+	if (y < 0)
+		player_y = 9;
+	else if (y > 0)
+		player_y = 10;
+	draw_square(mlx, player_x * 6, player_y * 6, 0x7EC0EE);	
+}
+
 void fill_minimap(t_mlx *mlx, int pad_x, int pad_y)
 {
 	int y;
 	int x;
 	int x_screen;
 	int y_screen;
+	int player_x = 5;
+	int player_y = 10;
 	// Loop through each cell in the map matrix*
 	y_screen = 0;
 
@@ -58,24 +76,21 @@ void fill_minimap(t_mlx *mlx, int pad_x, int pad_y)
 	if (y < 0)
 	{
 		y_screen = -y;
+		player_y = 9;
 		y = 0;
 	}
 	while (mlx->map[y] && y < mlx->player.posY + 10)
 	{
-		x = mlx->player.posX - 5;
+		x = mlx->player.posX - 5;	
+		//draw_player(mlx, x, y);
 		x_screen = 0;
 		if (x < 0)
 		{
 			x_screen = -x;
 			x = 0;
-//			draw_square(mlx, (mlx->player.posX + x_screen) * 6, (mlx->player.posY) * 6, 0x000000);
+			player_x = 4;
 		}
-//	else if (y < 0)
-//		draw_square(mlx, (mlx->player.posX) * 6, (mlx->player.posY + y_screen) * 6, 0x000000);
-//	else if (y < 0 && x < 0)
-//		draw_square(mlx, (mlx->player.posX + x_screen) * 6, (mlx->player.posY + y_screen) * 6, 0x000000);
-//	else
-//		draw_square(mlx, (mlx->player.posX) * 6, (mlx->player.posY) * 6, 0x000000);
+		draw_square(mlx, player_x * 6, player_y * 6, 0x7EC0EE);
 		while (mlx->map[y][x] && x < mlx->player.posX + 5)
 		{
 			if (x > mlx->map_x)
@@ -103,6 +118,5 @@ void    draw_minimap(t_mlx *mlx)
 
 	draw_background(mlx, pad_x, pad_y);
 	fill_minimap(mlx, pad_x, pad_y);
-	draw_square(mlx, (5 * 6), (10 * 6), 0x7EC0EE);
 	//draw_square(mlx, (mlx->player.posX * 6) + pad_x, (mlx->player.posY * 6) + pad_y, 0x7EC0EE);
 }
