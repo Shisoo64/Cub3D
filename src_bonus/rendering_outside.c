@@ -14,7 +14,7 @@
 
 //
 //		OUTSIDE
-void	draw_line_texture(t_display *texture, t_raycast *ray, int x, int draw_coord[2])
+void	draw_line_out(t_display *texture, t_raycast *ray, int x, int coord[2])
 {
 	double	step;
 	double	tex_pos;
@@ -23,10 +23,10 @@ void	draw_line_texture(t_display *texture, t_raycast *ray, int x, int draw_coord
 	int		y;
 
 	step = 0.75 * texture->tex_height / ray->lineheight;
-	tex_pos = (draw_coord[0] - WIN_H / 2 + ray->lineheight / 0.93) * step;
-	y = draw_coord[0];
+	tex_pos = (coord[0] - WIN_H / 2 + ray->lineheight / 0.93) * step;
+	y = coord[0];
 	ray->tex_x = texture->tex_width - ray->tex_x;
-	while (y < draw_coord[1])
+	while (y < coord[1])
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
@@ -53,11 +53,11 @@ void	get_tex_line_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 		ray->tex_x = mlx->bat_tex.tex_width - ray->tex_x - 1;
 
 	if (ray->hit_type == 1)
-		draw_line_texture(&mlx->bat_tex, ray, x, draw_coord);
+		draw_line_out(&mlx->bat_tex, ray, x, draw_coord);
 	else if (ray->hit_type == 2)
-		draw_line_texture(&mlx->bat2_tex, ray, x, draw_coord);
+		draw_line_out(&mlx->bat2_tex, ray, x, draw_coord);
 	else if (ray->hit_type == 3)
-		draw_line_texture(&mlx->bat3_tex, ray, x, draw_coord);
+		draw_line_out(&mlx->bat3_tex, ray, x, draw_coord);
 	else if (ray->hit_type == 90)
 	{
 		if (ray->perpwalldists[x] <= 0.15)
@@ -67,7 +67,7 @@ void	get_tex_line_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_line_texture(&mlx->door_tex, ray, x, draw_coord);
+		draw_line_out(&mlx->door_tex, ray, x, draw_coord);
 	}
 	else if (ray->hit_type == 91)
 	{
@@ -78,7 +78,7 @@ void	get_tex_line_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 			else
 				mlx->message = "Press F to open door";
 		}
-		draw_line_texture(&mlx->door_tex, ray, x, draw_coord);
+		draw_line_out(&mlx->door_tex, ray, x, draw_coord);
 	}
 }
 

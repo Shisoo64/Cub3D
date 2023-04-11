@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 16:17:57 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:33:50 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	key_release(int key, t_mlx *mlx)
 		mlx->player.right = 0;
 	else if (key == KEY_F)
 		mlx->player.using = -1;
+	else if (key == KEY_M)
+		mlx->player.use_phone = -1;
 	return (0);
 }
 

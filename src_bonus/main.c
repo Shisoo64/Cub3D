@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/04 15:47:09 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:50:53 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,12 @@ int	frames(t_mlx *mlx)
 		mlx->message = NULL;
 	}
 
+	if (mlx->player.use_phone == -1)
+		mlx->wazing = -mlx->wazing;
+	if (mlx->wazing == 1)
+		draw_minimap(mlx, 0, 0);
+	mlx->player.use_phone = 0;
 	mlx->player.using = 0;
-
 	return (0);
 }
 
@@ -162,9 +166,12 @@ int	exit_hook(t_mlx *mlx)
 	return (0);
 }
 
-int	main()
+int	main(void)
 {
 	t_mlx	mlx;
+
+	mlx.player.plane_x = 0;
+	mlx.player.plane_y = FOV;
 
 	ft_parsing(&mlx);
 	mlx_mouse_hide(mlx.mlx, mlx.win);
@@ -173,4 +180,5 @@ int	main()
 	mlx_loop_hook(mlx.mlx, frames, &mlx);
 	mlx_hook(mlx.win, 17, 0, exit_hook, &mlx);
 	mlx_loop(mlx.mlx);
+	return (0);
 }

@@ -52,6 +52,7 @@ void	get_textures(t_mlx *mlx)
 	init_tex(mlx, &mlx->hand, "./sprites/hand.xpm");
 	init_tex(mlx, &mlx->hand2, "./sprites/hand2.xpm");
 	init_tex(mlx, &mlx->phone, "./sprites/phone.xpm");
+	init_tex(mlx, &mlx->waze, "./sprites/phone_transp.xpm");
 	init_tex(mlx, &mlx->bike, "./sprites/tmax.xpm");
 	init_tex(mlx, &mlx->bike_wheel, "./sprites/tmax_wheel.xpm");
 	init_tex(mlx, &mlx->crash, "./sprites/crash.xpm");

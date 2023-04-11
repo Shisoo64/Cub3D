@@ -14,6 +14,29 @@
 
 //Check if ray has hit a wall
 //and set the type of wall that was hit
+int	check_wall_ext(t_mlx *mlx, t_raycast *ray)
+{
+	if (mlx->map[ray->map_y][ray->map_x]
+		&& mlx->map[ray->map_y][ray->map_x] == 'J')
+	{
+		ray->hit_type = 90;
+		return (1);
+	}
+	else if (mlx->map[ray->map_y][ray->map_x]
+		&& mlx->map[ray->map_y][ray->map_x] == 'A')
+	{
+		ray->hit_type = 91;
+		return (1);
+	}
+	else if (mlx->map[ray->map_y][ray->map_x]
+		&& mlx->map[ray->map_y][ray->map_x] == 'D')
+	{
+		ray->hit_type = 999;
+		return (1);
+	}
+	return (0);
+}
+
 int	check_wall(t_mlx *mlx, t_raycast *ray)
 {
 	if (mlx->map[ray->map_y][ray->map_x]
@@ -34,24 +57,8 @@ int	check_wall(t_mlx *mlx, t_raycast *ray)
 		ray->hit_type = 3;
 		return (1);
 	}
-	else if (mlx->map[ray->map_y][ray->map_x]
-		&& mlx->map[ray->map_y][ray->map_x] == 'J')
-	{
-		ray->hit_type = 90;
+	if (check_wall_ext(mlx, ray))
 		return (1);
-	}
-	else if (mlx->map[ray->map_y][ray->map_x]
-		&& mlx->map[ray->map_y][ray->map_x] == 'A')
-	{
-		ray->hit_type = 91;
-		return (1);
-	}
-	else if (mlx->map[ray->map_y][ray->map_x]
-		&& mlx->map[ray->map_y][ray->map_x] == 'D')
-	{
-		ray->hit_type = 999;
-		return (1);
-	}
 	return (0);
 }
 
