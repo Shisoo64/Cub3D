@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 16:50:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:07:04 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_walk_anim(t_mlx *mlx)
 	{
 		if (i >= 0 && i <= 50)
 			put_img_transp(mlx, mlx->hand, WIN_W / 2 - 228, WIN_H - 118);
-		else if (mlx->bag_status != 1)
+		else if (mlx->bag_status != 1 && mlx->wazing != 1)
 			put_img_transp(mlx, mlx->hand2, WIN_W / 2 + 70, WIN_H - 118);
 		if (i++ == 100)
 			i = 0;
@@ -134,6 +134,11 @@ int	frames(t_mlx *mlx)
 	if (mlx->bag_status == 1)
 		put_img_transp(mlx, mlx->handbag, WIN_W - 366, WIN_H - 240);
 
+	if (mlx->player.use_phone == -1)
+		mlx->wazing = -mlx->wazing;
+	if (mlx->wazing == 1 && mlx->player.biking == -1)
+		draw_minimap(mlx, WIN_W / 2 + 100, WIN_H - 230);
+
 	if (mlx->dialog != 0)
 		ft_dialog(mlx);
 
@@ -151,10 +156,6 @@ int	frames(t_mlx *mlx)
 		mlx->message = NULL;
 	}
 
-	if (mlx->player.use_phone == -1)
-		mlx->wazing = -mlx->wazing;
-	if (mlx->wazing == 1)
-		draw_minimap(mlx, 0, 0);
 	mlx->player.use_phone = 0;
 	mlx->player.using = 0;
 	return (0);
