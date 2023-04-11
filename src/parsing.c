@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "includes/cub3D.h"
 
 void	check_map_ext(t_mlx *v)
 {
@@ -22,20 +22,22 @@ void	check_map_ext(t_mlx *v)
 	if (ft_strlen(v->mapname) < 5
 		|| v->mapname[ft_strlen(v->mapname) - 5] == '/')
 	{
-		ft_printf("Error\nNo map name!\n");
-		exit(1);
+		error_message("Please provide a correct map.", NULL);
+		exit_game_light(v);
 	}
 	while (++i < 5)
+	{
 		if (v->mapname[ft_strlen(v->mapname) - i] != ext[4 - i])
 		{
-			ft_printf("Error\nProblem with map extension.\n");
-			exit (1);
+			error_message("Problem with map extension.", NULL);
+			exit_game_light(v);
 		}
+	}
 }
 
 int	file_size(t_mlx *mlx)
 {
-	char 	*line;
+	char	*line;
 	int		i;
 	int		fd;
 
@@ -52,7 +54,7 @@ int	file_size(t_mlx *mlx)
 	return (i);
 }
 
-char **get_data_from_file(t_mlx *mlx)
+char	**get_data_from_file(t_mlx *mlx)
 {
 	char	**data;
 	char	*line;
@@ -63,11 +65,12 @@ char **get_data_from_file(t_mlx *mlx)
 	fd = open(mlx->mapname, O_RDONLY);
 	if (fd == -1)
 	{
-		error_message("Check the map file.", NULL);
-		return (NULL);
+		error_message("Check the map file.\n", NULL);
+		exit_game_light(mlx);
 	}
-	data = NULL;
-	data = malloc(sizeof(char *) * file_size(mlx) + 1);
+	data = ft_calloc(sizeof(char *), file_size(mlx) + 1);
+	if (!data)
+		exit_game_light(mlx);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -76,6 +79,7 @@ char **get_data_from_file(t_mlx *mlx)
 			data[i] = ft_strdup(line);
 			i++;
 		}
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -89,10 +93,6 @@ void	ft_parsing(t_mlx *mlx)
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(mlx, data);
-	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
-	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
-	mlx->display.addr = mlx_get_data_addr(mlx->display.img, &mlx->display.bits_per_pixel,
-			&mlx->display.line_length, &mlx->display.endian);
 	fetch_assets(mlx, data);
+	free_map(data);
 }

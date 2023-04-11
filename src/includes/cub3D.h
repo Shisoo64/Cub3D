@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/10 14:31:17 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:51:11 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,12 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-# include "../mlx_linux/mlx.h"
-# include "../libft/libft.h"
+# include "../../mlx_linux/mlx.h"
+# include "../../libft/libft.h"
 # include "player_settings.h"
 
 //
 //		STRUCTS
-typedef struct s_raycast {
-	//what cardinal point the raycast hit is perpendicular to
-	int		side;
-
-	//what type of wall the ray has hit
-	int		wall_type;
-
-	//what direction to step in x or y-direction (either +1 or -1)
-	int		stepX;
-	int		stepY;
-
-	double	raydirX;
-	double	raydirY;
-
-	//which box of the map we're in
-	int		mapX;
-	int		mapY;
-
-	int		tex_x;
-
-	//length of ray from current position to next x or y-side
-	double	sideDistX;
-	double	sideDistY;
-	double	DeltaDistX;
-	double	DeltaDistY;
-}				t_raycast;
-
-typedef struct s_player {
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-
-	int	rot_l;
-	int rot_r;
-	int left;
-	int right;
-	int up;
-	int down;
-
-}				t_player;
-
 typedef struct s_display {
 	void	*img;
 	char	*addr;
@@ -75,6 +31,23 @@ typedef struct s_display {
 	int		tex_width;
 	int		tex_height;
 }				t_display;
+
+typedef struct s_player {
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+
+	int		rot_l;
+	int		rot_r;
+	int		left;
+	int		right;
+	int		up;
+	int		down;
+
+}				t_player;
 
 typedef struct s_mlx {
 	void		*mlx;
@@ -89,11 +62,35 @@ typedef struct s_mlx {
 
 	t_player	player;
 
-	t_display	NO_tex;
-	t_display	SO_tex;
-	t_display	WE_tex;
-	t_display	EA_tex;
+	t_display	no_tex;
+	t_display	so_tex;
+	t_display	we_tex;
+	t_display	ea_tex;
 }				t_mlx;
+
+typedef struct s_raycast {
+	int			side;
+	int			wall_type;
+
+	int			step_x;
+	int			step_y;
+
+	double		raydir_x;
+	double		raydir_y;
+
+	double		perpwalldists[WIN_W];
+	int			lineheight;
+	int			tex_x;
+
+	int			map_x;
+	int			map_y;
+
+	double		sidedist_x;
+	double		sidedist_y;
+	double		deltadist_x;
+	double		deltadist_y;
+	t_display	*display;
+}				t_raycast;
 
 //
 //		PARSING
@@ -107,7 +104,6 @@ int		is_asset(char *line);
 void	fetch_assets(t_mlx *mlx, char **data);
 void	get_colors(t_mlx *mlx, char *line);
 void	get_wall_textures(t_mlx *mlx, char *line);
-
 
 //
 //		MOVEMENT
@@ -125,7 +121,6 @@ int		input_manager(t_mlx *mlx);
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
-void    draw_minimap(t_mlx *mlx);
 
 //
 //		SCREENS
@@ -133,7 +128,7 @@ void	draw_backdrop(t_mlx *mlx);
 
 //
 //		FREE
-void	free_map(t_mlx *mlx, char **map);
+void	free_map(char **map);
 
 //
 //		ERRORS

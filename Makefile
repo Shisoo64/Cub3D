@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/06 23:49:09 by bchabot          ###   ########.fr        #
+#    Updated: 2023/04/11 15:20:36 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SRCS =	src/main.c \
 		src/parsing.c \
 		src/rendering.c \
 		src/map.c \
-		src/minimap.c \
 		src/free.c \
 		src/error.c \
 		src/assets.c \
@@ -41,7 +40,7 @@ SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/error.c \
 				src_bonus/anim.c
 
-CC = @gcc
+CC = @clang
 
 LIBFT = libft/libft.a
 

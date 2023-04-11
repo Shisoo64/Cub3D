@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "includes/cub3D.h"
 
-void	draw_short_line_texture(t_display *texture, t_display *display, int x, int lineHeight, int draw_start, int draw_end, int tex_x)
+void	draw_short_line_texture(t_display *texture, t_raycast *ray, int x, int draw_coord[2])
 {
 	double	step;
 	double	tex_pos;
@@ -20,161 +20,145 @@ void	draw_short_line_texture(t_display *texture, t_display *display, int x, int 
 	int		tex_y;
 	int		y;
 
-	step = 1.0 * texture->tex_height / lineHeight;
-	tex_pos = (draw_start - WIN_H / 2 + lineHeight / 2) * step;
-	y = draw_start;
-	tex_x = texture->tex_width - tex_x;
-	while (y < draw_end)
+	step = 1.0 * texture->tex_height / ray->lineheight;
+	tex_pos = (draw_coord[0] - WIN_H / 2 + ray->lineheight / 2) * step;
+	y = draw_coord[0];
+	ray->tex_x = texture->tex_width - ray->tex_x;
+	while (y < draw_coord[1])
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
-		my_mlx_pixel_put(display, x, y, color);
+		color = my_mlx_get_color(texture, ray->tex_x, tex_y);
+		my_mlx_pixel_put(ray->display, x, y, color);
 		y++;
 	}
 }
 
-// Draw a vertical line of pixels in the img
-void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
+void	get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 {
-	int		draw_start;
-	int		draw_end;
-	double	perpWallDist;
-	int		lineHeight;
-
-	if (ray->side == 0)
-		perpWallDist = (ray->sideDistX - ray->DeltaDistX);
-	else
-		perpWallDist = (ray->sideDistY - ray->DeltaDistY);
-
-	lineHeight = (int)(WIN_H / perpWallDist);
-
-	//calculate lowest and highest pixel to fill in current stripe
-	draw_start = -lineHeight / 2 + WIN_H / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = lineHeight / 2 + WIN_H / 2;
-	if (draw_end >= WIN_H)
-		draw_end = WIN_H - 1;
-
-
-	/// Couper la fonction ici ///
-	//Get line on texture
 	double	wall_x;
-	int		tex_x;
 
+	ray->lineheight = (int)(WIN_H / ray->perpwalldists[x]);
 	if (ray->side == 0)
-		wall_x = mlx->player.posY + perpWallDist * ray->raydirY;
+		wall_x = mlx->player.pos_y + ray->perpwalldists[x] * ray->raydir_y;
 	else
-		wall_x = mlx->player.posX + perpWallDist * ray->raydirX;
+		wall_x = mlx->player.pos_x + ray->perpwalldists[x] * ray->raydir_x;
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)mlx->NO_tex.tex_width);
-	if (ray->side == 0 && ray->raydirX > 0)
-		tex_x = mlx->WE_tex.tex_width - tex_x - 1;
-	if (ray->side == 1 && ray->raydirY < 0)
-		tex_x = mlx->SO_tex.tex_width - tex_x - 1;
+	ray->tex_x = (int)(wall_x * (double)mlx->no_tex.tex_width);
+	if (ray->side == 0 && ray->raydir_x > 0)
+		ray->tex_x = mlx->we_tex.tex_width - ray->tex_x - 1;
+	if (ray->side == 1 && ray->raydir_y < 0)
+		ray->tex_x = mlx->so_tex.tex_width - ray->tex_x - 1;
 	if (ray->side == 1)
 	{
-		if (ray->stepY > 0)
-			draw_short_line_texture(&mlx->NO_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
+		if (ray->step_y > 0)
+			draw_short_line_texture(&mlx->no_tex, ray, x, draw_coord);
 		else
-			draw_short_line_texture(&mlx->SO_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
+			draw_short_line_texture(&mlx->so_tex, ray, x, draw_coord);
 	}
 	else
 	{
-		if (ray->stepX > 0)
-			draw_short_line_texture(&mlx->WE_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
+		if (ray->step_x > 0)
+			draw_short_line_texture(&mlx->we_tex, ray, x, draw_coord);
 		else
-			draw_short_line_texture(&mlx->EA_tex, &mlx->display, x, lineHeight, draw_start, draw_end, tex_x);
+			draw_short_line_texture(&mlx->ea_tex, ray, x, draw_coord);
 	}
 }
 
+// Draw a vertical line of pixels in the img.
+void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
+{
+	int		draw_coord[2];
+	double	perpwalldist;
+
+	if (ray->side == 0)
+		perpwalldist = (ray->sidedist_x - ray->deltadist_x);
+	else
+		perpwalldist = (ray->sidedist_y - ray->deltadist_y);
+	ray->lineheight = (int)(WIN_H / perpwalldist);
+	ray->perpwalldists[x] = perpwalldist;
+	draw_coord[0] = -ray->lineheight / 2 + WIN_H / 2;
+	if (draw_coord[0] < 0)
+		draw_coord[0] = 0;
+	draw_coord[1] = ray->lineheight / 2 + WIN_H / 2;
+	if (draw_coord[1] >= WIN_H)
+		draw_coord[1] = WIN_H - 1;
+	get_tex_line(ray, mlx, draw_coord, x);
+}
+
 // Digital Differential Analysis
-// iterate through each line in the grid the ray intersect until it hit a wall
+// Iterate through each line in the grid the ray intersect until it hit a wall.
 void	ft_dda(t_mlx *mlx, t_raycast *ray)
 {
 	while (1)
 	{
-		// ADD LES AUTRES TEXTS DE MUR
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->sidedist_x < ray->sidedist_y)
 		{
-			ray->sideDistX += ray->DeltaDistX;
-			ray->mapX += ray->stepX;
+			ray->sidedist_x += ray->deltadist_x;
+			ray->map_x += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sideDistY += ray->DeltaDistY;
-			ray->mapY += ray->stepY;
+			ray->sidedist_y += ray->deltadist_y;
+			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-
-		//Check if ray has hit a wall
-		if (mlx->map[ray->mapY][ray->mapX]
-			&& mlx->map[ray->mapY][ray->mapX] == '1')
+		if (mlx->map[ray->map_y][ray->map_x]
+			&& mlx->map[ray->map_y][ray->map_x] == '1')
 			break ;
 	}
 }
 
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 {
-	double	cameraX;
+	double	camera_x;
 
-	cameraX = 2 * x / (double)WIN_W - 1;
-
-	ray->raydirX = mlx->player.dirX + mlx->player.planeX * cameraX;
-	ray->raydirY = mlx->player.dirY + mlx->player.planeY * cameraX;
-
-	ray->mapX = (int)mlx->player.posX;
-	ray->mapY = (int)mlx->player.posY;
-
-	if (ray->raydirX == 0)
-		ray->DeltaDistX = 1000;
+	camera_x = 2 * x / (double)WIN_W - 1;
+	ray->raydir_x = mlx->player.dir_x + mlx->player.plane_x * camera_x;
+	ray->raydir_y = mlx->player.dir_y + mlx->player.plane_y * camera_x;
+	ray->map_x = (int)mlx->player.pos_x;
+	ray->map_y = (int)mlx->player.pos_y;
+	if (ray->raydir_x == 0)
+		ray->deltadist_x = 1000;
 	else
-		ray->DeltaDistX = fabs(1 / ray->raydirX);
-
-	if (ray->raydirY == 0)
-		ray->DeltaDistY = 1000;
+		ray->deltadist_x = fabs(1 / ray->raydir_x);
+	if (ray->raydir_y == 0)
+		ray->deltadist_y = 1000;
 	else
-		ray->DeltaDistY = fabs(1 / ray->raydirY);
-
-	//calculate step and initial sideDist
-	if (ray->raydirX < 0)
+		ray->deltadist_y = fabs(1 / ray->raydir_y);
+	if (ray->raydir_x < 0)
 	{
-		ray->stepX = -1;
-		ray->sideDistX = (mlx->player.posX - ray->mapX) * ray->DeltaDistX;
+		ray->step_x = -1;
+		ray->sidedist_x = (mlx->player.pos_x - ray->map_x) * ray->deltadist_x;
 	}
 	else
 	{
-		ray->stepX = 1;
-		ray->sideDistX = (ray->mapX + 1.0 - mlx->player.posX) * ray->DeltaDistX;
+		ray->step_x = 1;
+		ray->sidedist_x = (ray->map_x + 1.0 - mlx->player.pos_x) * ray->deltadist_x;
 	}
-	if (ray->raydirY < 0)
+	if (ray->raydir_y < 0)
 	{
-		ray->stepY = -1;
-		ray->sideDistY = (mlx->player.posY - ray->mapY) * ray->DeltaDistY;
+		ray->step_y = -1;
+		ray->sidedist_y = (mlx->player.pos_y - ray->map_y) * ray->deltadist_y;
 	}
 	else
 	{
-		ray->stepY = 1;
-		ray->sideDistY = (ray->mapY + 1.0 - mlx->player.posY) * ray->DeltaDistY;
+		ray->step_y = 1;
+		ray->sidedist_y = (ray->map_y + 1.0 - mlx->player.pos_y) * ray->deltadist_y;
 	}
 	ft_dda(mlx, ray);
 	ft_render_vline(ray, mlx, x);
 }
 
-
-
-// Render the backdrop in the img,
-// raycast each vertical lines and render them in the img
 void	ft_display(t_mlx *mlx)
 {
 	t_raycast	ray;
 	int			x;
 
+	ray.display = &mlx->display;
 	draw_backdrop(mlx);
 	x = 0;
 	while (x < WIN_W)
 		ft_raycast(mlx, &ray, x++);
-	draw_minimap(mlx);
 }

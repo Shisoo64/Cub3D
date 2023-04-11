@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/09 23:26:14 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/11 19:14:32 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "includes/cub3D.h"
 
 void	print_map(char **map)
 {
@@ -25,24 +25,23 @@ void	print_map(char **map)
 
 void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2])
 {
-	mlx->player.dirX = dir[0];
-	mlx->player.dirY = dir[1];
-	mlx->player.planeX = plane[0];
-	mlx->player.planeY = plane[1];
+	mlx->player.dir_x = dir[0];
+	mlx->player.dir_y = dir[1];
+	mlx->player.plane_x = plane[0];
+	mlx->player.plane_y = plane[1];
 }
 
 void	set_player_pos(t_mlx *mlx, char *row, int y)
 {
-	int x;
+	int		x;
 	char	*player_orientation;
 
 	player_orientation = "NSWE";
-
 	x = 0;
 	while (row[x] && !ft_strchr(player_orientation, row[x]))
 		x++;
-	mlx->player.posY = y + 0.5f;
-	mlx->player.posX = x + 0.5f;
+	mlx->player.pos_y = y + 0.5f;
+	mlx->player.pos_x = x + 0.5f;
 }
 
 void	place_player_on_map(t_mlx *mlx)
@@ -71,7 +70,7 @@ void	place_player_on_map(t_mlx *mlx)
 		{
 			set_player_dir(mlx, (int []){-1, 0}, (double []){0, -FOV});
 			break ;
-		}		
+		}
 	}
 	set_player_pos(mlx, mlx->map[y], y);
 }
@@ -124,9 +123,9 @@ void	ft_fill_map(t_mlx *mlx, char **data)
 	int		x;
 
 	ft_map_height(mlx, data);
-	mlx->map = malloc(sizeof(char *) * mlx->map_y + 1);
+	mlx->map = ft_calloc(sizeof(char *), mlx->map_y + 1);
 	if (!mlx->map)
-		return ;
+		exit_game_light(mlx);
 	i = 0;
 	x = 0;
 	while (data[i])
