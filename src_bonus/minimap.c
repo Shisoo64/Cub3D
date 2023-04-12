@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/12 14:53:15 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:36:13 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,19 @@ void	fill_minimap(t_mlx *mlx, int pad_x, int pad_y)
 			x_screen++;
 			x++;
 		}
-		y++;
 		y_screen++;
+		y++;
 	}
 }
 
-void	draw_minimap(t_mlx *mlx, int pad_x, int pad_y)
+void	ft_minimap_controller(t_mlx *mlx, int pad_x, int pad_y)
 {
-	draw_background(mlx, pad_x, pad_y);
-	fill_minimap(mlx, pad_x, pad_y);
-	put_img_transp(mlx, mlx->waze, WIN_W / 2 + 70, WIN_H - 233);
+	if (mlx->player.use_phone == -1)
+		mlx->wazing = -mlx->wazing;
+	if (mlx->wazing == 1 && mlx->player.biking == -1)
+	{
+		draw_background(mlx, pad_x, pad_y);
+		fill_minimap(mlx, pad_x, pad_y);
+		put_img_transp(mlx, mlx->waze, WIN_W / 2 + 70, WIN_H - 233);
+	}
 }

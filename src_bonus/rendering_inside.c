@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rendering.h"
+#include "cub3D.h"
 
 void	draw_line_in(t_display *texture, t_raycast *ray, int x, int coord[2])
 {
@@ -34,21 +34,9 @@ void	draw_line_in(t_display *texture, t_raycast *ray, int x, int coord[2])
 	}
 }
 
-//Get line on texture
-void	get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
+//Check wich wall type it hit and show the apropriate texture
+void	ft_wall_hit_in(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 {
-	double	wall_x;
-
-	if (ray->side == 0)
-		wall_x = mlx->player.pos_y + ray->perpwalldists[x] * ray->raydir_y;
-	else
-		wall_x = mlx->player.pos_x + ray->perpwalldists[x] * ray->raydir_x;
-	wall_x -= floor(wall_x);
-	ray->tex_x = (int)(wall_x * (double)mlx->in_wall.tex_width);
-	if (ray->side == 0 && ray->raydir_x > 0)
-		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
-	if (ray->side == 1 && ray->raydir_y < 0)
-		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
 	if (ray->hit_type == 1)
 		draw_line_in(&mlx->in_wall, ray, x, draw_coord);
 	else if (ray->hit_type == 2)
@@ -64,6 +52,24 @@ void	get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 		}
 		draw_line_in(&mlx->in_door_tex, ray, x, draw_coord);
 	}
+}
+
+//Get line on texture
+void	get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
+{
+	double	wall_x;
+
+	if (ray->side == 0)
+		wall_x = mlx->player.pos_y + ray->perpwalldists[x] * ray->raydir_y;
+	else
+		wall_x = mlx->player.pos_x + ray->perpwalldists[x] * ray->raydir_x;
+	wall_x -= floor(wall_x);
+	ray->tex_x = (int)(wall_x * (double)mlx->in_wall.tex_width);
+	if (ray->side == 0 && ray->raydir_x > 0)
+		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
+	if (ray->side == 1 && ray->raydir_y < 0)
+		ray->tex_x = mlx->in_wall.tex_width - ray->tex_x - 1;
+	ft_wall_hit_in(ray, mlx, draw_coord, x);
 }
 
 // Draw a vertical line of pixels in the img

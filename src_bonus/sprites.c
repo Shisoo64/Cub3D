@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rendering.h"
-
+#include "cub3D.h"
 
 void	draw_line_sprt(t_display *texture, t_raycast *ray, int x, int coord[2])
 {

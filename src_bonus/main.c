@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 15:24:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:21:28 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,51 +27,54 @@ void	ft_walk_anim(t_mlx *mlx)
 	}
 }
 
+//If player press the Use key, enter the building
+//else display the message
 void	open_door(t_mlx *mlx, char *mapname, int batnbr)
 {
-
-	printf("\nENTERING THE BAT\n");
-
-	mlx->mapname = mapname;
-
-	mlx->player.dir_x_save = -mlx->player.dir_x;
-	mlx->player.dir_y_save = -mlx->player.dir_y;
-	mlx->player.pos_x_save = mlx->player.pos_x;
-	mlx->player.pos_y_save = mlx->player.pos_y;
-	mlx->player.plane_x_save = -mlx->player.plane_x;
-	mlx->player.plane_y_save = -mlx->player.plane_y;
-
-	mlx->player.inside = batnbr;
-	mlx->player.biking = -1;
-
-	mlx->player.plane_x = 0;
-	mlx->player.plane_y = FOV;
-	free_map(mlx, mlx->map);
-	mlx->map = create_map(mlx);
-	place_player_on_map(mlx, mlx->map);
+	if (mlx->player.using == 1)
+	{
+		mlx->mapname = mapname;
+		mlx->player.dir_x_save = -mlx->player.dir_x;
+		mlx->player.dir_y_save = -mlx->player.dir_y;
+		mlx->player.pos_x_save = mlx->player.pos_x;
+		mlx->player.pos_y_save = mlx->player.pos_y;
+		mlx->player.plane_x_save = -mlx->player.plane_x;
+		mlx->player.plane_y_save = -mlx->player.plane_y;
+		mlx->player.inside = batnbr;
+		mlx->player.biking = -1;
+		mlx->player.plane_x = 0;
+		mlx->player.plane_y = FOV;
+		free_map(mlx, mlx->map);
+		mlx->map = create_map(mlx);
+		place_player_on_map(mlx, mlx->map);
+	}
+	else
+		mlx->message = "Press F to open door";
 }
 
+//If player press the Use key, go back to the main map
+//else display the message
 void	close_door(t_mlx *mlx)
 {
-	printf("\nJE ME BARRE OF THE BAT\n");
-
-	mlx->mapname = "maps/map.cub";
-
-	mlx->player.pos_x = mlx->player.pos_x_save;
-	mlx->player.pos_y = mlx->player.pos_y_save;
-	mlx->player.plane_x = mlx->player.plane_x_save;
-	mlx->player.plane_y = mlx->player.plane_y_save;
-	mlx->player.dir_x = mlx->player.dir_x_save;
-	mlx->player.dir_y = mlx->player.dir_y_save;
-
-	mlx->player.inside = 0;
-	mlx->player.using = 0;
-
-	free_map(mlx, mlx->map);
-	mlx->map = create_map(mlx);
+	if (mlx->player.using == 1)
+	{
+		mlx->mapname = "maps/map.cub";
+		mlx->player.pos_x = mlx->player.pos_x_save;
+		mlx->player.pos_y = mlx->player.pos_y_save;
+		mlx->player.plane_x = mlx->player.plane_x_save;
+		mlx->player.plane_y = mlx->player.plane_y_save;
+		mlx->player.dir_x = mlx->player.dir_x_save;
+		mlx->player.dir_y = mlx->player.dir_y_save;
+		mlx->player.inside = 0;
+		mlx->player.using = 0;
+		free_map(mlx, mlx->map);
+		mlx->map = create_map(mlx);
+	}
+	else
+		mlx->message = "Press F to open door";
 }
 
-
+//Check if the sprite is reachable by the player
 int	ft_check_prox(t_mlx *mlx, t_sprite tex)
 {
 	if (mlx->player.pos_x - tex.x <= 0.5
@@ -82,7 +85,8 @@ int	ft_check_prox(t_mlx *mlx, t_sprite tex)
 	return (0);
 }
 
-void	ft_start_dialog_check(t_mlx *mlx)
+//Control the start of the dialogs
+void	ft_start_dialog(t_mlx *mlx)
 {
 	if (mlx->dialog == 0 && ft_check_prox(mlx, mlx->jul))
 	{
@@ -99,6 +103,7 @@ void	ft_start_dialog_check(t_mlx *mlx)
 	}
 }
 
+//Get on and off the bike
 void	ft_bike_action(t_mlx *mlx)
 {
 	if (ft_check_prox(mlx, mlx->tmax))
@@ -124,49 +129,35 @@ void	ft_bike_action(t_mlx *mlx)
 	}
 }
 
+//This function is called at every frames
 int	frames(t_mlx *mlx)
 {
 	if (mlx->started == 0)
-	{
 		start_screen(mlx);
-		return (0);
-	}
 	else if (mlx->crashed == 1)
-	{
 		crash_screen(mlx);
-		return (0);
-	}
 	else
 	{
 		ft_rendering(mlx);
 		input_manager(mlx);
 		ft_walk_anim(mlx);
 		ft_bike_action(mlx);
-
+		ft_minimap_controller(mlx, WIN_W / 2 + 100, WIN_H - 230);
 		if (mlx->bag_status == 1)
 			put_img_transp(mlx, mlx->handbag, WIN_W - 366, WIN_H - 240);
-
-		if (mlx->player.use_phone == -1)
-			mlx->wazing = -mlx->wazing;
-		if (mlx->wazing == 1 && mlx->player.biking == -1)
-			draw_minimap(mlx, WIN_W / 2 + 100, WIN_H - 230);
-
 		if (mlx->dialog != 0)
 			ft_dialog(mlx);
-
 		if (mlx->player.biking == -1)
-			ft_start_dialog_check(mlx);
+			ft_start_dialog(mlx);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
+		if (mlx->message)
+		{
+			mlx_string_put(mlx->mlx, mlx->win, 342, 717, 0xffffff, mlx->message);
+			mlx->message = NULL;
+		}
+		mlx->player.use_phone = 0;
+		mlx->player.using = 0;
 	}
-
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-	if (mlx->message)
-	{
-		mlx_string_put(mlx->mlx, mlx->win, 342, 717, 0xffffff, mlx->message);
-		mlx->message = NULL;
-	}
-
-	mlx->player.use_phone = 0;
-	mlx->player.using = 0;
 	return (0);
 }
 
@@ -182,7 +173,6 @@ int	main(void)
 
 	mlx.player.plane_x = 0;
 	mlx.player.plane_y = FOV;
-
 	ft_parsing(&mlx);
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
