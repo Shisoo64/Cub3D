@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 18:07:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:24:28 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,31 +84,43 @@ int	ft_check_prox(t_mlx *mlx, t_sprite tex)
 
 void	ft_start_dialog_check(t_mlx *mlx)
 {
-	if (ft_check_prox(mlx, mlx->tmax))
+	if (mlx->dialog == 0 && ft_check_prox(mlx, mlx->jul))
 	{
-		if (mlx->tmaxkeys)
-			mlx->message = "Press F to ride the T-MAX";
-		else
-			mlx->message = "You don't have the keys!";
-		if (mlx->player.using == 1 && mlx->tmaxkeys)
-		{
-			mlx->tmax.x = 0;
-			mlx->tmax.y = 0;
-			mlx->player.biking = 1;
-		}
-	}
-	else if (mlx->dialog == 0 && ft_check_prox(mlx, mlx->jul))
-	{
-		mlx->message = "Press F to talk";
+		mlx->message = "Press F to talk to JuL";
 		if (mlx->player.using == 1)
 			mlx->dialog = 10;
 	}
 	else if (mlx->dialog == 0 && mlx->bag_status == 1
 		&& ft_check_prox(mlx, mlx->sch))
 	{
-		mlx->message = "Press F to talk";
+		mlx->message = "Press F to talk to SCH";
 		if (mlx->player.using == 1)
 			mlx->dialog = 20;
+	}
+}
+
+void	ft_bike_action(t_mlx *mlx)
+{
+	if (ft_check_prox(mlx, mlx->tmax))
+	{
+		if (mlx->tmaxkeys)
+			mlx->message = "Press F to ride the T-MAX";
+		else
+			mlx->message = "You don't have the keys!";
+		if (mlx->player.using == -1 && mlx->tmaxkeys)
+		{
+			mlx->tmax.x = 0;
+			mlx->tmax.y = 0;
+			mlx->player.biking = 1;
+		}
+	}
+	else if (mlx->player.biking == 1
+		&& mlx->player.using == -1 && mlx->player.speed == 0)
+	{
+		mlx->player.biking = -1;
+		mlx->player.using = 0;
+		mlx->tmax.x = mlx->player.pos_x;
+		mlx->tmax.y = mlx->player.pos_y;
 	}
 }
 
@@ -126,33 +138,30 @@ int	frames(t_mlx *mlx)
 	}
 	else
 	{
-		ft_display(mlx);
+		ft_rendering(mlx);
 		input_manager(mlx);
 		ft_walk_anim(mlx);
+		ft_bike_action(mlx);
+
+		if (mlx->bag_status == 1)
+			put_img_transp(mlx, mlx->handbag, WIN_W - 366, WIN_H - 240);
+
+		if (mlx->player.use_phone == -1)
+			mlx->wazing = -mlx->wazing;
+		if (mlx->wazing == 1 && mlx->player.biking == -1)
+			draw_minimap(mlx, WIN_W / 2 + 100, WIN_H - 230);
+
+		if (mlx->dialog != 0)
+			ft_dialog(mlx);
+
+		if (mlx->player.biking == -1)
+			ft_start_dialog_check(mlx);
 	}
 
-	if (mlx->bag_status == 1)
-		put_img_transp(mlx, mlx->handbag, WIN_W - 366, WIN_H - 240);
-
-	if (mlx->player.use_phone == -1)
-		mlx->wazing = -mlx->wazing;
-	if (mlx->wazing == 1 && mlx->player.biking == -1)
-		draw_minimap(mlx, WIN_W / 2 + 100, WIN_H - 230);
-
-	if (mlx->dialog != 0)
-		ft_dialog(mlx);
-
-	// DISPLAY THE IMG
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
-
-	// MESSAGES
-	if (mlx->player.biking == -1)
-		ft_start_dialog_check(mlx);
-
-	// DISPLAY MESSAGE
 	if (mlx->message)
 	{
-		mlx_string_put(mlx->mlx, mlx->win, WIN_W / 3, WIN_H - 50, 0xffffff, mlx->message);
+		mlx_string_put(mlx->mlx, mlx->win, 342, 717, 0xffffff, mlx->message);
 		mlx->message = NULL;
 	}
 

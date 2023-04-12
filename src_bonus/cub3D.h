@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 15:36:44 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:24:33 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,15 @@ typedef struct s_display
 
 typedef struct s_raycast
 {
-	//what cardinal point the raycast hit is perpendicular to
 	int			side;
-
 	int			hit_type;
 
-	//what direction to step in x or y-direction (either +1 or -1)
 	int			step_x;
 	int			step_y;
 
 	double		raydir_x;
 	double		raydir_y;
 
-	//which box of the map we're in
 	int			map_x;
 	int			map_y;
 
@@ -56,11 +52,10 @@ typedef struct s_raycast
 	double		perpwalldists[WIN_W];
 	int			lineheight;
 
-	//length of ray from current position to next x or y-side
-	double		sideDistX;
-	double		sideDistY;
-	double		DeltaDistX;
-	double		DeltaDistY;
+	double		sidedist_x;
+	double		sidedist_y;
+	double		deltadist_x;
+	double		deltadist_y;
 	t_display	*display;
 }				t_raycast;
 
@@ -73,7 +68,6 @@ typedef struct s_player
 	double		plane_x;
 	double		plane_y;
 
-	//SAVES
 	double		plane_x_save;
 	double		plane_y_save;
 	double		dir_x_save;
@@ -177,7 +171,7 @@ void			close_door(t_mlx *mlx);
 //
 //		RENDER
 int				frames(t_mlx *mlx);
-void			ft_display(t_mlx *mlx);
+void			ft_rendering(t_mlx *mlx);
 void			ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
 void			ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
 void			ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x);

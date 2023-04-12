@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/03/31 16:17:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:39:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	start_screen(t_mlx *mlx)
 	if (i >= 100000)
 		i = -1;
 }
-
 
 void	crash_screen(t_mlx *mlx)
 {

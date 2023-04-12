@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/11 18:11:26 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:53:15 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ void	draw_background(t_mlx *mlx, int pad_x, int pad_y)
 	int	x;
 
 	y = -1;
-	while (++y < 21 * 5)//WIN_H / 2)
+	while (++y < 21 * 5)
 	{
 		x = -1;
-		while (++x < 10 * 5) //WIN_W / 5)
+		while (++x < 10 * 5)
 			draw_square(mlx, x + pad_x, y + pad_y, 0xbbb8b2);
-			//my_mlx_pixel_put(&mlx->display, x + pad_x, y + pad_y, 0xffffff);
 	}
 }
 

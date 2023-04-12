@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 15:33:50 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:39:43 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ int	key_press(int key, t_mlx *mlx)
 		mlx->player.right = 1;
 	else if (key == KEY_F)
 		mlx->player.using = 1;
-
-	// Stop biking
-	if (mlx->player.biking == 1 && mlx->player.using && mlx->player.speed == 0)
-	{
-		mlx->player.biking = -1;
-		mlx->player.using = 0;
-		mlx->tmax.x = mlx->player.pos_x;
-		mlx->tmax.y = mlx->player.pos_y;
-	}
 	return (0);
 }
 

@@ -88,9 +88,9 @@ void	ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x)
 	int	draw_coord[2];
 
 	if (ray->side == 0)
-		ray->perpwalldists[x] = (ray->sideDistX - ray->DeltaDistX);
+		ray->perpwalldists[x] = (ray->sidedist_x - ray->deltadist_x);
 	else
-		ray->perpwalldists[x] = (ray->sideDistY - ray->DeltaDistY);
+		ray->perpwalldists[x] = (ray->sidedist_y - ray->deltadist_y);
 	ray->lineheight = (int)(WIN_H / ray->perpwalldists[x]);
 	draw_coord[0] = -ray->lineheight * 2.1 + WIN_H / 2;
 	if (draw_coord[0] < 0)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rendering.h"
+#include "cub3D.h"
 
 //Check if ray has hit a wall
 //and set the type of wall that was hit
@@ -68,20 +68,47 @@ void	ft_dda(t_mlx *mlx, t_raycast *ray)
 {
 	while (1)
 	{
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->sidedist_x < ray->sidedist_y)
 		{
-			ray->sideDistX += ray->DeltaDistX;
+			ray->sidedist_x += ray->deltadist_x;
 			ray->map_x += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sideDistY += ray->DeltaDistY;
+			ray->sidedist_y += ray->deltadist_y;
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
 		if (check_wall(mlx, ray))
 			break ;
+	}
+}
+
+//calculate step and initial sideDist
+void	ft_sidedist_calc(t_mlx *mlx, t_raycast *ray)
+{
+	if (ray->raydir_x < 0)
+	{
+		ray->step_x = -1;
+		ray->sidedist_x = (mlx->player.pos_x - ray->map_x) * ray->deltadist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->sidedist_x = (ray->map_x + 1.0 - mlx->player.pos_x)
+			* ray->deltadist_x;
+	}
+	if (ray->raydir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->sidedist_y = (mlx->player.pos_y - ray->map_y) * ray->deltadist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->sidedist_y = (ray->map_y + 1.0 - mlx->player.pos_y)
+			* ray->deltadist_y;
 	}
 }
 
@@ -98,38 +125,16 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 	ray->map_y = (int)mlx->player.pos_y;
 
 	if (ray->raydir_x == 0)
-		ray->DeltaDistX = 1000;
+		ray->deltadist_x = 1000;
 	else
-		ray->DeltaDistX = fabs(1 / ray->raydir_x);
+		ray->deltadist_x = fabs(1 / ray->raydir_x);
 
 	if (ray->raydir_y == 0)
-		ray->DeltaDistY = 1000;
+		ray->deltadist_y = 1000;
 	else
-		ray->DeltaDistY = fabs(1 / ray->raydir_y);
+		ray->deltadist_y = fabs(1 / ray->raydir_y);
 
-	//calculate step and initial sideDist
-	if (ray->raydir_x < 0)
-	{
-		ray->step_x = -1;
-		ray->sideDistX = (mlx->player.pos_x - ray->map_x) * ray->DeltaDistX;
-	}
-	else
-	{
-		ray->step_x = 1;
-		ray->sideDistX = (ray->map_x + 1.0 - mlx->player.pos_x)
-			* ray->DeltaDistX;
-	}
-	if (ray->raydir_y < 0)
-	{
-		ray->step_y = -1;
-		ray->sideDistY = (mlx->player.pos_y - ray->map_y) * ray->DeltaDistY;
-	}
-	else
-	{
-		ray->step_y = 1;
-		ray->sideDistY = (ray->map_y + 1.0 - mlx->player.pos_y)
-			* ray->DeltaDistY;
-	}
+	ft_sidedist_calc(mlx, ray);
 	ft_dda(mlx, ray);
 	if (mlx->player.inside == 0)
 		ft_render_out_vline(ray, mlx, x);
@@ -159,7 +164,7 @@ void	ft_sprites_controller(t_mlx *mlx, t_raycast *ray)
 
 // Render the backdrop in the img,
 // raycast each vertical lines and render them in the img
-void	ft_display(t_mlx *mlx)
+void	ft_rendering(t_mlx *mlx)
 {
 	t_raycast	ray;
 	int			x;
