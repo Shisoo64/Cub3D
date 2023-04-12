@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 19:24:23 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:10:57 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,15 @@ int	check_colors(char *line)
 	while (i < 3)
 	{
 		buf = ft_strdup(str);
-		buf = ft_strtok(buf, ",\n");
-		if (!buf)
+		buf = ft_strtok(buf, ",");
+		if (!buf || !ft_isdigit(*buf))
 		{
 			error_message("Color is wrong. Check this line : ", line);
 			return (1);
 		}
 		while (*str && ft_isdigit(*str))
 			str++;
-		while (*str && !ft_isdigit(*str))
-			str++;
+		str++;
 		value = ft_atoi(buf);
 		if (value > 255)
 		{
@@ -76,10 +75,10 @@ int	check_colors(char *line)
 		}
 		else
 			i++;
+		free(buf);
 	}
 	if (i != 3)
 		error_message("Color values are missing. Check this line : ", line);
-	free(buf);
 	return (0);
 }
 

@@ -48,7 +48,9 @@ int	file_size(t_mlx *mlx)
 	{
 		if (*line >= 32)
 				i++;
+		free(line);
 		line = get_next_line(fd);
+
 	}
 	close(fd);
 	return (i);

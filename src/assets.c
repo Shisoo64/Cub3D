@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/11 19:00:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:12:18 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int	fill_color(char *line)
 		buf = ft_strtok(buf, ",\n");
 		while (*str && ft_isdigit(*str))
 			str++;
-		while (*str && !ft_isdigit(*str))
-			str++;
+		str++;
 		color |= (ft_atoi(buf) << ((3 - i) * 8));
 		free(buf);
 	}
@@ -82,6 +81,55 @@ void	get_colors(t_mlx *mlx, char *line)
 		mlx->color_c = fill_color(line);
 }
 
+#include <string.h>
+
+void	check_map_borders(t_mlx *mlx)
+{
+	char **test_map;
+
+	printf("y is %d\n", mlx->map_y);
+	printf("x is %d\n", mlx->map_x);
+	print_map(mlx->map);
+	test_map = ft_calloc(sizeof(char *), mlx->map_y + 2);
+	if (!test_map)
+		exit_game_light(mlx);
+	int	i = 0;
+	while (i < mlx->map_y + 1)
+	{
+		test_map[i] = ft_calloc(sizeof(char), mlx->map_x + 2);
+		memset(test_map[i], ' ', mlx->map_x + 2);
+		test_map[i][mlx->map_x + 2] = '\n';
+		i++;
+	}
+	print_map(test_map);
+
+	// Copy the original map into the new map
+    int j = 0;
+    while (j < mlx->map_y) {
+        int k = 0;
+        while (k < mlx->map_x) {
+            test_map[j][k] = mlx->map[j][k];
+            k++;
+        }
+        j++;
+    }
+/*
+    // Surround the new map with '1' chars
+    int l = 0;
+    while (l < mlx->map_x + 2) {
+        test_map[0][l] = '1';
+        test_map[mlx->map_y + 2][l] = '1';
+        l++;
+    }
+    int m = 1;
+    while (m < mlx->map_y + 1) {
+        test_map[m][0] = '1';
+        test_map[m][mlx->map_x + 1] = '1';
+        m++;
+    }
+	*/
+}
+
 void	fetch_assets(t_mlx *mlx, char **data)
 {
 	int	i;
@@ -89,8 +137,6 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	i = 0;
 	while (data[i])
 	{
-		if (is_input(data[i]) && !is_asset(data[i]))
-			break ;
 		if (is_asset(data[i]) == 1)
 			get_wall_textures(mlx, data[i]);
 		if (is_asset(data[i]) == 2)
@@ -98,5 +144,6 @@ void	fetch_assets(t_mlx *mlx, char **data)
 		i++;
 	}
 	ft_fill_map(mlx, data);
+	check_map_borders(mlx);
 	place_player_on_map(mlx);
 }

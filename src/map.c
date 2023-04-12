@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 19:14:32 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:04:15 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,22 @@ void	ft_map_height(t_mlx *mlx, char **data)
 {
 	int		i;
 	int		len;
+	int		row;
 
 	i = 0;
 	len = 0;
+	row = 0;
 	while (data[i])
 	{
-		if (is_input(data[i]) && !is_asset(data[i]))
+		if (is_input(data[i]))
 		{
 			if (len < (int)ft_strlen(data[i]))
 				len = (int)ft_strlen(data[i]);
+			row++;
 		}
 		i++;
 	}
-	mlx->map_y = i;
+	mlx->map_y = row;
 	mlx->map_x = len - 1;
 }
 
