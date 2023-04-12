@@ -117,23 +117,18 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 	double	camera_x;
 
 	camera_x = 2 * x / (double)WIN_W - 1;
-
 	ray->raydir_x = mlx->player.dir_x + mlx->player.plane_x * camera_x;
 	ray->raydir_y = mlx->player.dir_y + mlx->player.plane_y * camera_x;
-
 	ray->map_x = (int)mlx->player.pos_x;
 	ray->map_y = (int)mlx->player.pos_y;
-
 	if (ray->raydir_x == 0)
 		ray->deltadist_x = 1000;
 	else
 		ray->deltadist_x = fabs(1 / ray->raydir_x);
-
 	if (ray->raydir_y == 0)
 		ray->deltadist_y = 1000;
 	else
 		ray->deltadist_y = fabs(1 / ray->raydir_y);
-
 	ft_sidedist_calc(mlx, ray);
 	ft_dda(mlx, ray);
 	if (mlx->player.inside == 0)

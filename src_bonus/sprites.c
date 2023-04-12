@@ -35,73 +35,53 @@ void	draw_line_sprt(t_display *texture, t_raycast *ray, int x, int coord[2])
 	}
 }
 
-/*
-void    draw_line_sprite(t_display *texture, t_display *display, int x, int lineheight, int coord[2], int tex_x)
+void	display_sprite(t_raycast *ray, double pos[2], int draw_coord[2], t_sprite texture)
 {
-	double	step;
-	double	tex_pos;
-	int		color;
-	int		tex_y;
-	int		y;
+	int	stripe;
+	int	sprt_width;
+	int	sprt_screen_x;
+	int	draw_start_x;
+	int	draw_end_x;
 
-	step = 1.0 * texture->tex_height / lineheight;
-	tex_pos = (coord[0] - WIN_H / 2 + lineheight / 2) * step;
-	y = coord[0];
-	tex_x = texture->tex_width - tex_x;
-	while (y < coord[1])
+	sprt_width = abs((int)(WIN_H * 1.2 / (pos[1])));
+	sprt_screen_x = (int)((WIN_W / 2) * (1 + pos[0] / pos[1]));
+	draw_start_x = -sprt_width / 2 + sprt_screen_x;
+	draw_end_x = sprt_width / 2 + sprt_screen_x;
+	if (draw_start_x < 0)
+		draw_start_x = 0;
+	if (draw_end_x >= WIN_W)
+		draw_end_x = WIN_W - 1;
+	stripe = draw_start_x;
+	while (stripe < draw_end_x)
 	{
-		tex_y = (int)tex_pos;
-		tex_pos += step;
-		color = my_mlx_get_color(texture, tex_x, tex_y);
-		if (color != 0x00FF00)
-			my_mlx_pixel_put(display, x, y, color);
-		y++;
+		ray->tex_x = (int)(256 * (stripe - (-sprt_width / 2 + sprt_screen_x)) \
+			* texture.tex.tex_width / sprt_width) / 256;
+		if (pos[1] > 0 && stripe > 0
+			&& stripe < WIN_W && pos[1] - 0.6 < ray->perpwalldists[stripe])
+			draw_line_sprt(&texture.tex, ray, stripe, draw_coord);
+		stripe++;
 	}
-*/
+}
 
 void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
 {
-	int	stripe;
-	int	draw_coord[2];
-	double	spriteX;
-	double	spriteY;
+	int		draw_coord[2];
+	double	sprte_x;
+	double	sprite_y;
+	double	inv_det;
+	double	pos[2];
 
-	spriteX = texture.x - mlx->player.pos_x;
-	spriteY = texture.y - mlx->player.pos_y;
-
-	double invDet = 1.0 / (mlx->player.plane_x * mlx->player.dir_y - mlx->player.dir_x * mlx->player.plane_y); //required for correct matrix multiplication
-
-	double transformX = invDet * (mlx->player.dir_y * spriteX - mlx->player.dir_x * spriteY);
-	double transformY = invDet * (-mlx->player.plane_y * spriteX + mlx->player.plane_x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
-
-	int spriteScreenX = (int)((WIN_W / 2) * (1 + transformX / transformY));
-
-	//calculate height of the sprite on screen
-	ray->lineheight = abs((int)(WIN_H * 1.2 / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
-	//calculate lowest and highest pixel to fill in current stripe
+	sprte_x = texture.x - mlx->player.pos_x;
+	sprite_y = texture.y - mlx->player.pos_y;
+	inv_det = 1.0 / (mlx->player.plane_x * mlx->player.dir_y - mlx->player.dir_x * mlx->player.plane_y);
+	pos[0] = inv_det * (mlx->player.dir_y * sprte_x - mlx->player.dir_x * sprite_y);
+	pos[1] = inv_det * (-mlx->player.plane_y * sprte_x + mlx->player.plane_x * sprite_y);
+	ray->lineheight = abs((int)(WIN_H * 1.2 / (pos[1])));
 	draw_coord[0] = -ray->lineheight / 2 + WIN_H / 2;
 	if (draw_coord[0] < 0)
 		draw_coord[0] = 0;
 	draw_coord[1] = ray->lineheight / 2 + WIN_H / 2;
 	if (draw_coord[1] >= WIN_H)
 		draw_coord[1] = WIN_H - 1;
-
-	//calculate width of the sprite
-	int spriteWidth = abs((int)(WIN_H * 1.2 / (transformY)));
-	int drawStartX = -spriteWidth / 2 + spriteScreenX;
-	if(drawStartX < 0)
-		drawStartX = 0;
-	int drawEndX = spriteWidth / 2 + spriteScreenX;
-	if(drawEndX >= WIN_W)
-		drawEndX = WIN_W - 1;
-
-	//loop through every vertical stripe of the sprite on screen
-	stripe = drawStartX;
-	while (stripe < drawEndX)
-	{
-		ray->tex_x = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) *  texture.tex.tex_width / spriteWidth) / 256;
-		if (transformY > 0 && stripe > 0 && stripe < WIN_W && transformY - 0.6 < ray->perpwalldists[stripe])
-			draw_line_sprt(&texture.tex, ray, stripe, draw_coord);
-		stripe++;
-	}
+	display_sprite(ray, pos, draw_coord, texture);
 }
