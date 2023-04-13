@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 18:10:57 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:20:48 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int	check_wall_textures(char *line)
 	int		fd;
 
 	str = ft_strnstr(line, "./", ft_strlen(line));
+	printf("%s\n", ft_strnstr(str, ".xpm", ft_strlen(str)));
 	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
 		error_message("Check this line provided in the map file : ", line);
 		return (1);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
+	printf("%s", str);
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/12 18:12:18 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:05:21 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,37 @@ void	get_colors(t_mlx *mlx, char *line)
 		mlx->color_c = fill_color(line);
 }
 
-#include <string.h>
+int	is_good(char c)
+{
+	if (c == '1' || c == ' ')
+		return (1);
+	return (0);
+}
+
+void	check_surround_cells(char **test_map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (test_map[i])
+	{
+		j = 0;
+		while (test_map[i][j])
+		{
+			if (test_map[i][j] == 32)
+			{
+				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j]) || !is_good(test_map[i][j + 1]) || !is_good(test_map[i][j - 1]))
+				{
+					error_message("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC", NULL);
+					return ;
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+}
 
 void	check_map_borders(t_mlx *mlx)
 {
@@ -89,45 +119,49 @@ void	check_map_borders(t_mlx *mlx)
 
 	printf("y is %d\n", mlx->map_y);
 	printf("x is %d\n", mlx->map_x);
-	print_map(mlx->map);
-	test_map = ft_calloc(sizeof(char *), mlx->map_y + 2);
+	test_map = ft_calloc(sizeof(char *), mlx->map_y + 5);
 	if (!test_map)
 		exit_game_light(mlx);
 	int	i = 0;
-	while (i < mlx->map_y + 1)
+	while (i < mlx->map_y + 4)
 	{
-		test_map[i] = ft_calloc(sizeof(char), mlx->map_x + 2);
-		memset(test_map[i], ' ', mlx->map_x + 2);
-		test_map[i][mlx->map_x + 2] = '\n';
+		test_map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
+		ft_memset(test_map[i], ' ', mlx->map_x + 4);
+		test_map[i][mlx->map_x + 3] = '\n';
 		i++;
 	}
-	print_map(test_map);
 
 	// Copy the original map into the new map
     int j = 0;
-    while (j < mlx->map_y) {
+    while (j < mlx->map_y)
+	{
         int k = 0;
-        while (k < mlx->map_x) {
-            test_map[j][k] = mlx->map[j][k];
+        while (k < mlx->map_x)
+		{
+			if (mlx->map[j][k] >= 32)
+            	test_map[j + 2][k + 2] = mlx->map[j][k];
             k++;
         }
         j++;
     }
-/*
+
     // Surround the new map with '1' chars
     int l = 0;
-    while (l < mlx->map_x + 2) {
-        test_map[0][l] = '1';
-        test_map[mlx->map_y + 2][l] = '1';
+    while (l <= mlx->map_x + 2)
+	{
+		test_map[0][l] = '1';
+		test_map[mlx->map_y + 3][l] = '1';
         l++;
     }
-    int m = 1;
-    while (m < mlx->map_y + 1) {
-        test_map[m][0] = '1';
-        test_map[m][mlx->map_x + 1] = '1';
+    int m = 0;
+    while (m <= mlx->map_y + 3)
+	{
+		test_map[m][0] = '1';
+		test_map[m][mlx->map_x + 2] = '1';
         m++;
     }
-	*/
+	print_map(test_map);
+	check_surround_cells(test_map);
 }
 
 void	fetch_assets(t_mlx *mlx, char **data)
