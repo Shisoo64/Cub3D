@@ -6,8 +6,8 @@ NO ./sprites/NO.xpm
 
 
 
-C 47,174,224
-SO                                           ./sprites/SO.xpm
+C 47,,74,224
+SO ./sprites/SO.xpm
 
 
 F 255,255,255

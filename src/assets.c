@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/13 15:05:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:57:11 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void	check_map_borders(t_mlx *mlx)
     }
 	print_map(test_map);
 	check_surround_cells(test_map);
+	free_map(test_map);
 }
 
 void	fetch_assets(t_mlx *mlx, char **data)

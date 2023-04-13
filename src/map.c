@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 18:04:15 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:55:08 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,11 @@ void	place_player_on_map(t_mlx *mlx)
 
 int	is_asset(char *line)
 {
-	char	*asset_text;
-	char	*asset_color;
-
-	asset_text = "NSWE";
-	asset_color = "FC";
-	while (*asset_text)
-	{
-		if (ft_strchr(line, *asset_text))
-			return (1);
-		asset_text++;
-	}
-	while (*asset_color)
-	{
-		if (ft_strchr(line, *asset_color))
-			return (2);
-		asset_color++;
-	}
+	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
+			|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
+		return (1);
+	if (!ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
+		return (2);
 	return (0);
 }
 

@@ -23,14 +23,14 @@ void	check_map_ext(t_mlx *v)
 		|| v->mapname[ft_strlen(v->mapname) - 5] == '/')
 	{
 		error_message("Please provide a correct map.", NULL);
-		exit_game_light(v);
+		exit_game_light(v, NULL);
 	}
 	while (++i < 5)
 	{
 		if (v->mapname[ft_strlen(v->mapname) - i] != ext[4 - i])
 		{
 			error_message("Problem with map extension.", NULL);
-			exit_game_light(v);
+			exit_game_light(v, NULL);
 		}
 	}
 }
@@ -68,11 +68,11 @@ char	**get_data_from_file(t_mlx *mlx)
 	if (fd == -1)
 	{
 		error_message("Check the map file.\n", NULL);
-		exit_game_light(mlx);
+		exit_game_light(mlx, NULL);
 	}
 	data = ft_calloc(sizeof(char *), file_size(mlx) + 1);
 	if (!data)
-		exit_game_light(mlx);
+		exit_game_light(mlx, data);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -84,6 +84,7 @@ char	**get_data_from_file(t_mlx *mlx)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	return (data);
 }
@@ -95,6 +96,7 @@ void	ft_parsing(t_mlx *mlx)
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(mlx, data);
+	init_mlx(mlx);
 	fetch_assets(mlx, data);
 	free_map(data);
 }

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 19:32:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:57:00 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_mlx(t_mlx *mlx)
 	mlx->mlx = mlx_init();
 	if (mlx->mlx == NULL)
 	{
-		error_message("mlx initializationfailed.\n", NULL);
+		error_message("Mlx initialization failed.\n", NULL);
 		exit(1);
 	}
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
@@ -63,7 +63,6 @@ int	main(int ac, char **av)
 		return (1);
 	mlx.mapname = av[1];
 	init_data(&mlx);
-	init_mlx(&mlx);
 	ft_parsing(&mlx);
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);

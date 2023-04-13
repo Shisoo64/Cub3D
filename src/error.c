@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 15:20:48 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 16:14:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ int	check_wall_textures(char *line)
 	char	*str;
 	int		fd;
 
-	str = ft_strnstr(line, "./", ft_strlen(line));
-	printf("%s\n", ft_strnstr(str, ".xpm", ft_strlen(str)));
-	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
+	str = ft_strnstr(line, ".", ft_strlen(line));
+
+	if ((*(str - 1) != ' ' && *(str + 1) != '/') || !str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
 		error_message("Check this line provided in the map file : ", line);
 		return (1);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
-	printf("%s", str);
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
@@ -54,34 +53,30 @@ int	check_colors(char *line)
 	char	*buf;
 
 	i = 0;
-	str = line;
-	while (*str && !ft_isdigit(*str))
+	str = line + 1;
+	while (*str == 32)
 		str++;
 	while (i < 3)
 	{
 		buf = ft_strdup(str);
 		buf = ft_strtok(buf, ",");
 		if (!buf || !ft_isdigit(*buf))
-		{
-			error_message("Color is wrong. Check this line : ", line);
-			return (1);
-		}
+			break ;
 		while (*str && ft_isdigit(*str))
 			str++;
 		str++;
 		value = ft_atoi(buf);
 		if (value > 255)
-		{
-			error_message("Color is wrong. Check this line : ", line);
-			return (1);
-		}
+			break ;
 		else
 			i++;
 		free(buf);
 	}
-	if (i != 3)
-		error_message("Color values are missing. Check this line : ", line);
-	return (0);
+	free(buf);
+	if (i == 3)
+			return (0);
+	error_message("Color values are erroneous. Check this line : ", line);
+	return (1);
 }
 
 int	is_input(char *line)
@@ -123,33 +118,24 @@ void	check_items(t_mlx *mlx, char **data)
 	int	text;
 	int	color;
 
-	i = 0;
+	i = -1;
 	text = 0;
 	color = 0;
-	while (data[i])
+	while (data[++i])
 	{
-		if (is_input(data[i]) && !is_asset(data[i]))
-			break ;
-		if (is_asset(data[i]) == 1)
-		{
-			if (check_wall_textures(data[i]))
-				exit_game_light(mlx);
-			else
-				text++;
-		}
-		if (is_asset(data[i]) == 2)
-		{
-			if (check_colors(data[i]))
-				exit_game_light(mlx);
-			else
-				color++;
-		}
-		i++;
+		if (is_asset(data[i]) == 1 && check_wall_textures(data[i]))
+			exit_game_light(mlx, data);
+		else if (is_asset(data[i]) == 1)
+			text++;
+		if (is_asset(data[i]) == 2 && check_colors(data[i]))
+			exit_game_light(mlx, data);
+		else if (is_asset(data[i]) == 2)
+			color++;
 	}
 	if (text != 4 || color != 2)
 	{
 		error_message("Assets are missing. Check textures and colors.\n", NULL);
-		exit_game_light(mlx);
+		exit_game_light(mlx, data);
 	}
 }
 
@@ -157,5 +143,5 @@ void	check_assets(t_mlx *mlx, char **data)
 {
 	check_items(mlx, data);
 	if (check_map(data))
-		exit_game_light(mlx);
+		exit_game_light(mlx, data);
 }

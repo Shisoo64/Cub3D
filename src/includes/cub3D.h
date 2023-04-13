@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 18:51:11 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/13 15:59:50 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		is_asset(char *line);
 void	fetch_assets(t_mlx *mlx, char **data);
 void	get_colors(t_mlx *mlx, char *line);
 void	get_wall_textures(t_mlx *mlx, char *line);
+void	init_mlx(t_mlx *mlx);
 
 //
 //		MOVEMENT
@@ -141,7 +142,7 @@ void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int		my_mlx_get_color(t_display *texture, int x, int y);
 void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void	exit_game(t_mlx *mlx);
-void	exit_game_light(t_mlx *mlx);
+void	exit_game_light(t_mlx *mlx, char **data);
 
 int		ft_strcspn(char *s, const char *rejects);
 int		ft_strspn(char *s, const char *accepts);
