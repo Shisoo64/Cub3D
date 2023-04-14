@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/13 15:57:11 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:00:25 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	check_map_borders(t_mlx *mlx)
 	printf("x is %d\n", mlx->map_x);
 	test_map = ft_calloc(sizeof(char *), mlx->map_y + 5);
 	if (!test_map)
-		exit_game_light(mlx);
+		exit_game_light(mlx, NULL);
 	int	i = 0;
 	while (i < mlx->map_y + 4)
 	{

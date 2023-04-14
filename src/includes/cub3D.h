@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 15:59:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:00:28 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,11 @@ int		ft_strcspn(char *s, const char *rejects);
 int		ft_strspn(char *s, const char *accepts);
 char	*ft_strtok(char *str, char *token);
 void	print_map(char **map);
+
+//
+//		UTILS
+void	error_message(char *msg, char *line);
+int		is_input(char *line);
+int		is_asset(char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 15:55:08 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:00:26 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,6 @@ void	place_player_on_map(t_mlx *mlx)
 	set_player_pos(mlx, mlx->map[y], y);
 }
 
-int	is_asset(char *line)
-{
-	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
-			|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
-		return (1);
-	if (!ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
-		return (2);
-	return (0);
-}
-
 void	ft_map_height(t_mlx *mlx, char **data)
 {
 	int		i;
@@ -116,7 +106,7 @@ void	ft_fill_map(t_mlx *mlx, char **data)
 	ft_map_height(mlx, data);
 	mlx->map = ft_calloc(sizeof(char *), mlx->map_y + 1);
 	if (!mlx->map)
-		exit_game_light(mlx);
+		exit_game_light(mlx, data);
 	i = 0;
 	x = 0;
 	while (data[i])

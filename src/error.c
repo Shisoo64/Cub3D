@@ -6,19 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 16:14:03 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:00:31 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D.h"
-
-void	error_message(char *msg, char *line)
-{
-	ft_putstr_fd("Error.\n", 2);
-	ft_putstr_fd(msg, 2);
-	if (line)
-		ft_putstr_fd(line, 2);
-}
 
 int	check_wall_textures(char *line)
 {
@@ -26,7 +18,6 @@ int	check_wall_textures(char *line)
 	int		fd;
 
 	str = ft_strnstr(line, ".", ft_strlen(line));
-
 	if ((*(str - 1) != ' ' && *(str + 1) != '/') || !str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
 		error_message("Check this line provided in the map file : ", line);
@@ -56,10 +47,16 @@ int	check_colors(char *line)
 	str = line + 1;
 	while (*str == 32)
 		str++;
+	if (!ft_isdigit(*str))
+	{
+		error_message("Check this line provided in the map file : ", line);
+		return (1);
+	}
 	while (i < 3)
 	{
 		buf = ft_strdup(str);
 		buf = ft_strtok(buf, ",");
+		printf("buf is %s\n", buf);
 		if (!buf || !ft_isdigit(*buf))
 			break ;
 		while (*str && ft_isdigit(*str))
@@ -70,28 +67,12 @@ int	check_colors(char *line)
 			break ;
 		else
 			i++;
-		free(buf);
+		//free(buf);
 	}
-	free(buf);
 	if (i == 3)
 			return (0);
+	//free(buf);
 	error_message("Color values are erroneous. Check this line : ", line);
-	return (1);
-}
-
-int	is_input(char *line)
-{
-	char	*map_input;
-
-	map_input = "10NSWE ";
-	while (*line == 32)
-		line++;
-	while (*line)
-	{
-		if (!ft_strchr(map_input, *line) && *line > 32)
-			return (0);
-		line++;
-	}
 	return (1);
 }
 
