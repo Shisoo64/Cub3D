@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 14:23:46 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:04:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,37 @@ void	draw_dialog(t_mlx *mlx)
 
 void	starting_dialog_ext(t_mlx *mlx)
 {
-	if (mlx->dialog == 1)
+	if (mlx->dialog == 2)
 	{
-		// Jouer une musique de jul
+		ft_playsound(1, "paplay ./ringtone.ogg &");
 		mlx->message = "*sonnerie de telephone*";
-	}
-	else if (mlx->dialog == 2)
-	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
-		mlx->message = "slt la famille c JuL";
 	}
 	else if (mlx->dialog == 3)
 	{
-		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
-		mlx->message = "oe fodrai juste ke tu viene me voir vite fai";
+		ft_playsound(0, NULL);
+		mlx->message = "*decroche*";
 	}
 	else if (mlx->dialog == 4)
 	{
+		ft_playsound(1, "paplay ./dialog1.ogg &");
 		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
-		mlx->message = "jui dan le bat tou seul o mileu tu pe pa louper";
+		mlx->message = "slt la famille c JuL";
 	}
 	else if (mlx->dialog == 5)
 	{
+		ft_playsound(1, "paplay ./dialog1.ogg &");
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
+		mlx->message = "oe fodrai juste ke tu viene me voir vite fai";
+	}
+	else if (mlx->dialog == 6)
+	{
+		ft_playsound(1, "paplay ./dialog1.ogg &");
+		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
+		mlx->message = "jui dan le bat tou seul o mileu tu pe pa louper";
+	}
+	else if (mlx->dialog == 7)
+	{
+		ft_playsound(1, "paplay ./dialog1.ogg &");
 		put_img_transp(mlx, mlx->phone, WIN_W / 2 + 90, WIN_H - 320);
 		mlx->message = "aller a tte";
 	}
@@ -123,12 +132,34 @@ void	sch_dialog(t_mlx *mlx)
 		mlx->dialog++;
 }
 
+	#include <sys/types.h>
+	#include <sys/wait.h>
+
+void	ft_playsound(int play, char *param)
+{
+	static int	playing;
+
+	if (play && !playing)
+	{
+		playing = 1;
+		system(param);
+	}
+	else if (play == 0 && playing)
+	{
+		playing = 0;
+		system("killall paplay");
+	}
+}
+
 void	ft_dialog(t_mlx *mlx)
 {
 	if (mlx->dialog >= 1 && mlx->dialog < 10)
 		starting_dialog(mlx);
 	else if (mlx->dialog >= 10 && mlx->dialog < 20)
+	{
+		ft_playsound(1, "paplay ./dialog1.ogg &");
 		jul_dialog(mlx);
+	}
 	else if (mlx->dialog >= 20 && mlx->dialog < 30)
 		sch_dialog(mlx);
 	draw_dialog(mlx);

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:45:17 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 14:39:07 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:15:19 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	start_screen(t_mlx *mlx)
 {
 	static int	i;
 
+	//ft_playsound(1, "paplay ./ovni.ogg &");
 	if (i++ == 0)
 	{
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->startscreen.img, 0, 0);

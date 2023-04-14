@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 15:35:23 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:52:07 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,10 @@ void			start_screen(t_mlx *mlx);
 void			crash_screen(t_mlx *mlx);
 void			draw_backdrop(t_mlx *mlx);
 void			ft_dialog(t_mlx *mlx);
+void	ft_playsound(int play, char *param);
+
+
+
 
 //
 //		MLX

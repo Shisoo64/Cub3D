@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 14:21:40 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:14:24 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ int	frames(t_mlx *mlx)
 			put_img_transp(mlx, mlx->handbag, WIN_W - 366, WIN_H - 240);
 		if (mlx->dialog != 0)
 			ft_dialog(mlx);
+		else
+			ft_playsound(0, NULL);
 		if (mlx->player.biking == -1)
 			ft_start_dialog(mlx);
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->display.img, 0, 0);
@@ -171,9 +173,10 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	if (ac > 1)
-		printf("Grand Theft Moto does not take map inputs, \"%s\""
-			" will not be considered.\n", av[1]);
+	(void)ac;
+	(void)av;
+	printf("Controls: \n"
+		" WASD to move\n F to use\n M to take out your phone\n\n\n");
 	mlx.player.plane_x = 0;
 	mlx.player.plane_y = FOV;
 	ft_parsing(&mlx);
