@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 17:21:28 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:21:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,13 @@ int	exit_hook(t_mlx *mlx)
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
+	if (ac > 1)
+		printf("Grand Theft Moto does not take map inputs, \"%s\""
+			" will not be considered.\n", av[1]);
 	mlx.player.plane_x = 0;
 	mlx.player.plane_y = FOV;
 	ft_parsing(&mlx);

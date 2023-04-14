@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/05 15:48:02 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:23:46 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	jul_dialog(t_mlx *mlx)
 	else if (mlx->dialog == 14)
 		mlx->message = "c ok pr toi????";
 	else if (mlx->dialog == 15)
-		mlx->message = "Aler tien pren les cle du T-Max \
-			il et garer juste derier le bat";
+		mlx->message = "Aler tien pren les cle du T-Max"
+			" il et garer juste derier le bat";
 	else if (mlx->dialog == 16)
 		mlx->message = "*you've obtained the keys*";
 	else
@@ -91,7 +91,6 @@ void	jul_dialog(t_mlx *mlx)
 		mlx->bag.y = 0;
 		mlx->tmaxkeys = 1;
 		mlx->dialog = 0;
-		return ;
 	}
 	if (mlx->player.using == -1)
 		mlx->dialog++;
@@ -108,8 +107,8 @@ void	sch_dialog(t_mlx *mlx)
 	else if (mlx->dialog == 23)
 		mlx->message = "Bon parfait alors";
 	else if (mlx->dialog == 24)
-		mlx->message = "Ca fait plaisir que t'ai pu nous depanner,\
-		tiens garde le t-max en cadeau";
+		mlx->message = "Ca fait plaisir que t'ai pu nous depanner,"
+			" tiens garde le t-max en cadeau";
 	else if (mlx->dialog == 25)
 		mlx->message = "Aller on se capte une autre fois";
 	else

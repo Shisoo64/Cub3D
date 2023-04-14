@@ -35,7 +35,7 @@ void	draw_line_sprt(t_display *texture, t_raycast *ray, int x, int coord[2])
 	}
 }
 
-void	display_sprite(t_raycast *ray, double pos[2], int draw_coord[2], t_sprite texture)
+void	display_sprite(t_raycast *r, double pos[2], int coord[2], t_sprite t)
 {
 	int	stripe;
 	int	sprt_width;
@@ -54,16 +54,16 @@ void	display_sprite(t_raycast *ray, double pos[2], int draw_coord[2], t_sprite t
 	stripe = draw_start_x;
 	while (stripe < draw_end_x)
 	{
-		ray->tex_x = (int)(256 * (stripe - (-sprt_width / 2 + sprt_screen_x)) \
-			* texture.tex.tex_width / sprt_width) / 256;
+		r->tex_x = (int)(256 * (stripe - (-sprt_width / 2 + sprt_screen_x)) \
+			* t.tex.tex_width / sprt_width) / 256;
 		if (pos[1] > 0 && stripe > 0
-			&& stripe < WIN_W && pos[1] - 0.6 < ray->perpwalldists[stripe])
-			draw_line_sprt(&texture.tex, ray, stripe, draw_coord);
+			&& stripe < WIN_W && pos[1] - 0.6 < r->perpwalldists[stripe])
+			draw_line_sprt(&t.tex, r, stripe, coord);
 		stripe++;
 	}
 }
 
-void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
+void	ft_render_sprite(t_raycast *ray, t_mlx *m, t_sprite texture)
 {
 	int		draw_coord[2];
 	double	sprte_x;
@@ -71,11 +71,13 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture)
 	double	inv_det;
 	double	pos[2];
 
-	sprte_x = texture.x - mlx->player.pos_x;
-	sprite_y = texture.y - mlx->player.pos_y;
-	inv_det = 1.0 / (mlx->player.plane_x * mlx->player.dir_y - mlx->player.dir_x * mlx->player.plane_y);
-	pos[0] = inv_det * (mlx->player.dir_y * sprte_x - mlx->player.dir_x * sprite_y);
-	pos[1] = inv_det * (-mlx->player.plane_y * sprte_x + mlx->player.plane_x * sprite_y);
+	sprte_x = texture.x - m->player.pos_x;
+	sprite_y = texture.y - m->player.pos_y;
+	inv_det = 1.0 / (m->player.plane_x * m->player.dir_y
+			- m->player.dir_x * m->player.plane_y);
+	pos[0] = inv_det * (m->player.dir_y * sprte_x - m->player.dir_x * sprite_y);
+	pos[1] = inv_det * (-m->player.plane_y * sprte_x
+			+ m->player.plane_x * sprite_y);
 	ray->lineheight = abs((int)(WIN_H * 1.2 / (pos[1])));
 	draw_coord[0] = -ray->lineheight / 2 + WIN_H / 2;
 	if (draw_coord[0] < 0)

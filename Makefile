@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/11 15:17:48 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/04/13 14:29:47 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/init.c \
 				src_bonus/parsing.c \
 				src_bonus/minimap.c \
+				src_bonus/raycaster.c \
 				src_bonus/rendering_controller.c \
 				src_bonus/rendering_outside.c \
 				src_bonus/rendering_inside.c \
