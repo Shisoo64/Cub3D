@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/16 20:57:47 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:02:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,22 @@ int	fill_color(char *line)
 	int		i;
 	int		color;
 	char	*str;
-	char	*buf;
+	int		value;
 
 	i = 0;
 	color = 0;
+	value = 0;
 	str = line;
 	while (*str && !ft_isdigit(*str))
 		str++;
 	while (i < 3)
 	{
 		i++;
-		buf = ft_strdup(str);
-		buf = ft_strtok(buf, ",\n");
+		value = get_next_color(str);
 		while (*str && ft_isdigit(*str))
 			str++;
 		str++;
-		color |= (ft_atoi(buf) << ((3 - i) * 8));
-		free(buf);
+		color |= (value << ((3 - i) * 8));
 	}
 	return (color);
 }
@@ -79,93 +78,6 @@ void	get_colors(t_mlx *mlx, char *line)
 		mlx->color_f = fill_color(line);
 	else if (is_asset(line) && ft_strchr(line, 'C'))
 		mlx->color_c = fill_color(line);
-}
-
-int	is_good(char c)
-{
-	if (c == '1' || c == ' ')
-		return (1);
-	return (0);
-}
-
-void	check_surround_cells(char **test_map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (test_map[i])
-	{
-		j = 0;
-		while (test_map[i][j])
-		{
-			if (test_map[i][j] == 32)
-			{
-				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j])
-					|| !is_good(test_map[i][j + 1]) || !is_good(test_map[i][j
-						- 1]))
-				{
-					error_message("Map is not closed.", NULL);
-					return ;
-				}
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	check_map_borders(t_mlx *mlx)
-{
-	char	**test_map;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-	int		m;
-
-	printf("y is %d\n", mlx->map_y);
-	printf("x is %d\n", mlx->map_x);
-	test_map = ft_calloc(sizeof(char *), mlx->map_y + 5);
-	if (!test_map)
-		exit_game_light(mlx, NULL);
-	i = 0;
-	while (i < mlx->map_y + 4)
-	{
-		test_map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
-		ft_memset(test_map[i], ' ', mlx->map_x + 4);
-		test_map[i][mlx->map_x + 3] = '\n';
-		i++;
-	}
-	j = 0;
-	while (j < mlx->map_y)
-	{
-		k = 0;
-		while (k < mlx->map_x)
-		{
-			if (mlx->map[j][k] >= 32)
-				test_map[j + 2][k + 2] = mlx->map[j][k];
-			k++;
-		}
-		j++;
-	}
-	l = 0;
-	while (l <= mlx->map_x + 2)
-	{
-		test_map[0][l] = '1';
-		test_map[mlx->map_y + 3][l] = '1';
-		l++;
-	}
-	m = 0;
-	while (m <= mlx->map_y + 3)
-	{
-		test_map[m][0] = '1';
-		test_map[m][mlx->map_x + 2] = '1';
-		m++;
-	}
-	print_map(test_map);
-	check_surround_cells(test_map);
-	free_map(test_map);
 }
 
 void	fetch_assets(t_mlx *mlx, char **data)

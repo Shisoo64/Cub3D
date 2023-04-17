@@ -6,22 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 19:00:26 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:22:34 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D.h"
-
-void	print_map(char **map)
-{
-	int	y;
-
-	y = -1;
-	ft_printf("map:\n");
-	while (map[++y])
-		ft_printf("%s", map[y]);
-	ft_printf("\n");
-}
 
 void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2])
 {

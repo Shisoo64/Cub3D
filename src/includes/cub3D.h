@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 19:00:28 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:23:12 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,22 @@ typedef struct s_raycast {
 }				t_raycast;
 
 //
+//		INITIALIZE
+void	init_data(t_mlx *mlx);
+void	init_mlx(t_mlx *mlx);
+
+//
 //		PARSING
 void	ft_parsing(t_mlx *mlx);
 void	check_map_ext(t_mlx *v);
 void	ft_fill_map(t_mlx *mlx, char **data);
 void	ft_map_height(t_mlx *mlx, char **data);
-int		is_input(char *line);
 void	place_player_on_map(t_mlx *mlx);
-int		is_asset(char *line);
 void	fetch_assets(t_mlx *mlx, char **data);
 void	get_colors(t_mlx *mlx, char *line);
 void	get_wall_textures(t_mlx *mlx, char *line);
 void	init_mlx(t_mlx *mlx);
+int		get_next_color(char *line);
 
 //
 //		MOVEMENT
@@ -122,9 +126,6 @@ int		input_manager(t_mlx *mlx);
 int		frames(t_mlx *mlx);
 void	ft_display(t_mlx *mlx);
 void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
-
-//
-//		SCREENS
 void	draw_backdrop(t_mlx *mlx);
 
 //
@@ -151,8 +152,12 @@ void	print_map(char **map);
 
 //
 //		UTILS
-void	error_message(char *msg, char *line);
 int		is_input(char *line);
 int		is_asset(char *line);
+int		count_commas(char *line);
+
+//
+//		UTILS_MAP
+void	check_map_borders(t_mlx *mlx);
 
 #endif

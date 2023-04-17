@@ -119,6 +119,8 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 	ray->raydir_y = mlx->player.dir_y + mlx->player.plane_y * camera_x;
 	ray->map_x = (int)mlx->player.pos_x;
 	ray->map_y = (int)mlx->player.pos_y;
+
+	//length of ray from one x or y-side to next x or y-side
 	if (ray->raydir_x == 0)
 		ray->deltadist_x = 1000;
 	else
@@ -127,6 +129,8 @@ void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x)
 		ray->deltadist_y = 1000;
 	else
 		ray->deltadist_y = fabs(1 / ray->raydir_y);
+
+	//calculate step and initial sideDist
 	if (ray->raydir_x < 0)
 	{
 		ray->step_x = -1;

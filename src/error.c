@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 19:00:31 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:00:40 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	check_wall_textures(char *line)
 	int		fd;
 
 	str = ft_strnstr(line, ".", ft_strlen(line));
-	if ((*(str - 1) != ' ' && *(str + 1) != '/') || !str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
+	if (!str || (*(str - 1) != ' ' && *(str + 1) != '/')
+		|| !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
 		error_message("Check this line provided in the map file : ", line);
 		return (1);
@@ -41,37 +42,26 @@ int	check_colors(char *line)
 	int		i;
 	int		value;
 	char	*str;
-	char	*buf;
 
-	i = 0;
+	i = -1;
 	str = line + 1;
 	while (*str == 32)
 		str++;
-	if (!ft_isdigit(*str))
+	if (!ft_isdigit(*str) || count_commas(line) != 2)
 	{
 		error_message("Check this line provided in the map file : ", line);
 		return (1);
 	}
-	while (i < 3)
+	while (++i < 3)
 	{
-		buf = ft_strdup(str);
-		buf = ft_strtok(buf, ",");
-		printf("buf is %s\n", buf);
-		if (!buf || !ft_isdigit(*buf))
-			break ;
+		value = get_next_color(str);
 		while (*str && ft_isdigit(*str))
 			str++;
-		str++;
-		value = ft_atoi(buf);
 		if (value > 255)
 			break ;
-		else
-			i++;
-		//free(buf);
 	}
 	if (i == 3)
-			return (0);
-	//free(buf);
+		return (0);
 	error_message("Color values are erroneous. Check this line : ", line);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/16 12:38:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:21:14 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,39 @@ void	error_message(char *msg, char *line)
 	ft_putstr_fd(msg, 2);
 	if (line)
 		ft_putstr_fd(line, 2);
+}
+
+int	get_next_color(char *str)
+{
+	char	*buf;
+	int		value;
+	int		i;
+
+	i = 0;
+	if (str[i] == ',')
+		str++;
+	while (ft_isdigit(str[i]))
+		i++;
+	buf = ft_substr(str, 0, i);
+	value = ft_atoi(buf);
+	free(buf);
+	return (value);
+}
+
+int	count_commas(char *line)
+{
+	int	i;
+	int	nbr;
+
+	i = 0;
+	nbr = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			nbr++;
+		i++;
+	}
+	return (nbr);
 }
 
 int	is_input(char *line)
@@ -44,22 +77,4 @@ int	is_asset(char *line)
 	if (!ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
 		return (2);
 	return (0);
-}
-
-//	get the color of the pixel on the coordinates of the texture
-int	my_mlx_get_color(t_display *texture, int x, int y)
-{
-	char	*color;
-
-	color = texture->addr + (y * texture->line_length + x
-			* (texture->bits_per_pixel / 8));
-	return (*(int *)color);
-}
-
-void	my_mlx_pixel_put(t_display *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
 }
