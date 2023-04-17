@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 19:00:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/16 12:38:30 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	is_input(char *line)
 int	is_asset(char *line)
 {
 	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
-			|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
+		|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
 		return (1);
 	if (!ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
 		return (2);

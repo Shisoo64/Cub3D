@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/14 19:00:25 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/16 20:57:47 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
 	if (open(str, O_RDONLY) == -1)
 		error_message("Check this line provided in the map file : ", line);
-	texture->img = mlx_xpm_file_to_image(mlx->mlx, str,
-			&texture->tex_width, &texture->tex_height);
+	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
+			&texture->tex_height);
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 			&texture->line_length, &texture->endian);
 	free(str);
@@ -36,14 +36,14 @@ void	get_wall_textures(t_mlx *mlx, char *line)
 {
 	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
 		fill_wall_tex(mlx, &mlx->no_tex, line);
-	else if (is_asset(line) == 1
-		&& ft_strnstr(line, "SO", ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && ft_strnstr(line, "SO",
+			ft_strlen(line)) != NULL)
 		fill_wall_tex(mlx, &mlx->so_tex, line);
-	else if (is_asset(line) == 1
-		&& ft_strnstr(line, "WE", ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && ft_strnstr(line, "WE",
+			ft_strlen(line)) != NULL)
 		fill_wall_tex(mlx, &mlx->we_tex, line);
-	else if (is_asset(line) == 1
-		&& ft_strnstr(line, "EA", ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && ft_strnstr(line, "EA",
+			ft_strlen(line)) != NULL)
 		fill_wall_tex(mlx, &mlx->ea_tex, line);
 }
 
@@ -101,9 +101,11 @@ void	check_surround_cells(char **test_map)
 		{
 			if (test_map[i][j] == 32)
 			{
-				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j]) || !is_good(test_map[i][j + 1]) || !is_good(test_map[i][j - 1]))
+				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j])
+					|| !is_good(test_map[i][j + 1]) || !is_good(test_map[i][j
+						- 1]))
 				{
-					error_message("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC", NULL);
+					error_message("Map is not closed.", NULL);
 					return ;
 				}
 			}
@@ -115,14 +117,19 @@ void	check_surround_cells(char **test_map)
 
 void	check_map_borders(t_mlx *mlx)
 {
-	char **test_map;
+	char	**test_map;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		m;
 
 	printf("y is %d\n", mlx->map_y);
 	printf("x is %d\n", mlx->map_x);
 	test_map = ft_calloc(sizeof(char *), mlx->map_y + 5);
 	if (!test_map)
 		exit_game_light(mlx, NULL);
-	int	i = 0;
+	i = 0;
 	while (i < mlx->map_y + 4)
 	{
 		test_map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
@@ -130,36 +137,32 @@ void	check_map_borders(t_mlx *mlx)
 		test_map[i][mlx->map_x + 3] = '\n';
 		i++;
 	}
-
-	// Copy the original map into the new map
-    int j = 0;
-    while (j < mlx->map_y)
+	j = 0;
+	while (j < mlx->map_y)
 	{
-        int k = 0;
-        while (k < mlx->map_x)
+		k = 0;
+		while (k < mlx->map_x)
 		{
 			if (mlx->map[j][k] >= 32)
-            	test_map[j + 2][k + 2] = mlx->map[j][k];
-            k++;
-        }
-        j++;
-    }
-
-    // Surround the new map with '1' chars
-    int l = 0;
-    while (l <= mlx->map_x + 2)
+				test_map[j + 2][k + 2] = mlx->map[j][k];
+			k++;
+		}
+		j++;
+	}
+	l = 0;
+	while (l <= mlx->map_x + 2)
 	{
 		test_map[0][l] = '1';
 		test_map[mlx->map_y + 3][l] = '1';
-        l++;
-    }
-    int m = 0;
-    while (m <= mlx->map_y + 3)
+		l++;
+	}
+	m = 0;
+	while (m <= mlx->map_y + 3)
 	{
 		test_map[m][0] = '1';
 		test_map[m][mlx->map_x + 2] = '1';
-        m++;
-    }
+		m++;
+	}
 	print_map(test_map);
 	check_surround_cells(test_map);
 	free_map(test_map);

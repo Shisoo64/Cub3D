@@ -50,7 +50,6 @@ int	file_size(t_mlx *mlx)
 				i++;
 		free(line);
 		line = get_next_line(fd);
-
 	}
 	close(fd);
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/13 16:00:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/16 12:39:00 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,5 @@ void	exit_game_light(t_mlx *mlx, char **data)
 {
 	(void)mlx;
 	free_map(data);
-	//mlx_destroy_window(mlx->mlx, mlx->win);
-	//mlx_destroy_display(mlx->mlx);
-	//free(mlx->mlx);
 	exit(1);
 }
