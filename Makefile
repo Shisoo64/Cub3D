@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/17 16:39:12 by bchabot          ###   ########.fr        #
+#    Updated: 2023/04/17 20:03:43 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 
 SRCS =	src/main.c \
 		src/input_manager.c \
-		src/foot_movement.c \
+		src/movement.c \
 		src/screens.c \
 		src/initialize.c \
 		src/parsing.c \

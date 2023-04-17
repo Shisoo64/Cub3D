@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 16:55:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:51:40 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	print_map(char **map);
 //		UTILS
 int		is_input(char *line);
 int		is_asset(char *line);
-int		count_commas(char *line);
+int		is_colorline_flawless(char *str);
 
 //
 //		UTILS_MAP

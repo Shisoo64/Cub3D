@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 17:51:56 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:52:16 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ int	get_next_color(char *str)
 	return (value);
 }
 
-int	count_commas(char *line)
+int	is_colorline_flawless(char *str)
 {
 	int	i;
 	int	nbr;
 
-	i = 0;
+	i = -1;
 	nbr = 0;
-	while (line[i])
+	while (str[++i])
 	{
-		if (line[i] == ',')
+		if (str[i] == ',')
 			nbr++;
-		i++;
+		else if (!ft_isdigit(str[i]) && ft_isprint(str[i]))
+			return (-1);
 	}
 	return (nbr);
 }

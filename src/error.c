@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 19:00:27 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:49:54 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_colors(char *line)
 	str = line + 1;
 	while (*str == 32)
 		str++;
-	if (ft_isdigit(*str) && count_commas(line) == 2)
+	if (ft_isdigit(*str) && is_colorline_flawless(str) == 2)
 	{
 		while (++i < 3)
 		{
