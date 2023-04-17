@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 15:56:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:34:49 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,21 @@ void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y)
 			if (color != 0x00FF00)
 				my_mlx_pixel_put(&mlx->display, x + pad_x, y + pad_y, color);
 		}
+	}
+}
+
+void	ft_playsound(int play, char *filename)
+{
+	static int	playing;
+
+	if (play && !playing)
+	{
+		playing = 1;
+		system(filename);
+	}
+	else if (play == 0 && playing)
+	{
+		playing = 0;
+		system("killall paplay");
 	}
 }

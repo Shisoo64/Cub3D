@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 14:39:43 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:31:43 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	key_press(int key, t_mlx *mlx)
 	if (key == ESC)
 		exit_game(mlx);
 	else if (mlx->started == 0)
+	{
 		mlx->started = 1;
+		system("killall paplay");
+	}
 	else if (mlx->crashed == 1)
 		exit_game(mlx);
 	else if (key == KEY_ARROW_L || key == KEY_Q)

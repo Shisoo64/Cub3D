@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 18:52:07 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:35:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,11 +164,6 @@ int				key_release(int key, t_mlx *mlx);
 int				input_manager(t_mlx *mlx);
 
 //
-//		TRUCS
-void			open_door(t_mlx *mlx, char *mapname, int batnbr);
-void			close_door(t_mlx *mlx);
-
-//
 //		RENDER
 int				frames(t_mlx *mlx);
 void			ft_rendering(t_mlx *mlx);
@@ -184,10 +179,6 @@ void			start_screen(t_mlx *mlx);
 void			crash_screen(t_mlx *mlx);
 void			draw_backdrop(t_mlx *mlx);
 void			ft_dialog(t_mlx *mlx);
-void	ft_playsound(int play, char *param);
-
-
-
 
 //
 //		MLX
@@ -195,5 +186,11 @@ void			my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int				my_mlx_get_color(t_display *texture, int x, int y);
 void			put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void			exit_game(t_mlx *mlx);
+
+//
+//		THINGS
+void			open_door(t_mlx *mlx, char *mapname, int batnbr);
+void			close_door(t_mlx *mlx);
+void			ft_playsound(int play, char *param);
 
 #endif

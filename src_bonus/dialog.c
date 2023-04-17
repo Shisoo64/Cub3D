@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/14 19:04:22 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:34:13 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,25 +130,6 @@ void	sch_dialog(t_mlx *mlx)
 	}
 	if (mlx->player.using == -1)
 		mlx->dialog++;
-}
-
-	#include <sys/types.h>
-	#include <sys/wait.h>
-
-void	ft_playsound(int play, char *param)
-{
-	static int	playing;
-
-	if (play && !playing)
-	{
-		playing = 1;
-		system(param);
-	}
-	else if (play == 0 && playing)
-	{
-		playing = 0;
-		system("killall paplay");
-	}
 }
 
 void	ft_dialog(t_mlx *mlx)

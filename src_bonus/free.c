@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/04 16:04:47 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:33:52 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	free_sprt(t_mlx *mlx)
 
 void	exit_game(t_mlx *mlx)
 {
+	system("killall paplay");
 	free_map(mlx, mlx->map);
 	free_img(mlx);
 	free_sprt(mlx);
@@ -59,15 +60,3 @@ void	exit_game(t_mlx *mlx)
 	free(mlx->mlx);
 	exit(0);
 }
-
-/*
-void	exit_game_light(t_mlx *mlx, int map)
-{
-	if (map)
-		free_map(mlx, mlx->map);
-	free_img(mlx);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	exit(0);
-}
-*/
