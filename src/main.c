@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 16:22:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 18:07:15 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	main(int ac, char **av)
 	t_mlx	mlx;
 
 	if (ac != 2)
+	{
+		error_message("Map argument is erroneous.\n", NULL);
 		return (1);
+	}
 	mlx.mapname = av[1];
 	init_data(&mlx);
 	ft_parsing(&mlx);

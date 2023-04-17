@@ -6,12 +6,13 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/17 15:02:09 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 18:58:08 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D.h"
 
+//Assign the wall textures
 void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 {
 	char	*str;
@@ -23,8 +24,6 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 		exit_game(mlx);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
-	if (open(str, O_RDONLY) == -1)
-		error_message("Check this line provided in the map file : ", line);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
@@ -32,6 +31,7 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	free(str);
 }
 
+//Check the texture lines in the map file
 void	get_wall_textures(t_mlx *mlx, char *line)
 {
 	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
@@ -47,6 +47,7 @@ void	get_wall_textures(t_mlx *mlx, char *line)
 		fill_wall_tex(mlx, &mlx->ea_tex, line);
 }
 
+//Assign the sky and ground colors
 int	fill_color(char *line)
 {
 	int		i;
@@ -72,6 +73,7 @@ int	fill_color(char *line)
 	return (color);
 }
 
+//Check the colors lines in the map file
 void	get_colors(t_mlx *mlx, char *line)
 {
 	if (is_asset(line) && ft_strchr(line, 'F'))
@@ -80,6 +82,7 @@ void	get_colors(t_mlx *mlx, char *line)
 		mlx->color_c = fill_color(line);
 }
 
+//Fetch and init the map, color and textures
 void	fetch_assets(t_mlx *mlx, char **data)
 {
 	int	i;
@@ -94,6 +97,6 @@ void	fetch_assets(t_mlx *mlx, char **data)
 		i++;
 	}
 	ft_fill_map(mlx, data);
-	check_map_borders(mlx);
+	check_map_borders(mlx, data);
 	place_player_on_map(mlx);
 }

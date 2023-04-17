@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 15:00:40 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:00:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	check_wall_textures(char *line)
 	return (0);
 }
 
+// C 1	47,174,224             PLAYING
+// C 147,1 74,132              PLAYING
 int	check_colors(char *line)
 {
 	int		i;
@@ -47,22 +49,21 @@ int	check_colors(char *line)
 	str = line + 1;
 	while (*str == 32)
 		str++;
-	if (!ft_isdigit(*str) || count_commas(line) != 2)
+	if (ft_isdigit(*str) && count_commas(line) == 2)
 	{
-		error_message("Check this line provided in the map file : ", line);
-		return (1);
-	}
-	while (++i < 3)
-	{
-		value = get_next_color(str);
-		while (*str && ft_isdigit(*str))
+		while (++i < 3)
+		{
+			value = get_next_color(str);
+			while (*str && ft_isdigit(*str))
+				str++;
 			str++;
-		if (value > 255)
-			break ;
+			if (value > 255 || value < 0)
+				break ;
+		}
+		if (i == 3)
+			return (0);
 	}
-	if (i == 3)
-		return (0);
-	error_message("Color values are erroneous. Check this line : ", line);
+	error_message("Check this line provided in the map file : ", line);
 	return (1);
 }
 
@@ -70,15 +71,14 @@ int	check_map(char **data)
 {
 	int	i;
 
-	i = 0;
-	while (data[i])
+	i = -1;
+	while (data[++i])
 	{
 		if (data[i] && !is_input(data[i]) && !is_asset(data[i]))
 		{
 			error_message("Check this map row in the map file : ", data[i]);
 			return (1);
 		}
-		i++;
 	}
 	return (0);
 }

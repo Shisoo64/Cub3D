@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 16:21:14 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 17:51:56 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	get_next_color(char *str)
 	int		i;
 
 	i = 0;
-	if (str[i] == ',')
-		str++;
 	while (ft_isdigit(str[i]))
 		i++;
+	if (i == 0)
+		return (-1);
 	buf = ft_substr(str, 0, i);
 	value = ft_atoi(buf);
 	free(buf);

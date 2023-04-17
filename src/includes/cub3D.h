@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 16:23:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:55:21 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,6 @@ int		count_commas(char *line);
 
 //
 //		UTILS_MAP
-void	check_map_borders(t_mlx *mlx);
+void	check_map_borders(t_mlx *mlx, char **data);
 
 #endif
