@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 15:37:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:09:23 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_structs(t_mlx *mlx)
 	mlx->bag_status = 0;
 	mlx->dialog = 1;
 	mlx->wazing = -1;
-	mlx->message = NULL;
+	mlx->msg = NULL;
 	mlx->started = 0;
 	mlx->crashed = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 14:35:25 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:22:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_mlx
 	int			crashed;
 
 	int			dialog;
-	char		*message;
+	char		*msg;
 	int			wazing;
 
 	int			tmaxkeys;
@@ -162,6 +162,7 @@ void			rotate_player(int multi, t_player *player);
 int				key_press(int key, t_mlx *mlx);
 int				key_release(int key, t_mlx *mlx);
 int				input_manager(t_mlx *mlx);
+void			ft_bike_action(t_mlx *mlx);
 
 //
 //		RENDER
@@ -188,9 +189,18 @@ void			put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
 void			exit_game(t_mlx *mlx);
 
 //
+//		DIALOGS
+void			ft_start_dialog(t_mlx *mlx);
+void			sch_dialog(t_mlx *mlx);
+void			jul_dialog(t_mlx *mlx);
+void			starting_dialog(t_mlx *mlx);
+
+//
 //		THINGS
 void			open_door(t_mlx *mlx, char *mapname, int batnbr);
 void			close_door(t_mlx *mlx);
 void			ft_playsound(int play, char *param);
+int				ft_check_prox(t_mlx *mlx, t_sprite tex);
+void			ft_walk_anim(t_mlx *mlx);
 
 #endif

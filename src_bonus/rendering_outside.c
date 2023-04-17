@@ -52,7 +52,7 @@ void	ft_wall_hit_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 			if (mlx->player.using == 1)
 				open_door(mlx, "maps/julbat.cub", 1);
 			else
-				mlx->message = "Press F to open door";
+				mlx->msg = "Press F to open door";
 		}
 		draw_line_out(&mlx->door_tex, ray, x, draw_coord);
 	}

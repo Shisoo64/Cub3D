@@ -87,3 +87,14 @@ void	ft_render_sprite(t_raycast *ray, t_mlx *m, t_sprite texture)
 		draw_coord[1] = WIN_H - 1;
 	display_sprite(ray, pos, draw_coord, texture);
 }
+
+//Check if the sprite is reachable by the player
+int	ft_check_prox(t_mlx *mlx, t_sprite tex)
+{
+	if (mlx->player.pos_x - tex.x <= 0.5
+		&& mlx->player.pos_x - tex.x >= -0.5
+		&& mlx->player.pos_y - tex.y <= 0.5
+		&& mlx->player.pos_y - tex.y >= -0.5)
+		return (1);
+	return (0);
+}

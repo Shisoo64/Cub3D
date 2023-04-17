@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/12 15:36:13 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:34:10 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,66 +40,42 @@ void	draw_background(t_mlx *mlx, int pad_x, int pad_y)
 	}
 }
 
-/*
-void	draw_player(t_mlx *mlx, int x, int y)
-{
-	int	player_x;
-	int	player_y;
-
-	if (x < 0)
-		player_x = 4;
-	else if (x > 0)
-		player_x = 5;
-	if (y < 0)
-		player_y = 9;
-	else if (y > 0)
-		player_y = 10;
-	draw_square(mlx, player_x * 6, player_y * 6, 0x7EC0EE);
-}
-*/
-
 void	fill_minimap(t_mlx *mlx, int pad_x, int pad_y)
 {
 	int	y;
 	int	x;
 	int	x_screen;
 	int	y_screen;
-	int	player_x;
-	int	player_y;
 
-	player_x = 5;
-	player_y = 10;
 	y_screen = 0;
 	y = mlx->player.pos_y - 10;
 	if (y <= 0)
 	{
 		y_screen = -y;
-		player_y = 9;
 		y = 0;
 	}
 	while (mlx->map[y] && y < mlx->player.pos_y + 10)
 	{
 		x = mlx->player.pos_x - 5;
-		//draw_player(mlx, x, y);
 		x_screen = 0;
 		if (x <= 0)
 		{
 			x_screen = -x;
 			x = 0;
-			player_x = 4;
 		}
-		draw_square(mlx, player_x * 5, player_y * 5, 0x05c8f7);
 		while (mlx->map[y][x] && x < mlx->player.pos_x + 5)
 		{
 			if (x > mlx->map_x)
 				x = mlx->map_x;
-			// Determine the color to use based on the cell value
 			if (ft_strchr("JAD", mlx->map[y][x]))
-				draw_square(mlx, x_screen * 5 + pad_x, y_screen * 5 + pad_y, 0x9a40f7);
+				draw_square(mlx, x_screen * 5 + pad_x,
+					y_screen * 5 + pad_y, 0x9a40f7);
 			else if (ft_strchr("123", mlx->map[y][x]))
-				draw_square(mlx, x_screen * 5 + pad_x, y_screen * 5 + pad_y, 0x3c444c);
+				draw_square(mlx, x_screen * 5 + pad_x,
+					y_screen * 5 + pad_y, 0x3c444c);
 			else
-				draw_square(mlx, x_screen * 5 + pad_x, y_screen * 5 + pad_y, 0xbbb8b2);
+				draw_square(mlx, x_screen * 5 + pad_x,
+					y_screen * 5 + pad_y, 0xbbb8b2);
 			x_screen++;
 			x++;
 		}

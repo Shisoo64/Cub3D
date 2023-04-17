@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/13 14:29:47 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/04/17 14:55:59 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/sprites.c \
 				src_bonus/screens.c \
 				src_bonus/dialog.c \
+				src_bonus/dialog_utils.c \
 				src_bonus/utils.c \
 				src_bonus/init.c \
 				src_bonus/parsing.c \

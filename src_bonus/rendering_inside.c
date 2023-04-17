@@ -48,7 +48,7 @@ void	ft_wall_hit_in(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 			if (mlx->player.using == 1)
 				close_door(mlx);
 			else
-				mlx->message = "Press F to open door";
+				mlx->msg = "Press F to open door";
 		}
 		draw_line_in(&mlx->in_door_tex, ray, x, draw_coord);
 	}

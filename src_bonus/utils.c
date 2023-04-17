@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 14:34:49 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:21:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,20 @@ void	ft_playsound(int play, char *filename)
 	{
 		playing = 0;
 		system("killall paplay");
+	}
+}
+
+void	ft_walk_anim(t_mlx *mlx)
+{
+	static int	i;
+
+	if (mlx->player.biking == -1 && mlx->player.down)
+	{
+		if (i >= 0 && i <= 50)
+			put_img_transp(mlx, mlx->hand, WIN_W / 2 - 228, WIN_H - 118);
+		else if (mlx->bag_status != 1 && mlx->wazing != 1)
+			put_img_transp(mlx, mlx->hand2, WIN_W / 2 + 70, WIN_H - 118);
+		if (i++ == 100)
+			i = 0;
 	}
 }
