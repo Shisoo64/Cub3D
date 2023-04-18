@@ -2,7 +2,7 @@
 <div align="center">
   <h1> Cub3D </h1>
   <h3>The cub of the 3d</h3>
-  <a href="https://open.spotify.com/track/18pedqpot9iF1Z7Ol3YHmc" target="_blank"><img src=https://www.podcastjournal.net/photo/art/default/3659590-5359889.jpg?v=1326539099 width="35%">
+  <a href="https://open.spotify.com/track/18pedqpot9iF1Z7Ol3YHmc" target="_blank"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Impossible_cube_illusion_angle.svg/1200px-Impossible_cube_illusion_angle.svg.png width="25%">
   </a></img>
 </div>
 
