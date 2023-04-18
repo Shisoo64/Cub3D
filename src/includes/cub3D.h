@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 19:51:40 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/18 15:30:17 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,70 +94,78 @@ typedef struct s_raycast {
 
 //
 //		INITIALIZE
-void	init_data(t_mlx *mlx);
-void	init_mlx(t_mlx *mlx);
+void		init_data(t_mlx *mlx);
+void		init_mlx(t_mlx *mlx);
 
 //
 //		PARSING
-void	ft_parsing(t_mlx *mlx);
-void	check_map_ext(t_mlx *v);
-void	ft_fill_map(t_mlx *mlx, char **data);
-void	ft_map_height(t_mlx *mlx, char **data);
-void	place_player_on_map(t_mlx *mlx);
-void	fetch_assets(t_mlx *mlx, char **data);
-void	get_colors(t_mlx *mlx, char *line);
-void	get_wall_textures(t_mlx *mlx, char *line);
-void	init_mlx(t_mlx *mlx);
-int		get_next_color(char *line);
+void		ft_parsing(t_mlx *mlx);
+void		check_map_ext(t_mlx *v);
+void		ft_fill_map(t_mlx *mlx, char **data);
+void		ft_map_height(t_mlx *mlx, char **data);
+void		place_player_on_map(t_mlx *mlx);
+void		fetch_assets(t_mlx *mlx, char **data);
+void		get_colors(t_mlx *mlx, char *line);
+void		get_wall_textures(t_mlx *mlx, char *line);
+void		init_mlx(t_mlx *mlx);
+int			get_next_color(char *line);
 
 //
 //		MOVEMENT
-void	input_manager_foot(t_mlx *mlx);
-void	rotate_player(int multi, t_player *player);
+void		input_manager_foot(t_mlx *mlx);
+void		rotate_player(int multi, t_player *player);
 
 //
 //		INPUTS
-int		key_press(int key, t_mlx *mlx);
-int		key_release(int key, t_mlx *mlx);
-int		input_manager(t_mlx *mlx);
+int			key_press(int key, t_mlx *mlx);
+int			key_release(int key, t_mlx *mlx);
+int			input_manager(t_mlx *mlx);
 
 //
 //		RENDER
-int		frames(t_mlx *mlx);
-void	ft_display(t_mlx *mlx);
-void	ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
-void	draw_backdrop(t_mlx *mlx);
+int			frames(t_mlx *mlx);
+void		ft_display(t_mlx *mlx);
+void		ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
+void		draw_backdrop(t_mlx *mlx);
 
 //
 //		FREE
-void	free_map(char **map);
+void		free_map(char **map);
 
 //
 //		ERRORS
-void	error_message(char *msg, char *line);
-void	check_assets(t_mlx *mlx, char **data);
+void		error_message(char *msg, char *line);
+void		check_assets(t_mlx *mlx, char **data);
 
 //
 //		MLX
-void	my_mlx_pixel_put(t_display *data, int x, int y, int color);
-int		my_mlx_get_color(t_display *texture, int x, int y);
-void	put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
-void	exit_game(t_mlx *mlx);
-void	exit_game_light(t_mlx *mlx, char **data);
+void		my_mlx_pixel_put(t_display *data, int x, int y, int color);
+int			my_mlx_get_color(t_display *texture, int x, int y);
+void		put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
+void		exit_game(t_mlx *mlx);
+void		exit_game_light(t_mlx *mlx, char **data);
 
-int		ft_strcspn(char *s, const char *rejects);
-int		ft_strspn(char *s, const char *accepts);
-char	*ft_strtok(char *str, char *token);
-void	print_map(char **map);
+int			ft_strcspn(char *s, const char *rejects);
+int			ft_strspn(char *s, const char *accepts);
+char		*ft_strtok(char *str, char *token);
+void		print_map(char **map);
 
 //
 //		UTILS
-int		is_input(char *line);
-int		is_asset(char *line);
-int		is_colorline_flawless(char *str);
+int			is_input(char *line);
+int			is_asset(char *line);
+int			is_colorline_flawless(char *str);
 
 //
 //		UTILS_MAP
-void	check_map_borders(t_mlx *mlx, char **data);
+void		check_map_borders(t_mlx *mlx, char **data);
+
+//
+//		UTILS_RENDERING
+void		draw_line_tex(t_display *tex, t_raycast *ray, int x,
+				int draw_coord[2]);
+void		get_tex_line(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x);
+t_display	identify_wall(t_mlx *mlx, t_raycast *ray);
+void		ft_sidedist_calc(t_mlx *mlx, t_raycast *ray);
 
 #endif

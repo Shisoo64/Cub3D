@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/17 20:03:43 by bchabot          ###   ########.fr        #
+#    Updated: 2023/04/18 15:24:48 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =	src/main.c \
 		src/ft_strspn.c \
 		src/utils.c \
 		src/utils_mlx.c \
+		src/utils_rendering.c \
 		src/utils_map.c
 
 SRCS_BONUS =	src_bonus/main.c \
