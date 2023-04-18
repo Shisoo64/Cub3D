@@ -16,7 +16,6 @@ NAME = cub3D
 SRCS =	src/main.c \
 		src/input_manager.c \
 		src/movement.c \
-		src/screens.c \
 		src/initialize.c \
 		src/parsing.c \
 		src/rendering.c \
@@ -24,10 +23,7 @@ SRCS =	src/main.c \
 		src/free.c \
 		src/error.c \
 		src/assets.c \
-		src/ft_strtok.c \
-		src/ft_strcspn.c \
-		src/ft_strspn.c \
-		src/utils.c \
+		src/utils_parsing.c \
 		src/utils_mlx.c \
 		src/utils_rendering.c \
 		src/utils_map.c

@@ -12,6 +12,27 @@
 
 #include "includes/cub3D.h"
 
+// Draw the background colors (floor and ceiling).
+void	draw_backdrop(t_mlx *mlx)
+{
+	int	y;
+	int	x;
+
+	y = -1;
+	while (++y <= WIN_H / 2)
+	{
+		x = -1;
+		while (++x <= WIN_W)
+			my_mlx_pixel_put(&mlx->display, x, y, mlx->color_c);
+	}
+	while (++y <= WIN_H)
+	{
+		x = -1;
+		while (++x <= WIN_W)
+			my_mlx_pixel_put(&mlx->display, x, y, mlx->color_f);
+	}
+}
+
 // Draw a vertical line of pixels in the img.
 void	ft_render_vline(t_raycast *ray, t_mlx *mlx, int x)
 {

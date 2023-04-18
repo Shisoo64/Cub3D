@@ -15,7 +15,6 @@
 
 # include <fcntl.h>
 # include <math.h>
-# include <stdio.h>
 # include "../../mlx_linux/mlx.h"
 # include "../../libft/libft.h"
 # include "player_settings.h"
@@ -107,8 +106,6 @@ void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
 void		get_colors(t_mlx *mlx, char *line);
 void		get_wall_textures(t_mlx *mlx, char *line);
-void		init_mlx(t_mlx *mlx);
-int			get_next_color(char *line);
 
 //
 //		MOVEMENT
@@ -123,7 +120,6 @@ int			input_manager(t_mlx *mlx);
 
 //
 //		RENDER
-int			frames(t_mlx *mlx);
 void		ft_display(t_mlx *mlx);
 void		ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
 void		draw_backdrop(t_mlx *mlx);
@@ -131,6 +127,8 @@ void		draw_backdrop(t_mlx *mlx);
 //
 //		FREE
 void		free_map(char **map);
+void		exit_game(t_mlx *mlx);
+void		exit_game_light(t_mlx *mlx, char **data);
 
 //
 //		ERRORS
@@ -142,8 +140,6 @@ void		check_assets(t_mlx *mlx, char **data);
 void		my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int			my_mlx_get_color(t_display *texture, int x, int y);
 void		put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
-void		exit_game(t_mlx *mlx);
-void		exit_game_light(t_mlx *mlx, char **data);
 
 int			ft_strcspn(char *s, const char *rejects);
 int			ft_strspn(char *s, const char *accepts);
@@ -151,10 +147,11 @@ char		*ft_strtok(char *str, char *token);
 void		print_map(char **map);
 
 //
-//		UTILS
+//		UTILS_PARSING
 int			is_input(char *line);
 int			is_asset(char *line);
 int			is_colorline_flawless(char *str);
+int			get_next_color(char *line);
 
 //
 //		UTILS_MAP
