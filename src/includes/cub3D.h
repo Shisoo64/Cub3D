@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 15:30:17 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/18 22:34:01 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ int			my_mlx_get_color(t_display *texture, int x, int y);
 
 //
 //		UTILS_PARSING
-int			is_input(char *line);
+int			is_mapline_ok(char *line);
 int			is_asset(char *line);
-int			is_colorline_flawless(char *str);
+int			is_colorline_ok(char *str);
 int			get_next_color(char *line);
 
 //

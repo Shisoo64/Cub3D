@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 16:05:20 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/18 22:34:01 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_colors(char *line)
 	str = line + 1;
 	while (*str == 32)
 		str++;
-	if (ft_isdigit(*str) && is_colorline_flawless(str) == 2)
+	if (ft_isdigit(*str) && is_colorline_ok(str) == 2)
 	{
 		while (++i < 3)
 		{
@@ -74,7 +74,7 @@ int	check_map(char **data)
 	i = -1;
 	while (data[++i])
 	{
-		if (data[i] && !is_input(data[i]) && !is_asset(data[i]))
+		if (data[i] && !is_mapline_ok(data[i]) && !is_asset(data[i]))
 		{
 			error_message("Check this map row in the map file : ", data[i]);
 			return (1);

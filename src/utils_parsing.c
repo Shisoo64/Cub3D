@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 15:29:13 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:33:19 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	get_next_color(char *str)
 	return (value);
 }
 
-int	is_colorline_flawless(char *str)
+
+//Check if the color line only contain valid chars
+int	is_colorline_ok(char *str)
 {
 	int	i;
 	int	nbr;
@@ -54,16 +56,14 @@ int	is_colorline_flawless(char *str)
 	return (nbr);
 }
 
-int	is_input(char *line)
+//Check if the map line only contain valid chars
+int	is_mapline_ok(char *line)
 {
-	char	*map_input;
-
-	map_input = "10NSWE ";
 	while (*line == 32)
 		line++;
 	while (*line)
 	{
-		if (!ft_strchr(map_input, *line) && *line > 32)
+		if (!ft_strchr("10NSWE ", *line) && *line > 32)
 			return (0);
 		line++;
 	}

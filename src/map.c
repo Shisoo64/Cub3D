@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 14:46:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:34:01 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_map_height(t_mlx *mlx, char **data)
 	row = 0;
 	while (data[i])
 	{
-		if (is_input(data[i]))
+		if (is_mapline_ok(data[i]))
 		{
 			if (len < (int)ft_strlen(data[i]))
 				len = (int)ft_strlen(data[i]);
@@ -81,7 +81,7 @@ void	ft_fill_map(t_mlx *mlx, char **data)
 	y = 0;
 	while (data[i])
 	{
-		if (is_input(data[i]))
+		if (is_mapline_ok(data[i]))
 			mlx->map[y++] = ft_strdup(data[i]);
 		i++;
 	}
