@@ -6,7 +6,7 @@
 #    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/17 14:55:59 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/04/19 01:35:23 by rlaforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,18 @@ NAME = cub3D
 
 SRCS =	src/main.c \
 		src/input_manager.c \
-		src/foot_movement.c \
-		src/bike_movement.c \
-		src/sprites.c \
-		src/screens.c \
-		src/dialog.c \
-		src/utils.c \
+		src/movement.c \
+		src/initialize.c \
 		src/parsing.c \
 		src/rendering.c \
 		src/map.c \
 		src/free.c \
-		src/error.c
+		src/error.c \
+		src/assets.c \
+		src/utils_parsing.c \
+		src/utils_mlx.c \
+		src/utils_rendering.c \
+		src/utils_map.c
 
 SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/input_manager.c \
@@ -59,7 +60,7 @@ OBJS = $(SRCS:.c=.o)
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-all : logo message $(NAME)
+all : message $(NAME)
 	@echo "\e[1A\e[2K\e[1A\e[2K"
 
 %.o : %.c
@@ -77,9 +78,9 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	@echo "\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1;32m📦 $(NAME) compiled!\n\n\033[0m"
 
 
-bonus : $(OBJS_BONUS) $(LIBFT) $(MLX)
+bonus : logo $(OBJS_BONUS) $(LIBFT) $(MLX)
 	$(CC) $(OBJS_BONUS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
-	@echo "\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1;32m📦 Grand Theft Moto compiled!\n\n\033[0m"
+	@echo "\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1;32m📦 Grand Theft Moto compiled!\n\033[0m"
 
 
 
@@ -93,7 +94,7 @@ logo :
 	@echo "         \e[1;34m___|_| |_|_|___|_| |_|  \e[0m"
 	@echo "       \e[1;34m |     |___| |_ ___  \e[0m"
 	@echo "       \e[1;34m | | | | . |  _| . | \e[0m"
-	@echo "       \e[1;34m |_|_|_|___|_| |___| \e[0m\n"
+	@echo "       \e[1;34m |_|_|_|___|_| |___| \e[0m\n\n\n\n"
 
 message:
 	@echo "\e[1;5m🗜️  $(NAME) compiling...\n\033[0m"
