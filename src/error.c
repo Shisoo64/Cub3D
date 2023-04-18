@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 19:49:54 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/18 15:03:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	check_wall_textures(char *line)
 
 // C 1	47,174,224             PLAYING
 // C 147,1 74,132              PLAYING
+//Check if colors are properly formated
 int	check_colors(char *line)
 {
 	int		i;
@@ -67,6 +68,7 @@ int	check_colors(char *line)
 	return (1);
 }
 
+//Check if all char in the map are allowed
 int	check_map(char **data)
 {
 	int	i;
@@ -83,7 +85,8 @@ int	check_map(char **data)
 	return (0);
 }
 
-void	check_items(t_mlx *mlx, char **data)
+//Check if colors and textures are valid
+int	check_items(char **data)
 {
 	int	i;
 	int	text;
@@ -95,24 +98,25 @@ void	check_items(t_mlx *mlx, char **data)
 	while (data[++i])
 	{
 		if (is_asset(data[i]) == 1 && check_wall_textures(data[i]))
-			exit_game_light(mlx, data);
+			return (1);
 		else if (is_asset(data[i]) == 1)
 			text++;
 		if (is_asset(data[i]) == 2 && check_colors(data[i]))
-			exit_game_light(mlx, data);
+			return (1);
 		else if (is_asset(data[i]) == 2)
 			color++;
 	}
 	if (text != 4 || color != 2)
 	{
 		error_message("Assets are missing. Check textures and colors.\n", NULL);
-		exit_game_light(mlx, data);
+		return (1);
 	}
+	return (0);
 }
 
+//Check if map file is properly formated
 void	check_assets(t_mlx *mlx, char **data)
 {
-	check_items(mlx, data);
-	if (check_map(data))
+	if (check_map(data) || check_items(data))
 		exit_game_light(mlx, data);
 }

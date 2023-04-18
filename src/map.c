@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 19:51:32 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/18 14:46:01 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,19 @@ void	ft_map_height(t_mlx *mlx, char **data)
 void	ft_fill_map(t_mlx *mlx, char **data)
 {
 	int		i;
-	int		x;
+	int		y;
 
 	ft_map_height(mlx, data);
 	mlx->map = ft_calloc(sizeof(char *), mlx->map_y + 1);
 	if (!mlx->map)
 		exit_game_light(mlx, data);
 	i = 0;
-	x = 0;
+	y = 0;
 	while (data[i])
 	{
 		if (is_input(data[i]))
-			mlx->map[x++] = ft_strdup(data[i]);
+			mlx->map[y++] = ft_strdup(data[i]);
 		i++;
 	}
-	mlx->map[x] = NULL;
+	mlx->map[y] = NULL;
 }
