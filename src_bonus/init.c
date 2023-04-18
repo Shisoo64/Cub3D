@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 23:03:02 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 01:06:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,7 +419,6 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	}
 	ft_fill_map(mlx, data);
 	check_map_borders(mlx, data);
-	place_player_on_map(mlx);
 }
 
 
@@ -657,16 +656,28 @@ void	init_mlx(t_mlx *mlx)
 }
 
 
-void	ft_parsing(t_mlx *mlx, int init)
+void	ft_parsing(t_mlx *mlx)
 {
 	char	**data;
-
+	
 	init_structs(mlx);
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(mlx, data);
-	if (init)
-		init_mlx(mlx);
+	init_mlx(mlx);
+	get_textures(mlx);
+	fetch_assets(mlx, data);
+	place_player_on_map(mlx);
+	free_map(data);
+}
+
+void	ft_change_map(t_mlx *mlx)
+{
+	char	**data;
+	
+	check_map_ext(mlx);
+	data = get_data_from_file(mlx);
+	check_assets(mlx, data);
 	fetch_assets(mlx, data);
 	free_map(data);
 }

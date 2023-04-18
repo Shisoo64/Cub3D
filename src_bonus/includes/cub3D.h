@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:55:26 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 01:04:49 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void			get_textures(t_mlx *mlx);
 char			**create_map(t_mlx *mlx);
 
 
-void		ft_parsing(t_mlx *mlx, int init);
+void		ft_parsing(t_mlx *mlx);
 void		check_map_ext(t_mlx *v);
 void		ft_fill_map(t_mlx *mlx, char **data);
 void		ft_map_height(t_mlx *mlx, char **data);
@@ -191,6 +191,11 @@ int			get_next_color(char *line);
 
 void		check_map_borders(t_mlx *mlx, char **data);
 int			check_surround_cells(char **test_map);
+
+
+void	ft_change_map(t_mlx *mlx);
+
+
 
 //
 //		MOVEMENT

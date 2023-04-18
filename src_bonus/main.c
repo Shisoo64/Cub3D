@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 23:01:20 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 01:08:34 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	open_door(t_mlx *mlx, char *mapname, int batnbr)
 		mlx->player.plane_x = 0;
 		mlx->player.plane_y = FOV;
 		free_map(mlx->map);
-		ft_parsing(mlx, 0);
-		//place_player_on_map(mlx, mlx->map);
+		ft_change_map(mlx);
+		place_player_on_map(mlx);
 	}
 	else
 		mlx->msg = "Press F to open door";
@@ -53,7 +53,7 @@ void	close_door(t_mlx *mlx)
 		mlx->player.inside = 0;
 		mlx->player.using = 0;
 		free_map(mlx->map);
-		ft_parsing(mlx, 0);
+		ft_change_map(mlx);
 	}
 	else
 		mlx->msg = "Press F to open door";
@@ -104,7 +104,7 @@ int	main(int ac, char **av)
 		" WASD to move\n F to use\n M to take out your phone\n\n\n");
 	mlx.player.plane_x = 0;
 	mlx.player.plane_y = FOV;
-	ft_parsing(&mlx, 1);
+	ft_parsing(&mlx);
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);
