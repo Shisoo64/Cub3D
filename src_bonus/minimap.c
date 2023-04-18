@@ -6,11 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/17 15:34:10 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:55:38 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3D.h"
+#include "includes/cub3D.h"
 
 void	draw_square(t_mlx *mlx, int x, int y, int color)
 {

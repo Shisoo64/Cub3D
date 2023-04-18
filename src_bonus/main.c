@@ -6,11 +6,11 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 15:21:43 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:01:20 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 //If player press the Use key, enter the building
 //else display the message
@@ -29,9 +29,9 @@ void	open_door(t_mlx *mlx, char *mapname, int batnbr)
 		mlx->player.biking = -1;
 		mlx->player.plane_x = 0;
 		mlx->player.plane_y = FOV;
-		free_map(mlx, mlx->map);
-		mlx->map = create_map(mlx);
-		place_player_on_map(mlx, mlx->map);
+		free_map(mlx->map);
+		ft_parsing(mlx, 0);
+		//place_player_on_map(mlx, mlx->map);
 	}
 	else
 		mlx->msg = "Press F to open door";
@@ -52,8 +52,8 @@ void	close_door(t_mlx *mlx)
 		mlx->player.dir_y = mlx->player.dir_y_save;
 		mlx->player.inside = 0;
 		mlx->player.using = 0;
-		free_map(mlx, mlx->map);
-		mlx->map = create_map(mlx);
+		free_map(mlx->map);
+		ft_parsing(mlx, 0);
 	}
 	else
 		mlx->msg = "Press F to open door";
@@ -104,7 +104,7 @@ int	main(int ac, char **av)
 		" WASD to move\n F to use\n M to take out your phone\n\n\n");
 	mlx.player.plane_x = 0;
 	mlx.player.plane_y = FOV;
-	ft_parsing(&mlx);
+	ft_parsing(&mlx, 1);
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 	mlx_hook(mlx.win, 2, 1L << 0, key_press, &mlx);
 	mlx_hook(mlx.win, 3, 1L << 1, key_release, &mlx);

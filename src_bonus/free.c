@@ -6,12 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 14:33:52 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:59:02 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
+/*
 void	free_map(t_mlx *mlx, char **map)
 {
 	int	y;
@@ -21,6 +22,7 @@ void	free_map(t_mlx *mlx, char **map)
 		free(map[y++]);
 	free(map);
 }
+*/
 
 void	free_img(t_mlx *mlx)
 {
@@ -52,7 +54,7 @@ void	free_sprt(t_mlx *mlx)
 void	exit_game(t_mlx *mlx)
 {
 	system("killall paplay");
-	free_map(mlx, mlx->map);
+	free_map(mlx->map);
 	free_img(mlx);
 	free_sprt(mlx);
 	mlx_destroy_window(mlx->mlx, mlx->win);

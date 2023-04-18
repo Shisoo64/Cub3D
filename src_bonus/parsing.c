@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 void	init_sprite(t_mlx *mlx, t_sprite *sprt, char *path, double coord[2])
 {

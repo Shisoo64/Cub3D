@@ -6,15 +6,15 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/17 15:22:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:55:26 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../libft/libft.h"
-# include "../mlx_linux/mlx.h"
+# include "../../libft/libft.h"
+# include "../../mlx_linux/mlx.h"
 # include "player_settings.h"
 # include <fcntl.h>
 # include <math.h>
@@ -118,6 +118,24 @@ typedef struct s_mlx
 	t_display	display;
 	t_player	player;
 
+
+
+
+
+
+	t_display	no_tex;
+	t_display	so_tex;
+	t_display	we_tex;
+	t_display	ea_tex;
+	int			color_f;
+	int			color_c;
+
+
+
+
+
+
+
 	t_display	hand;
 	t_display	hand2;
 	t_display	phone;
@@ -147,9 +165,32 @@ typedef struct s_mlx
 //		PARSING
 void			get_textures(t_mlx *mlx);
 char			**create_map(t_mlx *mlx);
-void			place_player_on_map(t_mlx *mlx, char **map);
-void			ft_parsing(t_mlx *mlx);
-void			free_map(t_mlx *mlx, char **map);
+
+
+void		ft_parsing(t_mlx *mlx, int init);
+void		check_map_ext(t_mlx *v);
+void		ft_fill_map(t_mlx *mlx, char **data);
+void		ft_map_height(t_mlx *mlx, char **data);
+void		place_player_on_map(t_mlx *mlx);
+void		fetch_assets(t_mlx *mlx, char **data);
+void		init_mlx(t_mlx *mlx);
+
+
+void		free_map(char **map);
+void		exit_game_light(t_mlx *mlx, char **data);
+void		error_message(char *msg, char *line);
+void		check_assets(t_mlx *mlx, char **data);
+
+
+
+int			is_mapline_ok(char *line);
+int			is_asset(char *line);
+int			is_colorline_ok(char *str);
+int			get_next_color(char *line);
+
+
+void		check_map_borders(t_mlx *mlx, char **data);
+int			check_surround_cells(char **test_map);
 
 //
 //		MOVEMENT

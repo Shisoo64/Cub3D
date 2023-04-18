@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 void	draw_line_sprt(t_display *texture, t_raycast *ray, int x, int coord[2])
 {

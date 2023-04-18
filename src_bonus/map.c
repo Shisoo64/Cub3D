@@ -6,11 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/03 14:53:14 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:53:25 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
+
+/*
 
 int	get_map_dimension(t_mlx *mlx)
 {
@@ -88,3 +90,5 @@ char	**create_map(t_mlx *mlx)
 	close(fd);
 	return (map);
 }
+
+*/
