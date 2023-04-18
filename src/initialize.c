@@ -17,7 +17,7 @@ void	init_mlx(t_mlx *mlx)
 	mlx->mlx = mlx_init();
 	if (mlx->mlx == NULL)
 	{
-		error_message("mlx initialization failed.\n", NULL);
+		error_message("Mlx initialization failed.\n", NULL);
 		exit(1);
 	}
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");

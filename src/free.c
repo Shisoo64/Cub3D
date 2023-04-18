@@ -44,6 +44,7 @@ void	exit_game(t_mlx *mlx)
 void	exit_game_light(t_mlx *mlx, char **data)
 {
 	(void)mlx;
-	free_map(data);
+	if (data)
+		free_map(data);
 	exit(1);
 }

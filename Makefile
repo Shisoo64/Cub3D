@@ -69,7 +69,6 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 	@echo "\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1;32m📦 $(NAME) compiled!\n\n\033[0m"
 
-
 bonus : $(OBJS_BONUS) $(LIBFT) $(MLX)
 	$(CC) $(OBJS_BONUS) $(CFLAGS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 

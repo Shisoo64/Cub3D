@@ -104,8 +104,13 @@ void		ft_fill_map(t_mlx *mlx, char **data);
 void		ft_map_height(t_mlx *mlx, char **data);
 void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
-void		get_colors(t_mlx *mlx, char *line);
+
+//
+//		ASSETS
+void		fetch_assets(t_mlx *mlx, char **data);
 void		get_wall_textures(t_mlx *mlx, char *line);
+int			fill_color(char *line);
+void		get_colors(t_mlx *mlx, char *line);
 
 //
 //		MOVEMENT
@@ -139,12 +144,6 @@ void		check_assets(t_mlx *mlx, char **data);
 //		MLX
 void		my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int			my_mlx_get_color(t_display *texture, int x, int y);
-void		put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
-
-int			ft_strcspn(char *s, const char *rejects);
-int			ft_strspn(char *s, const char *accepts);
-char		*ft_strtok(char *str, char *token);
-void		print_map(char **map);
 
 //
 //		UTILS_PARSING
@@ -156,6 +155,7 @@ int			get_next_color(char *line);
 //
 //		UTILS_MAP
 void		check_map_borders(t_mlx *mlx, char **data);
+int			check_surround_cells(char **test_map);
 
 //
 //		UTILS_RENDERING

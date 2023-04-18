@@ -23,14 +23,14 @@ void	check_map_ext(t_mlx *mlx)
 	if (ft_strlen(mlx->mapname) < 5
 		|| mlx->mapname[ft_strlen(mlx->mapname) - 5] == '/')
 	{
-		error_message("Please provide a correct map.", NULL);
+		error_message("Please provide a correct map.\n", NULL);
 		exit_game_light(mlx, NULL);
 	}
 	while (++i < 5)
 	{
 		if (mlx->mapname[ft_strlen(mlx->mapname) - i] != ext[4 - i])
 		{
-			error_message("Problem with map extension.", NULL);
+			error_message("Problem with map extension.\n", NULL);
 			exit_game_light(mlx, NULL);
 		}
 	}

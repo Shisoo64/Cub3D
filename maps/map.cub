@@ -1,7 +1,7 @@
 
 WE ./sprites/WE.xpm
 EA ./sprites/EA.xpm
-NO ./sprites/../sprites/NO.xpm
+NO ./sprites/NO.xpm
 SO ./sprites/SO.xpm
 
 F 255,255,255

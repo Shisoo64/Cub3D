@@ -31,8 +31,6 @@ enum e_keycode
 	KEY_D = 100,
 	KEY_Q = 113,
 	KEY_E = 101,
-	KEY_F = 102,
-	KEY_M = 109,
 	KEY_ARROW_L = 65361,
 	KEY_ARROW_R = 65363,
 	ESC = 0xFF1B

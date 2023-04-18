@@ -37,8 +37,6 @@ int	check_wall_textures(char *line)
 	return (0);
 }
 
-// C 1	47,174,224             PLAYING
-// C 147,1 74,132              PLAYING
 //Check if colors are properly formated
 int	check_colors(char *line)
 {

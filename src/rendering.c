@@ -12,7 +12,7 @@
 
 #include "includes/cub3D.h"
 
-// Draw the background colors (floor and ceiling).
+// Draw the background colors (floor and color).
 void	draw_backdrop(t_mlx *mlx)
 {
 	int	y;

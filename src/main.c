@@ -12,17 +12,6 @@
 
 #include "includes/cub3D.h"
 
-void	print_map(char **map)
-{
-	int	y;
-
-	y = -1;
-	ft_printf("map:\n");
-	while (map[++y])
-		ft_printf("%s", map[y]);
-	ft_printf("\n");
-}
-
 int	frames(t_mlx *mlx)
 {
 	ft_display(mlx);
