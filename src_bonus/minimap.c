@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/19 18:12:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 19:05:40 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,47 +40,42 @@ void	draw_background(t_mlx *mlx, int pad_x, int pad_y)
 	}
 }
 
+void	reset_coord_minimap(int *y, int *screen)
+{
+	*screen = 0;
+	if (*y <= 0)
+	{
+		*screen = -*y;
+		*y = 0;
+	}
+}
+
 void	fill_minimap(t_mlx *mlx, int pad_x, int pad_y)
 {
 	int	y;
 	int	x;
-	int	x_screen;
-	int	y_screen;
+	int	screen[2];
 
-	y_screen = 0;
 	y = mlx->player.pos_y - 10;
-	if (y <= 0)
-	{
-		y_screen = -y;
-		y = 0;
-	}
-	while (mlx->map[y] && y < mlx->player.pos_y + 10)
+	reset_coord_minimap(&y, &screen[1]);
+	while (mlx->map[++y] && y < mlx->player.pos_y + 10)
 	{
 		x = mlx->player.pos_x - 5;
-		x_screen = 0;
-		if (x <= 0)
-		{
-			x_screen = -x;
-			x = 0;
-		}
+		reset_coord_minimap(&x, &screen[0]);
 		while (mlx->map[y][x] && x < mlx->player.pos_x + 5)
 		{
 			if (x > mlx->map_x)
 				x = mlx->map_x;
-			if (ft_strchr("JAD", mlx->map[y][x]))
-				draw_square(mlx, x_screen * 5 + pad_x,
-					y_screen * 5 + pad_y, 0x9a40f7);
-			else if (ft_strchr("123", mlx->map[y][x]))
-				draw_square(mlx, x_screen * 5 + pad_x,
-					y_screen * 5 + pad_y, 0x3c444c);
+			if (ft_strchr("123JAD", mlx->map[y][x]))
+				draw_square(mlx, screen[0] * 5 + pad_x,
+					screen[1] * 5 + pad_y, 0x3c444c);
 			else
-				draw_square(mlx, x_screen * 5 + pad_x,
-					y_screen * 5 + pad_y, 0xbbb8b2);
-			x_screen++;
+				draw_square(mlx, screen[0] * 5 + pad_x,
+					screen[1] * 5 + pad_y, 0xbbb8b2);
+			screen[0]++;
 			x++;
 		}
-		y_screen++;
-		y++;
+		screen[1]++;
 	}
 }
 
