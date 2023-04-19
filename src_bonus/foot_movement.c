@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   foot_movement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:50:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:57:59 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 void	move_player(int multi, t_player *player, char **map)
 {

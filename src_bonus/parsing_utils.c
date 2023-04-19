@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:32:57 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:46:50 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:57:52 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 void	init_tex(t_mlx *mlx, t_display *tex, char *path)
 {
@@ -28,16 +28,6 @@ void	error_message(char *msg, char *line)
 		ft_putstr_fd(line, 2);
 }
 
-void	free_map(char **map)
-{
-	int	y;
-
-	y = 0;
-	while (map[y])
-		free(map[y++]);
-	free(map);
-}
-
 void	exit_game_light(t_mlx *mlx, char **data)
 {
 	(void)mlx;
@@ -46,7 +36,7 @@ void	exit_game_light(t_mlx *mlx, char **data)
 	exit(1);
 }
 
-//Ft_parsing but doesn't init structs and all 
+//Ft_parsing but doesn't init structs and all
 void	ft_change_map(t_mlx *mlx)
 {
 	char	**data;

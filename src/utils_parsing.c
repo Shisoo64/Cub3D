@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 15:33:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:04:17 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	get_next_color(char *str)
 	free(buf);
 	return (value);
 }
-
 
 //Check if the color line only contain valid chars
 int	is_colorline_ok(char *str)

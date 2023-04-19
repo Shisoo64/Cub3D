@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:27:03 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:03:01 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../../libft/libft.h"
 # include "../../mlx_linux/mlx.h"
@@ -153,6 +153,8 @@ typedef struct s_mlx
 void		get_textures(t_mlx *mlx);
 char		**create_map(t_mlx *mlx);
 
+void		ft_change_map(t_mlx *mlx);
+void		init_tex(t_mlx *mlx, t_display *tex, char *path);
 char		**get_data_from_file(t_mlx *mlx);
 void		init_structs(t_mlx *mlx);
 void		ft_parsing(t_mlx *mlx);
@@ -175,8 +177,6 @@ int			get_next_color(char *line);
 
 void		check_map_borders(t_mlx *mlx, char **data);
 int			check_surround_cells(char **test_map);
-
-void		ft_change_map(t_mlx *mlx);
 
 //
 //		MOVEMENT
@@ -229,5 +229,8 @@ void		close_door(t_mlx *mlx);
 void		ft_playsound(int play, char *param);
 int			ft_check_prox(t_mlx *mlx, t_sprite tex);
 void		ft_walk_anim(t_mlx *mlx);
+
+//
+//		FREE
 
 #endif

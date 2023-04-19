@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 void	ft_sprites_controller(t_mlx *mlx, t_raycast *ray)
 {

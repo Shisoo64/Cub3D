@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+         #
+#    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/19 01:35:23 by rlaforge         ###   ########.fr        #
+#    Updated: 2023/04/19 18:02:44 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,10 @@ SRCS_BONUS =	src_bonus/main.c \
 				src_bonus/utils.c \
 				src_bonus/init.c \
 				src_bonus/parsing.c \
+				src_bonus/check_map.c \
+				src_bonus/map_check_assets.c \
+				src_bonus/map_fill_assets.c \
+				src_bonus/parsing_utils.c \
 				src_bonus/minimap.c \
 				src_bonus/raycaster.c \
 				src_bonus/rendering_controller.c \

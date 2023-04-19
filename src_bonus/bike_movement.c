@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   bike_movement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:05:19 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:50:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:58:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 //apply speed to the player and wall detection
 void	move_player_bike(t_mlx *mlx, int speed, t_player *player)

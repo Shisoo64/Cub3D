@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill_assets.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:45:58 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:57:55 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 //Assign the wall textures
 void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)

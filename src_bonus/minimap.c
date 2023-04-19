@@ -6,11 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:48:53 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/19 17:23:39 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:57:53 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3D.h"
+#include "includes/cub3D_bonus.h"
 
 void	draw_square(t_mlx *mlx, int x, int y, int color)
 {
