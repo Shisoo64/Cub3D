@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check_assets.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:56 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:05:43 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,3 @@ void	check_assets(t_mlx *mlx, char **data)
 	if (check_map(data) || check_items(data))
 		exit_game_light(mlx, data);
 }
-

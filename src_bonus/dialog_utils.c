@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dialog_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:58:02 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:06:27 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	ft_dialog(t_mlx *mlx)
 //Control the start of the dialogs
 void	ft_start_dialog(t_mlx *mlx)
 {
-	if (mlx->dialog == 0 && mlx->bag_status == 0 && ft_check_prox(mlx, mlx->jul))
+	if (mlx->dialog == 0 && mlx->bag_status == 0
+		&& ft_check_prox(mlx, mlx->jul))
 	{
 		mlx->msg = "Press F to talk to JuL";
 		if (mlx->player.using == 1)
