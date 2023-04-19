@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 01:06:25 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:00:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_structs(t_mlx *mlx)
 {
-	mlx->mapname = "maps/map.cub";
 	mlx->player.rot_r = 0;
 	mlx->player.rot_l = 0;
 	mlx->player.up = 0;
@@ -659,7 +658,7 @@ void	init_mlx(t_mlx *mlx)
 void	ft_parsing(t_mlx *mlx)
 {
 	char	**data;
-	
+
 	init_structs(mlx);
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
@@ -674,7 +673,7 @@ void	ft_parsing(t_mlx *mlx)
 void	ft_change_map(t_mlx *mlx)
 {
 	char	**data;
-	
+
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(mlx, data);

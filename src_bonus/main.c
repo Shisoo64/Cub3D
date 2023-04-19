@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 01:36:50 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:58:43 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,12 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	(void)ac;
-	(void)av;
+	if (ac != 2)
+	{
+		error_message("Map argument is erroneous.\n", NULL);
+		return (1);
+	}
+	mlx.mapname = av[1];
 	printf("Controls: \n"
 		" WASD to move\n F to use\n M to take out your phone\n\n\n");
 	mlx.player.plane_x = 0;
