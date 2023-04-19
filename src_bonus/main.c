@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:57 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 19:23:33 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	close_door(t_mlx *mlx)
 {
 	if (mlx->player.using == 1)
 	{
-		mlx->mapname = "maps/map.cub";
+		mlx->mapname = "maps_bonus/map.cub";
 		mlx->player.pos_x = mlx->player.pos_x_save;
 		mlx->player.pos_y = mlx->player.pos_y_save;
 		mlx->player.plane_x = mlx->player.plane_x_save;
@@ -100,7 +100,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		error_message("Map argument is erroneous.\n", NULL);
+		error_message("Not a valid map argument.\n", NULL);
 		return (1);
 	}
 	mlx.mapname = av[1];
