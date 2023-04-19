@@ -36,11 +36,29 @@ void	draw_line_out(t_display *texture, t_raycast *ray, int x, int coord[2])
 	}
 }
 
+void	identify_wall_out(t_mlx *mlx, t_raycast *ray, int x, int draw_coord[2])
+{
+	if (ray->side == 1)
+	{
+		if (ray->step_y > 0)
+			draw_line_out(&mlx->no_tex, ray, x, draw_coord);
+		else
+			draw_line_out(&mlx->so_tex, ray, x, draw_coord);
+	}
+	else
+	{
+		if (ray->step_x > 0)
+			draw_line_out(&mlx->we_tex, ray, x, draw_coord);
+		else
+			draw_line_out(&mlx->ea_tex, ray, x, draw_coord);
+	}
+}
+
 //Check wich wall type it hit and show the apropriate texture
 void	ft_wall_hit_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 {
 	if (ray->hit_type == 1)
-		draw_line_out(&mlx->bat_tex, ray, x, draw_coord);
+		identify_wall_out(mlx, ray, x, draw_coord);
 	else if (ray->hit_type == 2)
 		draw_line_out(&mlx->bat2_tex, ray, x, draw_coord);
 	else if (ray->hit_type == 3)
