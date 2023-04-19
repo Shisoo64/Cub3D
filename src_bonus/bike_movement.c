@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:05:19 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:58:03 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 20:13:25 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	input_manager_bike(t_mlx *mlx)
 		rotate_player((-5000 + mlx->player.speed) * coef, &mlx->player);
 	if (mlx->player.speed <= 10 && mlx->player.speed >= -10)
 		mlx->player.speed = 0;
-	printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2Kspeed:%fkmh - (%f)\n",
+	ft_printf("\e[1A\e[2K\e[1A\e[2K\e[1A\e[2Kspeed:%fkmh\n",
 		mlx->player.speed / 30, mlx->player.speed);
 	move_player_bike(mlx, mlx->player.speed, &mlx->player);
 }

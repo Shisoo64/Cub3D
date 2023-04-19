@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 18:03:01 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 19:50:56 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
 void		init_mlx(t_mlx *mlx);
 
-void		free_map(char **map);
 void		exit_game_light(t_mlx *mlx, char **data);
 void		error_message(char *msg, char *line);
 void		check_assets(t_mlx *mlx, char **data);
@@ -232,5 +231,7 @@ void		ft_walk_anim(t_mlx *mlx);
 
 //
 //		FREE
+void		free_map(char **map);
+void		free_mand_img(t_mlx *mlx);
 
 #endif

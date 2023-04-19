@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:58 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 19:49:59 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	free_map(char **map)
 	while (map[y])
 		free(map[y++]);
 	free(map);
+}
+
+void	free_mand_img(t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->mlx, mlx->no_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->so_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->we_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->ea_tex.img);
 }
 
 void	free_img(t_mlx *mlx)
@@ -40,6 +48,7 @@ void	free_img(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx, mlx->bike_wheel.img);
 	mlx_destroy_image(mlx->mlx, mlx->crash.img);
 	mlx_destroy_image(mlx->mlx, mlx->startscreen.img);
+	free_mand_img(mlx);
 }
 
 void	free_sprt(t_mlx *mlx)
@@ -48,10 +57,6 @@ void	free_sprt(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx, mlx->sch.tex.img);
 	mlx_destroy_image(mlx->mlx, mlx->bag.tex.img);
 	mlx_destroy_image(mlx->mlx, mlx->tmax.tex.img);
-	mlx_destroy_image(mlx->mlx, mlx->no_tex.img);
-	mlx_destroy_image(mlx->mlx, mlx->so_tex.img);
-	mlx_destroy_image(mlx->mlx, mlx->we_tex.img);
-	mlx_destroy_image(mlx->mlx, mlx->ea_tex.img);
 	mlx_destroy_image(mlx->mlx, mlx->display.img);
 }
 

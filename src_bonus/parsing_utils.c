@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:32:57 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:52 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 20:06:18 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_change_map(t_mlx *mlx)
 
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
+	free_mand_img(mlx);
 	check_assets(mlx, data);
 	fetch_assets(mlx, data);
 	free_map(data);

@@ -1,7 +1,7 @@
-WE ./sp/WE.xpm
-EA ./sp/EA.xpm
-NO ./sp/NO.xpm
-SO ./sp/SO.xpm
+WE ./sprites/in_wall.xpm
+EA ./sprites/in_wall.xpm
+NO ./sprites/in_wall.xpm
+SO ./sprites/in_wall.xpm
 
 F 255,255,255
 C 47,174,224
