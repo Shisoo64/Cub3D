@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 15:39:39 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:27:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,8 @@ typedef struct s_mlx
 	int			map_y;
 	int			map_x;
 	int			player_nb;
-
 	int			started;
 	int			crashed;
-
 	int			dialog;
 	char		*msg;
 	int			wazing;
@@ -119,23 +117,12 @@ typedef struct s_mlx
 	t_display	display;
 	t_player	player;
 
-
-
-
-
-
 	t_display	no_tex;
 	t_display	so_tex;
 	t_display	we_tex;
 	t_display	ea_tex;
 	int			color_f;
 	int			color_c;
-
-
-
-
-
-
 
 	t_display	hand;
 	t_display	hand2;
@@ -159,15 +146,15 @@ typedef struct s_mlx
 	t_display	crash;
 	t_display	bike;
 	t_display	bike_wheel;
-
 }				t_mlx;
 
 //
 //		PARSING
-void			get_textures(t_mlx *mlx);
-char			**create_map(t_mlx *mlx);
+void		get_textures(t_mlx *mlx);
+char		**create_map(t_mlx *mlx);
 
-
+char		**get_data_from_file(t_mlx *mlx);
+void		init_structs(t_mlx *mlx);
 void		ft_parsing(t_mlx *mlx);
 void		check_map_ext(t_mlx *v);
 void		ft_fill_map(t_mlx *mlx, char **data);
@@ -176,78 +163,71 @@ void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
 void		init_mlx(t_mlx *mlx);
 
-
 void		free_map(char **map);
 void		exit_game_light(t_mlx *mlx, char **data);
 void		error_message(char *msg, char *line);
 void		check_assets(t_mlx *mlx, char **data);
-
-
 
 int			is_mapline_ok(char *line);
 int			is_asset(char *line);
 int			is_colorline_ok(char *str);
 int			get_next_color(char *line);
 
-
 void		check_map_borders(t_mlx *mlx, char **data);
 int			check_surround_cells(char **test_map);
 
-
-void	ft_change_map(t_mlx *mlx);
-
-
+void		ft_change_map(t_mlx *mlx);
 
 //
 //		MOVEMENT
-void			input_manager_foot(t_mlx *mlx);
-void			input_manager_bike(t_mlx *mlx);
-void			rotate_player(int multi, t_player *player);
+void		input_manager_foot(t_mlx *mlx);
+void		input_manager_bike(t_mlx *mlx);
+void		rotate_player(int multi, t_player *player);
 
 //
 //		INPUTS
-int				key_press(int key, t_mlx *mlx);
-int				key_release(int key, t_mlx *mlx);
-int				input_manager(t_mlx *mlx);
-void			ft_bike_action(t_mlx *mlx);
+int			key_press(int key, t_mlx *mlx);
+int			key_release(int key, t_mlx *mlx);
+int			input_manager(t_mlx *mlx);
+void		ft_bike_action(t_mlx *mlx);
 
 //
 //		RENDER
-int				frames(t_mlx *mlx);
-void			ft_rendering(t_mlx *mlx);
-void			ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
-void			ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
-void			ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x);
-void			ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x);
-void			ft_minimap_controller(t_mlx *mlx, int pad_x, int pad_y);
+int			frames(t_mlx *mlx);
+void		ft_rendering(t_mlx *mlx);
+void		ft_raycast(t_mlx *mlx, t_raycast *ray, int x);
+void		ft_render_sprite(t_raycast *ray, t_mlx *mlx, t_sprite texture);
+void		ft_render_out_vline(t_raycast *ray, t_mlx *mlx, int x);
+void		ft_render_in_vline(t_raycast *ray, t_mlx *mlx, int x);
+void		ft_minimap_controller(t_mlx *mlx, int pad_x, int pad_y);
 
 //
 //		SCREENS
-void			start_screen(t_mlx *mlx);
-void			crash_screen(t_mlx *mlx);
-void			draw_backdrop(t_mlx *mlx);
-void			ft_dialog(t_mlx *mlx);
+void		start_screen(t_mlx *mlx);
+void		crash_screen(t_mlx *mlx);
+void		draw_backdrop(t_mlx *mlx);
+void		ft_dialog(t_mlx *mlx);
 
 //
 //		MLX
-void			my_mlx_pixel_put(t_display *data, int x, int y, int color);
-int				my_mlx_get_color(t_display *texture, int x, int y);
-void			put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
-void			exit_game(t_mlx *mlx);
+void		my_mlx_pixel_put(t_display *data, int x, int y, int color);
+int			my_mlx_get_color(t_display *texture, int x, int y);
+void		put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
+void		exit_game(t_mlx *mlx);
 
 //
 //		DIALOGS
-void			ft_start_dialog(t_mlx *mlx);
-void			sch_dialog(t_mlx *mlx);
-void			jul_dialog(t_mlx *mlx);
-void			starting_dialog(t_mlx *mlx);
+void		ft_start_dialog(t_mlx *mlx);
+void		sch_dialog(t_mlx *mlx);
+void		jul_dialog(t_mlx *mlx);
+void		starting_dialog(t_mlx *mlx);
 
 //
 //		THINGS
-void			open_door(t_mlx *mlx, char *mapname, int batnbr);
-void			close_door(t_mlx *mlx);
-void			ft_playsound(int play, char *param);
-int				ft_check_prox(t_mlx *mlx, t_sprite tex);
-void			ft_walk_anim(t_mlx *mlx);
+void		open_door(t_mlx *mlx, char *mapname, int batnbr);
+void		close_door(t_mlx *mlx);
+void		ft_playsound(int play, char *param);
+int			ft_check_prox(t_mlx *mlx, t_sprite tex);
+void		ft_walk_anim(t_mlx *mlx);
 
 #endif
