@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:59:02 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:11:07 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_img(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx, mlx->hand.img);
 	mlx_destroy_image(mlx->mlx, mlx->hand2.img);
 	mlx_destroy_image(mlx->mlx, mlx->phone.img);
+	mlx_destroy_image(mlx->mlx, mlx->waze.img);
 	mlx_destroy_image(mlx->mlx, mlx->bike.img);
 	mlx_destroy_image(mlx->mlx, mlx->bike_wheel.img);
 	mlx_destroy_image(mlx->mlx, mlx->crash.img);
@@ -49,6 +50,11 @@ void	free_sprt(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx, mlx->sch.tex.img);
 	mlx_destroy_image(mlx->mlx, mlx->bag.tex.img);
 	mlx_destroy_image(mlx->mlx, mlx->tmax.tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->no_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->so_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->we_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->ea_tex.img);
+	mlx_destroy_image(mlx->mlx, mlx->display.img);
 }
 
 void	exit_game(t_mlx *mlx)

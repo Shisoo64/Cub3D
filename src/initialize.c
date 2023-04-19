@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:21:27 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/17 14:36:51 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 15:26:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	init_data(t_mlx *mlx)
 	mlx->player.down = 0;
 	mlx->player.left = 0;
 	mlx->player.right = 0;
+	mlx->player_nb = 0;
 	mlx->no_tex.img = NULL;
 	mlx->so_tex.img = NULL;
 	mlx->we_tex.img = NULL;

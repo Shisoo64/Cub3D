@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:50:04 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:22:06 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	key_press(int key, t_mlx *mlx)
 	else if (mlx->started == 0)
 	{
 		mlx->started = 1;
-		system("killall paplay");
+		ft_playsound(0, NULL);
 	}
 	else if (mlx->crashed == 1)
 		exit_game(mlx);

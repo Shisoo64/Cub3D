@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/19 01:22:00 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:42:25 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,10 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	ft_fill_map(mlx, data);
 	check_map_borders(mlx, data);
 	place_player_on_map(mlx);
+	if (mlx->player_nb < 1)
+	{
+		error_message("Player number is erroneous, check map.\n", NULL);
+		free_map(data);
+		exit_game(mlx);
+	}
 }

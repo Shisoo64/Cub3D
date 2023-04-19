@@ -47,10 +47,10 @@ void	ft_wall_hit_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 		draw_line_out(&mlx->bat3_tex, ray, x, draw_coord);
 	else if (ray->hit_type == 90)
 	{
-		if (ray->perpwalldists[x] <= 0.15 && mlx->player.biking != 1)
+		if (ray->perpwalldists[x] <= 0.2 && mlx->player.biking != 1)
 		{
 			if (mlx->player.using == 1)
-				open_door(mlx, "maps/julbat.cub", 1);
+				open_door(mlx, "maps_bonus/julbat.cub", 1);
 			else
 				mlx->msg = "Press F to open door";
 		}
@@ -58,8 +58,8 @@ void	ft_wall_hit_out(t_raycast *ray, t_mlx *mlx, int draw_coord[2], int x)
 	}
 	else if (ray->hit_type == 91)
 	{
-		if (ray->perpwalldists[x] <= 0.15)
-			open_door(mlx, "maps/bat2.cub", 2);
+		if (ray->perpwalldists[x] <= 0.2)
+			open_door(mlx, "maps_bonus/bat2.cub", 2);
 		draw_line_out(&mlx->door_tex, ray, x, draw_coord);
 	}
 }

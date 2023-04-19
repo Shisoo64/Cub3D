@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/18 22:34:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:34:16 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2], int y)
 		x++;
 	mlx->player.pos_x = x + 0.5f;
 	mlx->player.pos_y = y + 0.5f;
+	mlx->player_nb++;
 }
 
 void	place_player_on_map(t_mlx *mlx)
