@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 16:30:32 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:33:06 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ void	get_sprites(t_mlx *mlx)
 	init_sprite(mlx, &mlx->bag, "./sprites/bag.xpm", (double []){4.6, 6.2});
 	init_sprite(mlx, &mlx->tmax, "./sprites/tmax_onfoot.xpm",
 		(double []){TMAX_START_X, TMAX_START_Y});
-}
-
-void	init_tex(t_mlx *mlx, t_display *tex, char *path)
-{
-	tex->img = mlx_xpm_file_to_image(mlx->mlx, path,
-			&tex->tex_width, &tex->tex_height);
-	tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel,
-			&tex->line_length, &tex->endian);
 }
 
 void	get_textures(t_mlx *mlx)
