@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:31 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 16:17:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:43:48 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	is_colorline_ok(char *str)
 //Check if the map line only contain valid chars
 int	is_mapline_ok(char *line)
 {
+	if (!line)
+		return (1);
 	while (*line == 32)
 		line++;
 	while (*line)
