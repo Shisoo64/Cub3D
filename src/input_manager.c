@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/11 15:21:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:58:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_press(int key, t_mlx *mlx)
 {
 	if (key == ESC)
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 1;
 	else if (key == KEY_W)
@@ -34,7 +34,7 @@ int	key_press(int key, t_mlx *mlx)
 int	key_release(int key, t_mlx *mlx)
 {
 	if (key == ESC)
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 0;
 	else if (key == KEY_W)

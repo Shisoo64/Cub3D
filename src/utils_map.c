@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:01:28 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/17 19:51:36 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:39:40 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**copy_map(t_mlx *mlx)
 	j = -1;
 	map = ft_calloc(sizeof(char *), mlx->map_y + 5);
 	if (!map)
-		exit_game_light(mlx, NULL);
+		exit(1);
 	while (++i < mlx->map_y + 4)
 	{
 		map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
@@ -39,7 +39,7 @@ char	**copy_map(t_mlx *mlx)
 	while (++j < mlx->map_y)
 	{
 		i = -1;
-		while (++i < mlx->map_x)
+		while (++i < mlx->map_x && mlx->map[j][i])
 		{
 			if (mlx->map[j][i] >= 32)
 				map[j + 2][i + 2] = mlx->map[j][i];
@@ -100,7 +100,7 @@ void	check_map_borders(t_mlx *mlx, char **data)
 		error_message("Map is not closed.\n", NULL);
 		free_map(test_map);
 		free_map(data);
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	}
 	free_map(test_map);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 19:45:39 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:58:08 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,8 @@ void	init_mlx(t_mlx *mlx)
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img,
 			&mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);
+	mlx->no_tex.img = NULL;
+	mlx->so_tex.img = NULL;
+	mlx->we_tex.img = NULL;
+	mlx->ea_tex.img = NULL;
 }

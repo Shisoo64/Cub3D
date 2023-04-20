@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_settings.h                                  :+:      :+:    :+:   */
+/*   player_settings_bonus.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/12 15:34:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:03:19 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAYER_SETTINGS_H
-# define PLAYER_SETTINGS_H
+#ifndef PLAYER_SETTINGS_BONUS_H
+# define PLAYER_SETTINGS_BONUS_H
 
 // Colors
 # define SKYCOLOR 0x2faee0

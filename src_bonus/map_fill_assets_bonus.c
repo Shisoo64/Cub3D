@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_fill_assets.c                                  :+:      :+:    :+:   */
+/*   map_fill_assets_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:48:55 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D_bonus.h"
 
 //Assign the wall textures
-void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
+void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 {
 	char	*str;
 
@@ -21,30 +21,36 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line)
 	if (!str || !ft_strnstr(str, ".xpm", ft_strlen(str)))
 	{
 		error_message("Check this line provided in the map file : ", line);
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
+	if (!texture->img)
+	{
+		free(str);
+		error_message("Check this line provided in the map file : ", line);
+		exit_game(mlx, data);
+	}
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 			&texture->line_length, &texture->endian);
 	free(str);
 }
 
 //Check the texture lines in the map file
-void	get_wall_textures(t_mlx *mlx, char *line)
+void	get_wall_textures(t_mlx *mlx, char **data, char *line)
 {
 	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
-		fill_wall_tex(mlx, &mlx->no_tex, line);
+		fill_wall_tex(mlx, &mlx->no_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "SO",
 			ft_strlen(line)) != NULL)
-		fill_wall_tex(mlx, &mlx->so_tex, line);
+		fill_wall_tex(mlx, &mlx->so_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "WE",
 			ft_strlen(line)) != NULL)
-		fill_wall_tex(mlx, &mlx->we_tex, line);
+		fill_wall_tex(mlx, &mlx->we_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "EA",
 			ft_strlen(line)) != NULL)
-		fill_wall_tex(mlx, &mlx->ea_tex, line);
+		fill_wall_tex(mlx, &mlx->ea_tex, line, data);
 }
 
 //Assign the sky and ground colors
@@ -91,7 +97,7 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	while (data[i])
 	{
 		if (is_asset(data[i]) == 1)
-			get_wall_textures(mlx, data[i]);
+			get_wall_textures(mlx, data, data[i]);
 		if (is_asset(data[i]) == 2)
 			get_colors(mlx, data[i]);
 		i++;

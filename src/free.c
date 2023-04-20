@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:52:00 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 15:49:48 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:49:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,23 @@ void	free_map(char **map)
 	free(map);
 }
 
-void	free_img(t_mlx *v)
+void	free_img(t_mlx *mlx)
 {
-	mlx_destroy_image(v->mlx, v->ea_tex.img);
-	mlx_destroy_image(v->mlx, v->we_tex.img);
-	mlx_destroy_image(v->mlx, v->no_tex.img);
-	mlx_destroy_image(v->mlx, v->so_tex.img);
-	mlx_destroy_image(v->mlx, v->display.img);
+	if (mlx->ea_tex.img)
+		mlx_destroy_image(mlx->mlx, mlx->ea_tex.img);
+	if (mlx->we_tex.img)
+		mlx_destroy_image(mlx->mlx, mlx->we_tex.img);
+	if (mlx->no_tex.img)
+		mlx_destroy_image(mlx->mlx, mlx->no_tex.img);
+	if (mlx->so_tex.img)
+		mlx_destroy_image(mlx->mlx, mlx->so_tex.img);
+	if (mlx->display.img)
+		mlx_destroy_image(mlx->mlx, mlx->display.img);
 }
 
-void	exit_game(t_mlx *mlx)
+void	exit_game(t_mlx *mlx, char **data)
 {
-	free_map(mlx->map);
+	free_map(data);
 	free_img(mlx);
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
@@ -41,9 +46,8 @@ void	exit_game(t_mlx *mlx)
 	exit(0);
 }
 
-void	exit_game_light(t_mlx *mlx, char **data)
+void	exit_game_light(char **data)
 {
-	(void)mlx;
 	if (data)
 		free_map(data);
 	exit(1);

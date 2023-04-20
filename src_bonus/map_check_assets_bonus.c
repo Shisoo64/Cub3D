@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_check_assets.c                                 :+:      :+:    :+:   */
+/*   map_check_assets_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 18:05:43 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:48:25 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int	check_items(char **data)
 }
 
 //Check if map file is properly formated
-void	check_assets(t_mlx *mlx, char **data)
+void	check_assets(char **data)
 {
 	if (check_map(data) || check_items(data))
-		exit_game_light(mlx, data);
+		exit_game_light(data);
 }

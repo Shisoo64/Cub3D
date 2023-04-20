@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 15:10:31 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:00:12 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	check_wall_textures(char *line)
 {
 	char	*str;
+	char	*buf;
 	int		fd;
 
+	buf = NULL;
 	str = ft_strnstr(line, ".", ft_strlen(line));
 	if (!str || (*(str - 1) != ' ' && *(str + 1) != '/')
 		|| !ft_strnstr(str, ".xpm", ft_strlen(str)))
@@ -113,8 +115,8 @@ int	check_items(char **data)
 }
 
 //Check if map file is properly formated
-void	check_assets(t_mlx *mlx, char **data)
+void	check_assets(char **data)
 {
 	if (check_map(data) || check_items(data))
-		exit_game_light(mlx, data);
+		exit_game_light(data);
 }

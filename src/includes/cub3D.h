@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:54:27 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:00:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		fetch_assets(t_mlx *mlx, char **data);
 //
 //		ASSETS
 void		fetch_assets(t_mlx *mlx, char **data);
-void		get_wall_textures(t_mlx *mlx, char *line);
+void		get_wall_textures(t_mlx *mlx, char **data, char *line);
 int			fill_color(char *line);
 void		get_colors(t_mlx *mlx, char *line);
 
@@ -133,13 +133,13 @@ void		draw_backdrop(t_mlx *mlx);
 //
 //		FREE
 void		free_map(char **map);
-void		exit_game(t_mlx *mlx);
-void		exit_game_light(t_mlx *mlx, char **data);
+void		exit_game(t_mlx *mlx, char **data);
+void		exit_game_light(char **data);
 
 //
 //		ERRORS
 void		error_message(char *msg, char *line);
-void		check_assets(t_mlx *mlx, char **data);
+void		check_assets(char **data);
 
 //
 //		MLX

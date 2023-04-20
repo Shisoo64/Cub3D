@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 19:50:56 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:53:52 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../../libft/libft.h"
 # include "../../mlx_linux/mlx.h"
-# include "player_settings.h"
+# include "player_settings_bonus.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -165,9 +165,9 @@ void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
 void		init_mlx(t_mlx *mlx);
 
-void		exit_game_light(t_mlx *mlx, char **data);
+void		exit_game_light(char **data);
 void		error_message(char *msg, char *line);
-void		check_assets(t_mlx *mlx, char **data);
+void		check_assets(char **data);
 
 int			is_mapline_ok(char *line);
 int			is_asset(char *line);
@@ -212,7 +212,7 @@ void		ft_dialog(t_mlx *mlx);
 void		my_mlx_pixel_put(t_display *data, int x, int y, int color);
 int			my_mlx_get_color(t_display *texture, int x, int y);
 void		put_img_transp(t_mlx *mlx, t_display img, int pad_x, int pad_y);
-void		exit_game(t_mlx *mlx);
+void		exit_game(t_mlx *mlx, char **data);
 
 //
 //		DIALOGS

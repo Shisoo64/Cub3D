@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/18 16:20:40 by rlaforge          #+#    #+#              #
-#    Updated: 2023/04/19 18:02:44 by bchabot          ###   ########.fr        #
+#    Updated: 2023/04/20 12:17:51 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,29 +28,29 @@ SRCS =	src/main.c \
 		src/utils_rendering.c \
 		src/utils_map.c
 
-SRCS_BONUS =	src_bonus/main.c \
-				src_bonus/input_manager.c \
-				src_bonus/foot_movement.c \
-				src_bonus/bike_movement.c \
-				src_bonus/sprites.c \
-				src_bonus/screens.c \
-				src_bonus/dialog.c \
-				src_bonus/dialog_utils.c \
-				src_bonus/utils.c \
-				src_bonus/init.c \
-				src_bonus/parsing.c \
-				src_bonus/check_map.c \
-				src_bonus/map_check_assets.c \
-				src_bonus/map_fill_assets.c \
-				src_bonus/parsing_utils.c \
-				src_bonus/minimap.c \
-				src_bonus/raycaster.c \
-				src_bonus/rendering_controller.c \
-				src_bonus/rendering_outside.c \
-				src_bonus/rendering_inside.c \
-				src_bonus/map.c \
-				src_bonus/free.c \
-				src_bonus/error.c
+SRCS_BONUS =	src_bonus/main_bonus.c \
+				src_bonus/input_manager_bonus.c \
+				src_bonus/foot_movement_bonus.c \
+				src_bonus/bike_movement_bonus.c \
+				src_bonus/sprites_bonus.c \
+				src_bonus/screens_bonus.c \
+				src_bonus/dialog_bonus.c \
+				src_bonus/dialog_utils_bonus.c \
+				src_bonus/utils_bonus.c \
+				src_bonus/init_bonus.c \
+				src_bonus/parsing_bonus.c \
+				src_bonus/check_map_bonus.c \
+				src_bonus/map_check_assets_bonus.c \
+				src_bonus/map_fill_assets_bonus.c \
+				src_bonus/parsing_utils_bonus.c \
+				src_bonus/minimap_bonus.c \
+				src_bonus/raycaster_bonus.c \
+				src_bonus/rendering_controller_bonus.c \
+				src_bonus/rendering_outside_bonus.c \
+				src_bonus/rendering_inside_bonus.c \
+				src_bonus/map_bonus.c \
+				src_bonus/free_bonus.c \
+				src_bonus/error_bonus.c
 
 CC = @clang
 

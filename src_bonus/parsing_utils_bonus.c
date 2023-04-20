@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:32:57 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 20:06:18 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:52:45 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ void	error_message(char *msg, char *line)
 		ft_putstr_fd(line, 2);
 }
 
-void	exit_game_light(t_mlx *mlx, char **data)
+void	exit_game_light(char **data)
 {
-	(void)mlx;
 	if (data)
 		free_map(data);
 	exit(1);
@@ -44,7 +43,7 @@ void	ft_change_map(t_mlx *mlx)
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	free_mand_img(mlx);
-	check_assets(mlx, data);
+	check_assets(data);
 	fetch_assets(mlx, data);
 	free_map(data);
 }

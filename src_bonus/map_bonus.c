@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:54 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:38:30 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_fill_map(t_mlx *mlx, char **data)
 	ft_map_height(mlx, data);
 	mlx->map = ft_calloc(sizeof(char *), mlx->map_y + 1);
 	if (!mlx->map)
-		exit_game_light(mlx, data);
+		exit_game_light(data);
 	i = 0;
 	y = 0;
 	while (data[i])

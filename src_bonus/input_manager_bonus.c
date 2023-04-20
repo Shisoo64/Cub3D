@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_manager.c                                    :+:      :+:    :+:   */
+/*   input_manager_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 23:59:47 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/19 17:57:57 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:09:08 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 int	key_press(int key, t_mlx *mlx)
 {
 	if (key == ESC)
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	else if (mlx->started == 0)
 	{
 		mlx->started = 1;
 		ft_playsound(0, NULL);
 	}
 	else if (mlx->crashed == 1)
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 1;
 	else if (key == KEY_W)
@@ -43,7 +43,7 @@ int	key_press(int key, t_mlx *mlx)
 int	key_release(int key, t_mlx *mlx)
 {
 	if (key == ESC)
-		exit_game(mlx);
+		exit_game(mlx, mlx->map);
 	else if (key == KEY_ARROW_L || key == KEY_Q)
 		mlx->player.rot_l = 0;
 	else if (key == KEY_W)
