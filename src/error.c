@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 16:00:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:26:44 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ int	check_items(char **data)
 //Check if map file is properly formated
 void	check_assets(char **data)
 {
+	if (is_mapline_ok(data[0]))
+	{
+		error_message("Map before assets.\n", NULL);
+		exit_game_light(data);
+	}
 	if (check_map(data) || check_items(data))
 		exit_game_light(data);
 }
