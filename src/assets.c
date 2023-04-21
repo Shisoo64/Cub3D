@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/20 15:27:01 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:44:46 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,13 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 //Check the texture lines in the map file
 void	get_wall_textures(t_mlx *mlx, char **data, char *line)
 {
-	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
+	if (is_asset(line) == 1 && !ft_strncmp(line, "NO ", 3))
 		fill_wall_tex(mlx, &mlx->no_tex, line, data);
-	else if (is_asset(line) == 1 && ft_strnstr(line, "SO",
-			ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "SO ", 3))
 		fill_wall_tex(mlx, &mlx->so_tex, line, data);
-	else if (is_asset(line) == 1 && ft_strnstr(line, "WE",
-			ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "WE ", 3))
 		fill_wall_tex(mlx, &mlx->we_tex, line, data);
-	else if (is_asset(line) == 1 && ft_strnstr(line, "EA",
-			ft_strlen(line)) != NULL)
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "EA ", 3))
 		fill_wall_tex(mlx, &mlx->ea_tex, line, data);
 }
 

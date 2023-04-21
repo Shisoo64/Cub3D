@@ -1,9 +1,9 @@
-SO ./sp/SO.xpm
-EA ./sp/EA.xpm
+NO ./sp/SO.xpm
+SO ./sp/NO.xpm
+EA ./sp/WE.xpm
 F 255,255,255
 C 47,174,226
-WE ./sp/WE.xpm
-NO ./sp/NO.xpm
+WE ./sp/EA.xpm
 
 1111111  111  11111111111
 1000001111011111000000001
