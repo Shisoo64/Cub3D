@@ -1,0 +1,12 @@
+SO ./sp/NO.xpm
+NO ./sp/NO.xpm
+EA ./sp/NO.xpm
+WE ./sp/NO.xpm
+
+F 200,100,0
+C 0,0,255
+
+ 11111111
+ 10000001
+10N011111
+11111

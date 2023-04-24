@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/21 14:44:46 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:04:32 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 		error_message("Check this line provided in the map file : ", line);
 		exit_game(mlx, mlx->map);
 	}
-	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
+	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
 	if (!texture->img)
@@ -40,13 +40,17 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 //Check the texture lines in the map file
 void	get_wall_textures(t_mlx *mlx, char **data, char *line)
 {
-	if (is_asset(line) == 1 && !ft_strncmp(line, "NO ", 3))
+	if (is_asset(line) == 1 && !ft_strncmp(line, "NO ", 3)
+		&& !mlx->no_tex.img)
 		fill_wall_tex(mlx, &mlx->no_tex, line, data);
-	else if (is_asset(line) == 1 && !ft_strncmp(line, "SO ", 3))
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "SO ", 3)
+		&& !mlx->so_tex.img)
 		fill_wall_tex(mlx, &mlx->so_tex, line, data);
-	else if (is_asset(line) == 1 && !ft_strncmp(line, "WE ", 3))
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "WE ", 3)
+		&& !mlx->we_tex.img)
 		fill_wall_tex(mlx, &mlx->we_tex, line, data);
-	else if (is_asset(line) == 1 && !ft_strncmp(line, "EA ", 3))
+	else if (is_asset(line) == 1 && !ft_strncmp(line, "EA ", 3)
+		&& !mlx->ea_tex.img)
 		fill_wall_tex(mlx, &mlx->ea_tex, line, data);
 }
 
@@ -79,9 +83,9 @@ int	fill_color(char *line)
 //Check the colors lines in the map file
 void	get_colors(t_mlx *mlx, char *line)
 {
-	if (is_asset(line) && ft_strchr(line, 'F'))
+	if (is_asset(line) && !ft_strncmp(line, "F ", 2))
 		mlx->color_f = fill_color(line);
-	else if (is_asset(line) && ft_strchr(line, 'C'))
+	else if (is_asset(line) && !ft_strncmp(line, "C ", 2))
 		mlx->color_c = fill_color(line);
 }
 
@@ -102,9 +106,10 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	ft_fill_map(mlx, data);
 	check_map_borders(mlx, data);
 	place_player_on_map(mlx);
-	if (mlx->player_nb < 1)
+	if (mlx->player_nb < 1 || !mlx->ea_tex.img || !mlx->no_tex.img
+		|| !mlx->so_tex.img || !mlx->we_tex.img)
 	{
-		error_message("Player number is erroneous, check map.\n", NULL);
+		error_message("Assets are erroneous, check map.\n", NULL);
 		free_map(data);
 		exit_game(mlx, mlx->map);
 	}

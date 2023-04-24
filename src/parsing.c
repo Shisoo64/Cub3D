@@ -52,7 +52,7 @@ int	file_size(t_mlx *mlx, int *fd)
 	line = get_next_line(*fd);
 	while (line)
 	{
-		if (*line >= 32)
+		if (*line >= 32 || *line == 10)
 				i++;
 		free(line);
 		line = get_next_line(*fd);
@@ -77,7 +77,7 @@ char	**get_data_from_file(t_mlx *mlx)
 	i = 0;
 	while (line)
 	{
-		if (*line >= 32)
+		if (*line >= 32 || *line == 10)
 			data[i++] = ft_strdup(line);
 		free(line);
 		line = get_next_line(fd);

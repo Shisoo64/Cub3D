@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:48:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 14:54:41 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 		error_message("Check this line provided in the map file : ", line);
 		exit_game(mlx, mlx->map);
 	}
-	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
+	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
 	if (!texture->img)

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:01:28 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/20 15:39:40 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:03:35 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**copy_map(t_mlx *mlx)
 	while (++i < mlx->map_y + 4)
 	{
 		map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
-		ft_memset(map[i], ' ', mlx->map_x + 4);
-		map[i][mlx->map_x + 3] = '\n';
+		ft_memset(map[i], ' ', mlx->map_x + 5);
+		map[i][mlx->map_x + 4] = '\n';
 	}
 	while (++j < mlx->map_y)
 	{
@@ -76,7 +76,7 @@ void	surround_map(t_mlx *mlx, char **map)
 	int	i;
 
 	i = -1;
-	while (++i <= mlx->map_x + 2)
+	while (++i <= mlx->map_x + 3)
 	{
 		map[0][i] = '1';
 		map[mlx->map_y + 3][i] = '1';
@@ -85,7 +85,7 @@ void	surround_map(t_mlx *mlx, char **map)
 	while (++i <= mlx->map_y + 3)
 	{
 		map[i][0] = '1';
-		map[i][mlx->map_x + 2] = '1';
+		map[i][mlx->map_x + 3] = '1';
 	}
 }
 

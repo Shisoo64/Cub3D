@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/21 14:42:17 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:17:17 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_wall_textures(char *line)
 		error_message("Check this line provided in the map file : ", line);
 		return (1);
 	}
-	str = ft_substr((const char *)str, 0, ft_strlen(str) - 2);
+	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
@@ -108,7 +108,7 @@ int	check_items(char **data)
 	}
 	if (text != 4 || color != 2)
 	{
-		error_message("Assets are missing. Check textures and colors.\n", NULL);
+		error_message("Check textures and colors.\n", NULL);
 		return (1);
 	}
 	return (0);
@@ -119,7 +119,7 @@ void	check_assets(char **data)
 {
 	if (is_mapline_ok(data[0]))
 	{
-		error_message("Map before assets.\n", NULL);
+		error_message(NULL, NULL);
 		exit_game_light(data);
 	}
 	if (check_map(data) || check_items(data))
