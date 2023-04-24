@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill_assets_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/24 14:54:41 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:22:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 		exit_game(mlx, mlx->map);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
+	if (!str)
+		exit_game(mlx, mlx->map);
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
 	if (!texture->img)
@@ -40,16 +42,17 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 //Check the texture lines in the map file
 void	get_wall_textures(t_mlx *mlx, char **data, char *line)
 {
-	if (is_asset(line) == 1 && ft_strnstr(line, "NO", ft_strlen(line)))
+	if (is_asset(line) == 1 && ft_strnstr(line, "NO",
+			ft_strlen(line)) && !mlx->no_tex.img)
 		fill_wall_tex(mlx, &mlx->no_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "SO",
-			ft_strlen(line)) != NULL)
+			ft_strlen(line)) != NULL && !mlx->so_tex.img)
 		fill_wall_tex(mlx, &mlx->so_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "WE",
-			ft_strlen(line)) != NULL)
+			ft_strlen(line)) != NULL && !mlx->we_tex.img)
 		fill_wall_tex(mlx, &mlx->we_tex, line, data);
 	else if (is_asset(line) == 1 && ft_strnstr(line, "EA",
-			ft_strlen(line)) != NULL)
+			ft_strlen(line)) != NULL && !mlx->ea_tex.img)
 		fill_wall_tex(mlx, &mlx->ea_tex, line, data);
 }
 
@@ -82,9 +85,9 @@ int	fill_color(char *line)
 //Check the colors lines in the map file
 void	get_colors(t_mlx *mlx, char *line)
 {
-	if (is_asset(line) && ft_strchr(line, 'F'))
+	if (is_asset(line) && !ft_strncmp(line, "F ", 2))
 		mlx->color_f = fill_color(line);
-	else if (is_asset(line) && ft_strchr(line, 'C'))
+	else if (is_asset(line) && !ft_strncmp(line, "C ", 2))
 		mlx->color_c = fill_color(line);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 12:15:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:08:37 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ int	get_next_color(char *str)
 	i = 0;
 	while (ft_isdigit(str[i]))
 		i++;
-	if (i == 0)
+	if (i == 0 || i > 3)
 		return (-1);
 	buf = ft_substr(str, 0, i);
+	if (!buf)
+		return (-1);
 	value = ft_atoi(buf);
 	free(buf);
 	return (value);

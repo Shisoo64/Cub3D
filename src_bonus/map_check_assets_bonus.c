@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check_assets_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:43:45 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/24 16:21:20 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:10:47 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	check_items(char **data)
 	}
 	if (text != 4 || color != 2)
 	{
-		error_message("Assets are erroneous. Check textures and colors.\n", NULL);
+		error_message("Check textures and colors.\n", NULL);
 		return (1);
 	}
 	return (0);
