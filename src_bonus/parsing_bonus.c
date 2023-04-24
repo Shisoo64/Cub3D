@@ -52,7 +52,7 @@ int	file_size(t_mlx *mlx, int *fd)
 	line = get_next_line(*fd);
 	while (line)
 	{
-		if (*line >= 32)
+		if (*line >= 32 || *line == '\n')
 				i++;
 		free(line);
 		line = get_next_line(*fd);
@@ -77,7 +77,7 @@ char	**get_data_from_file(t_mlx *mlx)
 	i = 0;
 	while (line)
 	{
-		if (*line >= 32)
+		if (*line >= 32 || *line == '\n')
 			data[i++] = ft_strdup(line);
 		free(line);
 		line = get_next_line(fd);
@@ -95,13 +95,14 @@ void	ft_parsing(t_mlx *mlx)
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(data);
-	init_mlx(mlx);
+	init_mlx(mlx, data);
 	get_textures(mlx);
 	fetch_assets(mlx, data);
 	place_player_on_map(mlx);
-	if (mlx->player_nb < 1)
+	if (mlx->player_nb < 1 || !mlx->ea_tex.img || !mlx->no_tex.img
+		|| !mlx->so_tex.img || !mlx->we_tex.img)
 	{
-		error_message("Player number is erroneous, check map.\n", NULL);
+		error_message("Assets are erroneous, check map file.\n", NULL);
 		free_map(data);
 		exit_game(mlx, mlx->map);
 	}

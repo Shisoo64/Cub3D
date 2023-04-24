@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:38:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:03:15 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,27 @@ void	ft_fill_map(t_mlx *mlx, char **data)
 		i++;
 	}
 	mlx->map[y] = NULL;
+}
+
+char	**blank_map(t_mlx *mlx, char **data)
+{
+	char	**map;
+	int		i;
+
+	map = ft_calloc(sizeof(char *), mlx->map_y + 5);
+	if (!map)
+		exit_game_light(data);
+	i = -1;
+	while (++i < mlx->map_y + 4)
+	{
+		map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
+		if (!map)
+		{
+			free_map(map);
+			exit_game_light(data);
+		}
+		ft_memset(map[i], ' ', mlx->map_x + 5);
+		map[i][mlx->map_x + 4] = '\n';
+	}
+	return (map);
 }

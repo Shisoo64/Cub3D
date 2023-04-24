@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:58:08 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:56:56 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,26 @@ void	get_textures(t_mlx *mlx)
 	get_sprites(mlx);
 }
 
-void	init_mlx(t_mlx *mlx)
+void	init_mlx(t_mlx *mlx, char **data)
 {
 	mlx->mlx = mlx_init();
 	if (mlx->mlx == NULL)
 	{
 		error_message("Mlx initialization failed.\n", NULL);
-		exit(1);
+		exit_game_light(data);
 	}
 	mlx->win = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "cub3D");
+	if (mlx->win == NULL)
+	{
+		error_message("Mlx initialization failed.\n", NULL);
+		exit_game_light(data);
+	}
 	mlx->display.img = mlx_new_image(mlx->mlx, WIN_W, WIN_H);
+	if (mlx->display.img == NULL)
+	{
+		error_message("Mlx initialization failed.\n", NULL);
+		exit_game_light(data);
+	}
 	mlx->display.addr = mlx_get_data_addr(mlx->display.img,
 			&mlx->display.bits_per_pixel,
 			&mlx->display.line_length, &mlx->display.endian);

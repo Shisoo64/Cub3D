@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:53:52 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:17:18 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,8 @@ void		ft_fill_map(t_mlx *mlx, char **data);
 void		ft_map_height(t_mlx *mlx, char **data);
 void		place_player_on_map(t_mlx *mlx);
 void		fetch_assets(t_mlx *mlx, char **data);
-void		init_mlx(t_mlx *mlx);
+void		init_mlx(t_mlx *mlx, char **data);
+char		**blank_map(t_mlx *mlx, char **data);
 
 void		exit_game_light(char **data);
 void		error_message(char *msg, char *line);
@@ -175,7 +176,7 @@ int			is_colorline_ok(char *str);
 int			get_next_color(char *line);
 
 void		check_map_borders(t_mlx *mlx, char **data);
-int			check_surround_cells(char **test_map);
+int			check_surround_cells(t_mlx *mlx, char **test_map);
 
 //
 //		MOVEMENT
