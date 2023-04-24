@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:01:28 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/24 16:03:35 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:23:41 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,32 @@ int	is_good(char c)
 	return (0);
 }
 
-char	**copy_map(t_mlx *mlx)
+int	check_surround_cells(t_mlx *mlx, char **test_map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (test_map[i] && i < mlx->map_y + 4)
+	{
+		j = 0;
+		while (test_map[i][j] && j < mlx->map_x + 4)
+		{
+			if (test_map[i][j] && test_map[i][j] == 32)
+			{
+				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j])
+					|| !is_good(test_map[i][j + 1])
+					|| !is_good(test_map[i][j - 1]))
+					return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+char	**copy_map(t_mlx *mlx, char **data)
 {
 	char	**map;
 	int		i;
@@ -27,15 +52,7 @@ char	**copy_map(t_mlx *mlx)
 
 	i = -1;
 	j = -1;
-	map = ft_calloc(sizeof(char *), mlx->map_y + 5);
-	if (!map)
-		exit(1);
-	while (++i < mlx->map_y + 4)
-	{
-		map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
-		ft_memset(map[i], ' ', mlx->map_x + 5);
-		map[i][mlx->map_x + 4] = '\n';
-	}
+	map = blank_map(mlx, data);
 	while (++j < mlx->map_y)
 	{
 		i = -1;
@@ -46,29 +63,6 @@ char	**copy_map(t_mlx *mlx)
 		}
 	}
 	return (map);
-}
-
-int	check_surround_cells(char **test_map)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (test_map[++i])
-	{
-		j = -1;
-		while (test_map[i][++j])
-		{
-			if (test_map[i][j] == 32)
-			{
-				if (!is_good(test_map[i + 1][j]) || !is_good(test_map[i - 1][j])
-					|| !is_good(test_map[i][j + 1])
-					|| !is_good(test_map[i][j - 1]))
-					return (1);
-			}
-		}
-	}
-	return (0);
 }
 
 void	surround_map(t_mlx *mlx, char **map)
@@ -93,9 +87,9 @@ void	check_map_borders(t_mlx *mlx, char **data)
 {
 	char	**test_map;
 
-	test_map = copy_map(mlx);
+	test_map = copy_map(mlx, data);
 	surround_map(mlx, test_map);
-	if (check_surround_cells(test_map))
+	if (check_surround_cells(mlx, test_map))
 	{
 		error_message("Map is not closed.\n", NULL);
 		free_map(test_map);

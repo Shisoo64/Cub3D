@@ -77,7 +77,7 @@ char	**get_data_from_file(t_mlx *mlx)
 	i = 0;
 	while (line)
 	{
-		if (*line >= 32 || *line == 10)
+		if (*line >= 32 || *line == '\n')
 			data[i++] = ft_strdup(line);
 		free(line);
 		line = get_next_line(fd);
@@ -94,7 +94,7 @@ void	ft_parsing(t_mlx *mlx)
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
 	check_assets(data);
-	init_mlx(mlx);
+	init_mlx(mlx, data);
 	fetch_assets(mlx, data);
 	free_map(data);
 }

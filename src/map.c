@@ -6,11 +6,34 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:16:43 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:38:30 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:28:28 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D.h"
+
+char	**blank_map(t_mlx *mlx, char **data)
+{
+	char	**map;
+	int		i;
+
+	map = ft_calloc(sizeof(char *), mlx->map_y + 5);
+	if (!map)
+		exit_game_light(data);
+	i = -1;
+	while (++i < mlx->map_y + 4)
+	{
+		map[i] = ft_calloc(sizeof(char), mlx->map_x + 5);
+		if (!map)
+		{
+			free_map(map);
+			exit_game_light(data);
+		}
+		ft_memset(map[i], ' ', mlx->map_x + 5);
+		map[i][mlx->map_x + 4] = '\n';
+	}
+	return (map);
+}
 
 void	set_player_dir(t_mlx *mlx, int dir[2], double plane[2], int y)
 {

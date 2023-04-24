@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 16:00:27 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:31:49 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_raycast {
 //
 //		INITIALIZE
 void		init_data(t_mlx *mlx);
-void		init_mlx(t_mlx *mlx);
+void		init_mlx(t_mlx *mlx, char **data);
 
 //
 //		PARSING
@@ -156,7 +156,8 @@ int			get_next_color(char *line);
 //
 //		UTILS_MAP
 void		check_map_borders(t_mlx *mlx, char **data);
-int			check_surround_cells(char **test_map);
+int			check_surround_cells(t_mlx *mlx, char **test_map);
+char		**blank_map(t_mlx *mlx, char **data);
 
 //
 //		UTILS_RENDERING
