@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:32:42 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/06/13 16:17:36 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:33:19 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ char	*ft_gnl_strjoin(char *s1, char *s2)
 		return (NULL);
 	ft_gnl_strlcpy(tab, s1, longueur);
 	ft_gnl_strlcat(tab, s2, longueur);
-	return (free(s1), tab);
+	free(s1);
+	return (tab);
 }
 
 int	ft_gnl_strlcat(char *dst, char *src, size_t size)
@@ -83,16 +84,21 @@ int	ft_gnl_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t		i;
 	char		*str;
+	int			ret;
 
 	i = 0;
 	str = (char *)src;
 	if (!size)
-		return ((int)ft_strlen(src));
+	{
+		ret = (int)ft_strlen(src);
+		return (ret);
+	}
 	while (str[i] && i < size - 1)
 	{
 		dst[i] = str[i];
 		i++;
 	}
 	dst[i] = '\0';
-	return ((int)ft_strlen(src));
+	ret = (int)ft_strlen(src);
+	return (ret);
 }

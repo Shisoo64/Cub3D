@@ -6,13 +6,13 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:33:26 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/10/19 17:13:01 by rlaforge         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:19:15 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-static int	ft_has_n(const char *s, int param)
+static int	ft_n(const char *s, int param)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ static char	*ft_read(char *str, int fd)
 	if (!buff)
 		return (NULL);
 	*buff = 0;
-	while (!ft_has_n(str, 1) && i)
+	while (!ft_n(str, 1) && i)
 	{
 		i = read(fd, buff, BUFFER_SIZE);
 		buff[i] = '\0';
@@ -62,7 +62,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	*str = 0;
 	if (read(fd, str, 0) == -1 || fd < 0 || BUFFER_SIZE < 1)
-		return (free(str), NULL);
+	{
+		free(str);
+		return (NULL);
+	}
 	if (!save)
 	{
 		save = malloc(sizeof(char));
@@ -71,8 +74,8 @@ char	*get_next_line(int fd)
 	str = ft_gnl_strjoin(str, save);
 	free(save);
 	str = ft_read(str, fd);
-	save = ft_gnl_substr(str, ft_has_n(str, 0), \
-		ft_strlen(str) - ft_has_n(str, 0));
-	line = ft_gnl_substr(str, 0, ft_has_n(str, 0));
-	return (free(str), line);
+	save = ft_gnl_substr(str, ft_n(str, 0), ft_strlen(str) - ft_n(str, 0));
+	line = ft_gnl_substr(str, 0, ft_n(str, 0));
+	free(str);
+	return (line);
 }
