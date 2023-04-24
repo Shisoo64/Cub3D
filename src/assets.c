@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:20:46 by bchabot           #+#    #+#             */
-/*   Updated: 2023/04/24 17:18:11 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:24:46 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	fill_wall_tex(t_mlx *mlx, t_display *texture, char *line, char **data)
 		exit_game(mlx, mlx->map);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
+	if (!str)
+	{
+		error_message("Check this line provided in the map file : ", line);
+		exit_game(mlx, mlx->map);
+	}
 	texture->img = mlx_xpm_file_to_image(mlx->mlx, str, &texture->tex_width,
 			&texture->tex_height);
 	if (!texture->img)
@@ -109,7 +114,7 @@ void	fetch_assets(t_mlx *mlx, char **data)
 	if (mlx->player_nb < 1 || !mlx->ea_tex.img || !mlx->no_tex.img
 		|| !mlx->so_tex.img || !mlx->we_tex.img)
 	{
-		error_message("Assets are erroneous, check map.\n", NULL);
+		error_message("Assets are erroneous, check map file.\n", NULL);
 		free_map(data);
 		exit_game(mlx, mlx->map);
 	}

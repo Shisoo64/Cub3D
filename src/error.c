@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:08:28 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/24 16:17:17 by bchabot          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:11:04 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	check_wall_textures(char *line)
 {
 	char	*str;
-	char	*buf;
 	int		fd;
 
-	buf = NULL;
 	str = ft_strnstr(line, ".", ft_strlen(line));
 	if (!str || (*(str - 1) != ' ' && *(str + 1) != '/')
 		|| !ft_strnstr(str, ".xpm", ft_strlen(str)))
@@ -27,6 +25,8 @@ int	check_wall_textures(char *line)
 		return (1);
 	}
 	str = ft_substr((const char *)str, 0, ft_strlen(str) - 1);
+	if (!str)
+		return (1);
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{

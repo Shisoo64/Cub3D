@@ -52,7 +52,7 @@ int	file_size(t_mlx *mlx, int *fd)
 	line = get_next_line(*fd);
 	while (line)
 	{
-		if (*line >= 32 || *line == 10)
+		if (*line >= 32 || *line == '\n')
 				i++;
 		free(line);
 		line = get_next_line(*fd);
