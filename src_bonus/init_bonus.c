@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:47:59 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/24 17:56:56 by rlaforge         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:51:06 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_sprite(t_mlx *mlx, t_sprite *sprt, char *path, double coord[2])
 void	get_sprites(t_mlx *mlx)
 {
 	init_sprite(mlx, &mlx->jul, "./sprites/jul.xpm", (double []){4.2, 6.2});
-	init_sprite(mlx, &mlx->sch, "./sprites/sch.xpm", (double []){12.3, 1.15});
+	init_sprite(mlx, &mlx->sch, "./sprites/sch.xpm", (double []){11.4, 4.4});
 	init_sprite(mlx, &mlx->bag, "./sprites/bag.xpm", (double []){4.6, 6.2});
 	init_sprite(mlx, &mlx->tmax, "./sprites/tmax_onfoot.xpm",
 		(double []){TMAX_START_X, TMAX_START_Y});

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_settings_bonus.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 16:03:19 by bchabot          ###   ########.fr       */
+/*   Updated: 2024/03/21 12:07:37 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@
 
 # define CRASH_SPEED 750
 
-# define TMAX_START_X 8.65
-# define TMAX_START_Y 30.5
+//# define TMAX_START_X 8.65
+//# define TMAX_START_Y 30.5
+# define TMAX_START_X 9.2
+# define TMAX_START_Y 33.2
 
 enum e_keycode
 {

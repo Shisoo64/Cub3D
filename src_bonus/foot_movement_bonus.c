@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   foot_movement_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:06:29 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 12:15:18 by bchabot          ###   ########.fr       */
+/*   Updated: 2024/03/21 12:16:57 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3D_bonus.h"
+#include <stdio.h>
 
 void	move_player(int multi, t_player *player, char **map)
 {

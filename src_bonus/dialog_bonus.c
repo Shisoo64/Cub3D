@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dialog_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:47:24 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 12:15:04 by bchabot          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:58:41 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	sch_dialog(t_mlx *mlx)
 	else
 	{
 		mlx->bag_status = 2;
-		mlx->bag.x = 12.65;
-		mlx->bag.y = 1.1;
+		mlx->bag.x = 11.65;
+		mlx->bag.y = 4.1;
 		mlx->dialog = 0;
 		return ;
 	}

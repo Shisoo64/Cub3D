@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:32:57 by rlaforge          #+#    #+#             */
-/*   Updated: 2023/04/20 15:52:45 by bchabot          ###   ########.fr       */
+/*   Updated: 2024/03/21 15:04:48 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_change_map(t_mlx *mlx)
 
 	check_map_ext(mlx);
 	data = get_data_from_file(mlx);
-	free_mand_img(mlx);
 	check_assets(data);
 	fetch_assets(mlx, data);
 	free_map(data);
