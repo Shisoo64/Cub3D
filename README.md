@@ -1,7 +1,7 @@
 <div align="center">
   <h1> Cub3D </h1>
   <h3>Grand Theft Auto Marseille Edition</h3>
-  <a href="https://open.spotify.com/intl-fr/track/2eDvflMCe9ssOkUJrxqikB" target="_blank"><img src=https://github.com/barondugroove/Cub3D/blob/main/sprites/gta%20marseille.PNG width="75%">
+  <a href="https://open.spotify.com/intl-fr/track/2eDvflMCe9ssOkUJrxqikB" target="_blank"><img src=https://github.com/Shisoo64/Cub3D/blob/main/gta_marseille.png width="75%">
   </a></img>
 </div>
 
