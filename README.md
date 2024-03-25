@@ -1,16 +1,23 @@
-
 <div align="center">
   <h1> Cub3D </h1>
-  <h3>The cub of the 3d</h3>
-  <a href="https://open.spotify.com/track/18pedqpot9iF1Z7Ol3YHmc" target="_blank"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Impossible_cube_illusion_angle.svg/1200px-Impossible_cube_illusion_angle.svg.png width="25%">
+  <h3>Grand Theft Auto Marseille Edition</h3>
+  <a href="https://open.spotify.com/intl-fr/track/2eDvflMCe9ssOkUJrxqikB" target="_blank"><img src=https://github.com/barondugroove/Cub3D/blob/main/sprites/gta%20marseille.PNG width="75%">
   </a></img>
 </div>
 
 ## 📖 Description
 
-Ce projet est inspiré du jeu éponyme mondialement connu, considéré comme le premier FPS jamais développé.<br>
-Il vous permettra d'explorer la technique du ray-casting.<br>
-Votre objectif est de faire une vue dynamique au sein d'un labyrinthe, dans lequel vous devrez trouver votre chemin.
+This project’s objectives are similar to all this first year’s objectives: Rigor, use of C, use
+of basic algorithms, information research etc.
+As a graphic design project, cub3D will enable you to improve your skills in these
+areas: windows, colors, events, fill shapes, etc.
+To conclude cub3D is a remarkable playground to explore the playful practical applications of mathematics without having to understand the specifics.
+With the help of the numerous documents available on the internet, you will use
+mathematics as a tool to create elegant and efficient algorithms.
+
+## 📖 Bonuses
+
+Our bonuses are an ode to the Grand Theft Auto Series and the beautiful city of Marseille.
 
 ## 🔩 Makefile
 
@@ -20,6 +27,11 @@ Votre objectif est de faire une vue dynamique au sein d'un labyrinthe, dans lequ
 
 ```shell
 $ make
+```
+**1. 🗜️Compiling the project with bonus :**
+
+```shell
+$ make bonus
 ```
 
 **2. 🧹Cleaning all binary (.o) :**
